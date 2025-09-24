@@ -120,8 +120,8 @@
         <h1 id="siteTitle">啃酥菱角酥批發官網</h1>
       </div>
       <nav>
-        <a href="#store">馬上選購</a>
         <a href="#about">關於我們</a>
+        <a href="#store">馬上選購</a>
         <a href="#news">最新鮮報</a>
       </nav>
     </div>
@@ -141,20 +141,23 @@
     </div>
   </section>
 
+  <!-- 關於我們（移到產品上方） -->
+  <section class="wrap" id="about" style="padding:18px 0 6px">
+    <h3>關於我們</h3>
+    <p>啃酥從夜市小攤發跡，主打菱角酥、芋泥酥、炸鮮奶與飲品原料。為了讓非加盟夥伴也能穩定取得原物料，我們開放<strong>整件與單品項</strong>批發。完成下單後，請依畫面顯示匯款資訊完成匯款；我們核帳後安排出貨。</p>
+  </section>
+
+  <!-- 產品 -->
   <section class="wrap" id="store">
     <div class="chips" id="chips"></div>
     <div class="grid" id="grid"></div>
   </section>
 
-  <section class="wrap" id="about" style="padding:18px 0 6px">
-    <h3>關於我們</h3>
-    <p>啃酥從夜市小攤發跡，主打菱角酥、芋泥酥、炸鮮奶與飲品原料。為了讓非加盟夥伴也能穩定取得原物料，我們開放<strong>整件與單品項</strong>批發。完成下單後，請依畫面顯示匯款資訊完成匯款；我們核帳後安排出貨。</p>
-  </section>
   <section class="wrap" id="news" style="padding:0 0 8px">
     <h3>最新鮮報</h3>
     <ul>
-      <li>🧊 冷藏/冷凍品需全程低溫配送；不同溫層恕無法合併出貨與運費。</li>
-      <li>🚚 免運規則：依<strong>溫層群組</strong>計算，達各群組門檻即免運（規則寫在產品卡）。</li>
+      <li>🧊 低溫商品需全程冷藏/冷凍配送；不同溫層原則上分開配送。</li>
+      <li>🚚 <b>全館滿 $20,000 免運</b>；未達門檻時，依<strong>溫層群組</strong>計算運費（以該群組最高運費計一次）。</li>
       <li>📦 出貨時程：核帳後約 3–5 個工作天。</li>
     </ul>
   </section>
@@ -196,35 +199,37 @@
       <h3 style="margin:6px 0 10px">填寫出貨資料</h3>
       <form id="orderForm" class="form" onsubmit="submitOrder(event)">
         <div class="two">
-          <div><div class="label">公司/店名（或姓名）</div><input class="input" name="buyer" required></div>
-          <div><div class="label">聯絡電話</div><input class="input" name="phone" required></div>
+          <div><div class="label">公司/店名（或姓名）</div><input class="input" name="buyer" placeholder="啃酥台中據點 / 王小明" required></div>
+          <div><div class="label">聯絡電話</div><input class="input" name="phone" placeholder="0912-345-678" required></div>
         </div>
         <div class="two">
-          <div><div class="label">Email（收通知）</div><input class="input" name="email" type="email" required></div>
-          <div><div class="label">LINE ID（選填）</div><input class="input" name="line"></div>
+          <div><div class="label">Email（收通知）</div><input class="input" name="email" type="email" placeholder="shop@example.com" required></div>
+          <div><div class="label">LINE ID（選填）</div><input class="input" name="line" placeholder="kensu_line"></div>
         </div>
         <div class="two">
-          <div><div class="label">收件人</div><input class="input" name="recipient" required></div>
+          <div><div class="label">收件人</div><input class="input" name="recipient" placeholder="王小明" required></div>
           <div><div class="label">出貨方式</div>
             <select name="ship_note" class="input" required>
-              <option value="常溫配送">常溫配送</option>
-              <option value="冷藏配送">冷藏配送</option>
-              <option value="冷凍配送">冷凍配送</option>
-              <option value="超商取貨">超商取貨（限可寄品項）</option>
+              <option value="宅配">宅配</option>
+              <option value="超商取貨">超商取貨</option>
             </select>
           </div>
         </div>
-        <div><div class="label">收件地址 / 取貨門市</div><input class="input" name="address" required></div>
-        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="如需統編抬頭、指定到貨日、開箱錄影等請填寫"></textarea></div>
+        <div><div class="label">收件地址 / 超商門市</div><input class="input" name="address" placeholder="例：台中市石岡區石岡街61號 / 7-11 石岡門市" required></div>
+        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="例：需要統編抬頭、指定到貨日、開箱錄影等"></textarea></div>
 
         <div class="bank">
-          <strong>匯款資訊（範例）：</strong>
-          <div class="fine">戶名：酥味香企業社｜銀行：連線銀行（代碼 824）｜帳號：111013782313<br>完成送出後請匯款，<b>留言匯款後五碼</b>；我們核帳後出貨（約 3–5 個工作天）。</div>
+          <strong>匯款資訊：</strong>
+          <div class="fine"><b>戶名：</b>酥味香企業社</div>
+          <div class="fine"><b>銀行 / 帳號：</b>連線銀行（代碼 824）｜111013782313</div>
+          <div class="fine"><b>匯款通知：</b>完成送出後請匯款，並傳送至官方 LINE 帳號
+            <a href="https://lin.ee/eE1XNc7" target="_blank" rel="noopener">https://lin.ee/eE1XNc7</a> 提供<b>匯款後五碼</b>。</div>
+          <div class="fine"><b>出貨時程：</b>我們核帳後出貨（約 3–5 個工作天）。</div>
         </div>
-        <div class="fine">送出後系統會將訂單寫入 Google 試算表並寄送確認信至您的信箱。</div>
-        <div class="two">
+        <div class="fine">送出後系統會將訂單明細寄送確認信至您的信箱【匯款後出貨】。</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:8px">
           <button type="button" class="btn" onclick="closeSheet()">取消</button>
-          <button type="submit" class="btn brand">送出訂單（未付款不出貨）</button>
+          <button type="submit" class="btn brand">送出訂單</button>
         </div>
       </form>
     </div>
@@ -285,7 +290,7 @@
       spec: '1台',          // 規格/單位
       price: 9200,          // 售價（數字）
       shipGroup: '常溫',    // 溫層：'常溫' | '冷藏' | '冷凍'
-      shipFee: 300,         // 運費（同溫層取最大值計算一次）
+      shipFee: 300,         // 運費（同溫層取最大值計算一次；若為設備且=300，前台顯示「大型貨物」）
       freeQty: 0,           // 滿件免運門檻（0=無免運）
       minOrder: 1,          // 按一次加入購物車的數量
       soldOut: false,       // 是否售完
@@ -307,8 +312,9 @@
       {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:95, img:'', note:'滿2件免運'},
       {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:600,  shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:210, img:'', note:'—'},
 
-      {id:'taro_case',    tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, soldCount:52, img:'', note:'滿1件免運'},
-      {id:'taro_single',  tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:276,  shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, soldCount:337, img:'', note:'—'},
+      /* ← 芋泥丁改為「冷藏」 */
+      {id:'taro_case',    tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, soldCount:52, img:'', note:'滿1件免運'},
+      {id:'taro_single',  tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:276,  shipGroup:'冷藏', shipFee:180, freeQty:18, minOrder:1, soldOut:false, soldCount:337, img:'', note:'—'},
 
       {id:'milkfried_case',  tag:'', name:'啃酥炸鮮奶', type:'整件',  spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:41, img:'', note:'滿2件免運'},
       {id:'milkfried_single',tag:'', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒',        price:106,  shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, soldCount:280, img:'', note:'—'},
@@ -316,7 +322,7 @@
       {id:'milkmix_case',  tag:'', name:'啃酥特調牛奶', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, soldCount:33, img:'', note:'滿1件免運'},
       {id:'milkmix_single',tag:'', name:'啃酥特調牛奶', type:'單品項', spec:'330毫升 / 1瓶',        price:75,  shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, soldCount:402, img:'', note:'—'},
 
-      /* 設備（你提供的 6 項） */
+      /* 設備（兩項運費 300 顯示為「大型貨物」） */
       {id:'equip_fryer15',  tag:'設備', name:'15型油炸鍋',  type:'單台',   spec:'1台', price:9200,  shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
       {id:'equip_fryer25',  tag:'設備', name:'25型油炸鍋',  type:'單台',   spec:'1台', price:11200, shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
       {id:'equip_mixer220', tag:'設備', name:'220V攪拌鍋',  type:'單台',   spec:'1台', price:11000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
@@ -329,9 +335,12 @@
     const TAGS = ['設備','常溫','冷藏','冷凍'];
     const GROUP_LABELS = { '常溫':'常溫', '冷藏':'冷藏', '冷凍':'冷凍' };
 
+    /* ===== 全館免運門檻 ===== */
+    const FREE_SHIP_ALL = 20000;
+
     /* ===== 狀態與儲存（本機） ===== */
-    const LS_KEY_PRODUCTS='kensu_wholesale_products_v6';
-    const LS_KEY_BRAND='kensu_wholesale_brand_v6';
+    const LS_KEY_PRODUCTS='kensu_wholesale_products_v7';
+    const LS_KEY_BRAND='kensu_wholesale_brand_v7';
     const LS_KEY_ADMIN='kensu_admin_ok_v3';
 
     const brand = loadBrand();
@@ -381,6 +390,8 @@
         const title=`${p.name}（${p.type}）`;
         const card=document.createElement('article'); card.className='card';
         const qtyId = `qty_${p.id}`;
+        const isHeavyEquip = (p.tag==='設備' && Number(p.shipFee)===300);
+        const shipNote = isHeavyEquip ? '大型貨物' : `運費 $${fmt(p.shipFee)}`;
         card.innerHTML=`
           <div class="media">
             ${p.img?`<img src="${p.img}" alt="${title}">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
@@ -401,7 +412,7 @@
             </div>
 
             <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCartFromCard('${p.id}','${qtyId}')">加入購物車</button>
-            <div class='note'>運費 $${p.shipFee}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}${p.note?`｜${p.note}`:''}</div>
+            <div class='note'>${shipNote}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}${p.note?`｜${p.note}`:''}</div>
           </div>`;
         grid.appendChild(card);
       })
@@ -424,7 +435,7 @@
     function fmt(n){ return Number(n).toLocaleString('zh-TW') }
     function scrollToStore(){ document.getElementById('store').scrollIntoView({behavior:'smooth'}) }
 
-    /* ===== 購物車：不跳頁；清空；輸入/按鈕改數量 ===== */
+    /* ===== 購物車：不跳頁；清空；輸入/按鈕改數量；單品刪除 ===== */
     function toast(msg){
       const t=document.createElement('div'); t.textContent=msg;
       t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;opacity:.96;z-index:120';
@@ -439,6 +450,7 @@
     function openCart(){ document.getElementById('drawer').classList.add('on'); renderCart() }
     function closeCart(){ document.getElementById('drawer').classList.remove('on') }
     function clearCart(){ if(confirm('確定要清空購物車嗎？')){ cart.clear(); updateCartCount(); renderCart(); } }
+    function removeItem(pid){ if(cart.has(pid)){ cart.delete(pid); updateCartCount(); renderCart(); } }
 
     function renderCart(){
       const list=document.getElementById('cartList'); list.innerHTML='';
@@ -454,13 +466,17 @@
         const subLine=product.price*qty;
         const item=document.createElement('div'); item.className='item';
         const inputId = `cart_qty_${product.id}`;
+        const isHeavyEquip = (product.tag==='設備' && Number(product.shipFee)===300);
         item.innerHTML=`
           <div style='width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center'>
             ${product.img?`<img src='${product.img}' style='width:100%;height:100%;object-fit:cover'>`:'—'}
           </div>
           <div>
-            <div style='font-weight:700'>${product.name}（${product.type}）</div>
-            <div class='item-sub'>${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}</div>
+            <div style='font-weight:700;display:flex;align-items:center;gap:6px'>
+              <span>${product.name}（${product.type}）</span>
+              <button title="刪除" onclick="removeItem('${product.id}')" style="border:1px solid var(--border);background:#fff;border-radius:8px;padding:2px 8px;cursor:pointer">刪除</button>
+            </div>
+            <div class='item-sub'>${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}${isHeavyEquip?'｜大型貨物':''}</div>
             <div class='item-sub'>已售出：${fmt(product.soldCount||0)}</div>
           </div>
           <div class='qty'>
@@ -471,15 +487,27 @@
         list.appendChild(item);
       });
 
+      // 運費總結：先看有沒有達全館免運門檻
       const sum=document.getElementById('cartSummary'); let ship=0; let shipRows='';
-      Object.entries(groups).forEach(([key,g])=>{
-        const groupFreeQty=g.freeCandidates.length?Math.min(...g.freeCandidates):0;
-        const free=groupFreeQty>0 && g.qty>=groupFreeQty;
-        const fee=free?0:g.feeMax; ship+=fee;
-        const need=Math.max(0,(groupFreeQty||0)-g.qty);
-        const hint=groupFreeQty?(free?'<span class="ok">已達免運</span>':`<span class="warn">尚差 ${need} 件免運</span>`):'<em>此群組無免運</em>';
-        shipRows += `<div class='row'><div>${g.name} 運費</div><div>$${fmt(fee)}　${hint}</div></div>`;
-      });
+      const reachAllFree = sub >= FREE_SHIP_ALL;
+
+      if(reachAllFree){
+        ship = 0;
+        shipRows += `<div class='row'><div>全館免運</div><div class="ok">已達 $${fmt(FREE_SHIP_ALL)}</div></div>`;
+      }else{
+        const needAll = Math.max(0, FREE_SHIP_ALL - sub);
+        shipRows += `<div class='row'><div>全館免運</div><div class="warn">尚差 $${fmt(needAll)}</div></div>`;
+        // 未達全館免運 → 依溫層群組計
+        Object.entries(groups).forEach(([key,g])=>{
+          const groupFreeQty=g.freeCandidates.length?Math.min(...g.freeCandidates):0;
+          const free=groupFreeQty>0 && g.qty>=groupFreeQty;
+          const fee=free?0:g.feeMax; ship+=fee;
+          const need=Math.max(0,(groupFreeQty||0)-g.qty);
+          const hint=groupFreeQty?(free?'<span class="ok">已達免運</span>':`<span class="warn">尚差 ${need} 件免運</span>`):'<em>此群組無免運</em>';
+          shipRows += `<div class='row'><div>${g.name} 運費</div><div>$${fmt(fee)}　${hint}</div></div>`;
+        });
+      }
+
       const total=sub+ship; let totalQty=0; cart.forEach(v=>totalQty+=v.qty);
       let groupDetail=Object.entries(groups).map(([k,g])=>`${g.name}:${g.qty}件`).join('、');
 
@@ -488,7 +516,7 @@
         <div class='row'><div>件數明細</div><div>${totalQty} 件（${groupDetail||'—'}）</div></div>
         ${shipRows||"<div class='row'><div>運費</div><div>$0</div></div>"}
         <div class='row' style='border-top:1px solid var(--border);padding-top:8px;font-weight:900'><div>應付總額</div><div>$${fmt(total)}</div></div>
-        <div class='fine'>＊不同溫層分開計算運費與免運門檻；實際出貨以匯款核帳為準。</div>`;
+        <div class='fine'>＊全館滿 $${fmt(FREE_SHIP_ALL)} 免運；未達時，不同溫層分開計算運費與免運門檻。</div>`;
     }
     function incQty(pid){ const row=cart.get(pid); if(!row) return; row.qty++; cart.set(pid,row); updateCartCount(); renderCart(); }
     function decQty(pid){ const row=cart.get(pid); if(!row) return; row.qty--; if(row.qty<=0) cart.delete(pid); else cart.set(pid,row); updateCartCount(); renderCart(); }
@@ -512,7 +540,15 @@
         groups[g].qty += qty; groups[g].fee = Math.max(groups[g].fee, product.shipFee||0);
         if(product.freeQty>0) groups[g].freeCandidates.push(product.freeQty);
       });
-      Object.values(groups).forEach(g=>{ const fq=g.freeCandidates.length?Math.min(...g.freeCandidates):0; ship += (fq>0 && g.qty>=fq)?0:g.fee; });
+      // 全館免運判斷
+      if(sub < FREE_SHIP_ALL){
+        Object.values(groups).forEach(g=>{
+          const fq=g.freeCandidates.length?Math.min(...g.freeCandidates):0;
+          ship += (fq>0 && g.qty>=fq)?0:g.fee;
+        });
+      } else {
+        ship = 0;
+      }
       const total=sub+ship;
       const payload={
         type:'ORDER',
@@ -522,7 +558,7 @@
       };
       if(!GAS_ENDPOINT){
         console.log('DEV payload →', payload);
-        alert('已模擬送出訂單（尚未串接後端）。請設定 Apps Script 網址後即可正式寫入試算表並寄信。\n總額：$'+fmt(total));
+        alert('已模擬送出訂單（尚未串接後端）。總額：$'+fmt(total));
         closeSheet(); closeCart(); return;
       }
       try{
