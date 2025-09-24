@@ -1,140 +1,520 @@
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>啃酥菱角酥批發</title>
-  <style>
-    body { font-family: "Noto Sans TC", sans-serif; margin:0; background:#fafafa; color:#111; }
-    header { padding:20px; text-align:center; background:#fff; border-bottom:1px solid #eee; }
-    h1[contenteditable] { outline:2px dashed #f59e0b; }
-    .products { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; padding:20px; }
-    .card { background:#fff; border:1px solid #ddd; border-radius:10px; overflow:hidden; position:relative; }
-    .card img { width:100%; display:block; }
-    .card h3 { margin:10px; font-size:18px; }
-    .card p { margin:10px; color:#666; }
-    .btn { display:block; margin:10px; padding:10px; text-align:center; background:#f59e0b; color:#fff; border-radius:8px; cursor:pointer; user-select:none; }
-    .btn:disabled { background:#ccc; cursor:not-allowed; }
-    .soldout::after {
-      content:"已售完"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-      background:rgba(0,0,0,.7); color:#fff; padding:8px 16px; border-radius:6px; font-size:18px;
-    }
-    .soldout img { opacity:0.4; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>啃酥｜嘉南菱角酥職人・批發零售</title>
+<meta name="description" content="啃酥：嘉南產地直送菱角酥，職人每日現炸，支援團媽/禮盒/通路批發。">
+<style>
+  :root{
+    --bg:#faf7f2; --surface:#ffffff; --text:#1f2937; --muted:#6b7280;
+    --brand:#f59e0b; --brand-dark:#d97706; --border:#e5e7eb; --shadow:0 10px 28px rgba(0,0,0,.06);
+    --hot:#ef4444; --hot-dark:#dc2626; --pongan-surface:#fff7d6; --maogao-surface:#eef9f0;
+    --sold:#111; --sold-bg:rgba(17,17,17,.55);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth; -webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","Helvetica Neue",Arial,sans-serif}
+  a{color:var(--brand-dark);text-decoration:none}
+  .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
 
-    /* 浮動購物車 */
-    #cart { position:fixed; bottom:20px; right:20px; background:#f59e0b; border-radius:50%; width:60px; height:60px;
-      display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.2);}
-    #cart svg { width:32px; height:32px; fill:#fff; }
-    #cart span { position:absolute; top:8px; right:8px; background:#d00; color:#fff; font-size:14px;
-      border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+  /* Hero */
+  .hero{position:relative;min-height:52vh;display:grid;place-items:center;color:#fff;background-size:cover;background-position:center}
+  @media(max-width:560px){.hero{min-height:44vh}}
+  .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.38));z-index:0;pointer-events:none}
+  .hero-inner{position:relative;z-index:1;text-align:center;padding:56px 16px}
+  .logo{width:110px;height:110px;border-radius:18px;background:#fff9;padding:10px;backdrop-filter:blur(4px);display:inline-grid;place-items:center;margin-bottom:10px}
+  .logo img{max-width:100%;max-height:100%}
+  .hero h1{font-size:clamp(21px,4.8vw,36px);margin:4px 0 6px}
+  .hero p{font-size:clamp(12.5px,3.2vw,15px);opacity:.98;margin:0}
+  .pill{display:inline-block;background:#fff3;backdrop-filter:blur(4px);border:1px solid #fff7;color:#fff;border-radius:999px;padding:6px 10px;font-weight:700}
 
-    /* 購買飛行動畫 */
-    .flying { position:fixed; z-index:999; transition: all .8s cubic-bezier(.55,.06,.68,.19); pointer-events:none; }
+  .btn{display:inline-flex;align-items:center;gap:8px;border-radius:12px;padding:10px 14px;background:var(--brand);color:#111;font-weight:700;border:1px solid rgba(0,0,0,.05);box-shadow:0 10px 20px rgba(245,158,11,.25);cursor:pointer;font-size:clamp(12.5px,3vw,15px)}
+  .btn:hover{background:var(--brand-dark)}
+  .btn-ghost{background:#f9fafb;border:1px solid var(--border);color:var(--text);box-shadow:none}
+  .btn-ghost:hover{background:#f3f4f6}
+  .btn-red{background:var(--hot);color:#fff;border-color:#ef4444;box-shadow:0 10px 20px rgba(239,68,68,.25)}
+  .btn-red:hover{background:var(--hot-dark)}
+  .btn-block{width:100%;justify-content:center}
 
-    /* 管理員面板 */
-    #admin { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; }
-    #admin .box { background:#fff; padding:20px; border-radius:10px; width:90%; max-width:400px; }
-    #admin input, #admin textarea { width:100%; margin:6px 0; padding:8px; border:1px solid #ccc; border-radius:6px; }
-    #admin button { margin-top:10px; padding:10px; background:#f59e0b; color:#fff; border:none; border-radius:8px; cursor:pointer; }
-  </style>
+  .section{padding:34px 0}
+  .section h2{font-size:clamp(17px,3.8vw,25px);margin:0 0 10px}
+  .muted{color:var(--muted)}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow)}
+  .grid{display:grid;gap:16px}
+  @media(min-width:900px){.grid-2{grid-template-columns:1fr 1fr}}
+  .content{padding:16px}
+  .content p{margin:0 0 10px;line-height:1.8;font-size:clamp(13.5px,3.2vw,15px)}
+  .content ul{margin:0;padding-left:1.2em;line-height:1.8}
+  .content li{margin:4px 0}
+  .note{font-size:12.5px;color:var(--muted)}
+
+  /* 分類籤：單排橫向滑動 */
+  .subnav{position:sticky;top:0;z-index:40;background:var(--surface);border-bottom:1px solid var(--border);box-shadow:0 6px 20px rgba(0,0,0,.04)}
+  .subnav .rail{display:flex;gap:8px;align-items:center;padding:10px 4px;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+  .subnav .rail::-webkit-scrollbar{height:6px}
+  .subnav .rail::-webkit-scrollbar-thumb{background:#e6e6e6;border-radius:999px}
+  .chip{flex:0 0 auto;background:#fef3c7;border:1px solid #fde68a;color:#7c2d12;padding:8px 12px;border-radius:12px;font-weight:800;cursor:pointer;scroll-snap-align:center;font-size:clamp(12.5px,3vw,14px)}
+  .chip:hover{background:#fde68a}
+
+  /* 橫向滑動卡片（新聞/規格共用） */
+  .rail-cards{display:flex;gap:12px;overflow:auto;padding:10px 4px}
+  .rail-cards::-webkit-scrollbar{height:6px}
+  .rail-cards::-webkit-scrollbar-thumb{background:#e6e6e6;border-radius:999px}
+  .rail-cards .card{flex:0 0 auto;width:min(480px,92%)}
+  .spec-cards .card{width:min(360px,48%)}
+  @media(min-width:900px){.spec-cards .card{width:min(420px,32%)}}
+
+  /* 產品網格（兩欄） */
+  .product-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+  @media(min-width:960px){.product-grid{gap:14px}}
+  .product{display:flex;flex-direction:column;position:relative}
+  .product .imgwrap{position:relative}
+  .product img{width:100%;aspect-ratio:4/3;height:auto;object-fit:cover;border-radius:14px 14px 0 0}
+  .sold-badge{position:absolute;inset:0;display:grid;place-items:center;background:var(--sold-bg);color:#fff;font-weight:900;border-radius:14px 14px 0 0;font-size:18px;letter-spacing:2px}
+  .product .body{padding:10px 12px}
+  .title{margin:0;font-weight:700;font-size:clamp(12.5px,3.5vw,15px);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.4em}
+  .price{font-weight:800;font-size:clamp(14px,3.8vw,16px)}
+  .row-between{display:flex;align-items:center;justify-content:space-between}
+  .tag-hot{display:inline-block;background:var(--hot);color:#fff;border:1px solid #ef4444;border-radius:10px;padding:3px 7px;font-size:12px;font-weight:800}
+
+  /* 區塊主題（延用） */
+  .theme-hot .content{background:#fee2e2;border-color:#fecaca}
+  .theme-pongan .content{background:#fff7e6;border-color:#fde68a}
+  .theme-maogao .content{background:#eef9f0;border-color:#bbf7d0}
+
+  /* 抽屜（共用） */
+  .drawer{position:fixed;right:0;top:0;bottom:0;width:min(480px,96%);background:var(--surface);border-left:1px solid var(--border);
+    transform:translateX(105%);transition:.28s;z-index:60;display:flex;flex-direction:column}
+  .drawer.open{transform:none}
+  .drawer header{padding:12px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .drawer header .btns{display:flex;gap:8px}
+  .drawer main{padding:12px 14px;overflow:auto;flex:1}
+  .line{height:1px;background:var(--border);margin:10px 0}
+
+  .cart-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+  .qty{display:flex;align-items:center;border:1px solid var(--border);border-radius:10px}
+  .qty button{width:30px;height:30px;border:0;background:#f3f4f6}
+  .qty span{display:inline-block;width:32px;text-align:center}
+
+  .summary{background:#f9fafb;border:1px dashed var(--border);border-radius:12px;padding:12px}
+  .badge{display:inline-block;background:#fff0d6;color:#7c2d12;border:1px solid #fed7aa;border-radius:10px;padding:4px 8px;font-size:12px;font-weight:700}
+  .warn{background:#fff1f2;border:1px solid #fecdd3;color:#7f1d1d}
+
+  /* 表單 */
+  .form .row{display:grid;gap:10px}
+  @media(min-width:720px){.form .row{grid-template-columns:1fr 1fr}}
+  .label{font-weight:700;margin:8px 0 6px}
+  .input, select, textarea{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:16px}
+  input, select, textarea{touch-action:manipulation}
+  .help{font-size:12px;color:#6b7280;margin-top:4px}
+
+  /* 浮動購物車（改成🍊） */
+  .fab{position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:55;background:var(--brand);color:#111;border:1px solid rgba(0,0,0,.06);
+    padding:12px 16px;border-radius:999px;box-shadow:0 10px 18px rgba(245,158,11,.35);display:flex;align-items:center;gap:8px;font-weight:800;cursor:pointer}
+  .fab .icon{font-size:18px}
+  .fab-badge{display:inline-block;min-width:22px;height:22px;border-radius:999px;background:#111;color:#fff;font-size:12px;line-height:22px;text-align:center;padding:0 6px}
+
+  /* 不起眼的管理員按鈕（左下角） */
+  .admin-btn{position:fixed;left:14px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:56;background:#fff;border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);padding:8px 10px;opacity:.5;cursor:pointer}
+  .admin-btn:hover{opacity:.9}
+
+  /* 右下角齒輪（庫存編輯） */
+  .gear{position:fixed;right:16px;bottom:calc(68px + env(safe-area-inset-bottom));z-index:55;background:#fff;border:1px solid var(--border);border-radius:999px;box-shadow:var(--shadow);padding:10px 12px;cursor:pointer}
+
+  /* Toast */
+  .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(86px + env(safe-area-inset-bottom));background:#111;color:#fff;padding:10px 14px;border-radius:999px;box-shadow:var(--shadow);z-index:70;opacity:0;pointer-events:none;transition:.25s}
+  .toast.show{opacity:1;transform:translate(-50%,-8px)}
+
+  footer{padding:34px 0 56px;color:#6b7280;text-align:center}
+</style>
 </head>
 <body>
 
-<header>
-  <h1 contenteditable="true">啃酥菱角酥 批發專區</h1>
-  <button onclick="openAdmin()">🔒 管理員登入</button>
-</header>
+<!-- 購物車抽屜 -->
+<aside id="drawer" class="drawer" aria-hidden="true">
+  <header>
+    <strong>購物車</strong>
+    <div class="btns">
+      <button class="btn-ghost" onclick="clearCart()">清空購物車</button>
+      <button class="btn" onclick="toggleDrawer(false)">關閉</button>
+    </div>
+  </header>
+  <main>
+    <div id="cartList"></div>
 
-<section class="products" id="products">
-  <div class="card" data-stock="3">
-    <img src="https://via.placeholder.com/300x200" alt="菱角酥">
-    <h3 contenteditable="true">菱角酥 10斤</h3>
-    <p contenteditable="true">新鮮菱角製作，批發價</p>
-    <button class="btn" onclick="addToCart(this)">購買</button>
-  </div>
-  <div class="card" data-stock="0">
-    <img src="https://via.placeholder.com/300x200" alt="芋泥酥">
-    <h3 contenteditable="true">芋泥酥 10斤</h3>
-    <p contenteditable="true">香濃芋泥，批發價</p>
-    <button class="btn" disabled>補貨中</button>
+    <div class="line"></div>
+
+    <!-- 配送方式 -->
+    <div class="summary" style="margin-bottom:10px">
+      <div class="label">配送方式</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button id="shipHomeBtn" class="btn" type="button" onclick="setShipMethod('HOME')">宅配</button>
+        <button id="shipCvsBtn" class="btn-ghost" type="button" onclick="setShipMethod('CVS')">超商取貨（免運｜限10斤×1）</button>
+      </div>
+      <div class="help">
+        超商取貨限「單一 10 台斤 × 1 箱」。<br>
+        <span class="badge">選門市小幫手</span> 會以「新視窗」開啟官方查詢；選好後回到此頁，按「貼上剪貼簿」可自動帶入。
+      </div>
+    </div>
+
+    <!-- 運費與總額 -->
+    <div class="summary">
+      <div class="row-between"><span>商品小計</span><strong id="subtotal">$0</strong></div>
+      <div class="row-between"><span id="shipLabel">運費（宅配）</span><strong id="shipping">$0</strong></div>
+      <div class="line"></div>
+      <div class="row-between" style="font-size:18px"><span>應付金額</span><strong id="total">$0</strong></div>
+      <div class="note" style="margin-top:8px">宅配滿額 <b id="freeShipText">0</b> 免運；超商取貨一律免運。</div>
+    </div>
+
+    <div class="line"></div>
+
+    <!-- 下單表單 -->
+    <form id="orderForm" class="form" onsubmit="submitOrder(event)">
+      <div class="row">
+        <div>
+          <div class="label">姓名</div>
+          <input class="input" name="name" placeholder="例：王啃酥" required>
+        </div>
+        <div>
+          <div class="label">手機</div>
+          <input class="input" name="phone" placeholder="例：0912-345-678" required>
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <div class="label">Email（寄送出貨通知）</div>
+          <input class="input" type="email" name="email" placeholder="例：kensu@example.com" required>
+        </div>
+        <div>
+          <div class="label">物流方式</div>
+          <select name="ship" class="input" required>
+            <option value="宅配">宅配</option>
+            <option value="超商取貨">超商取貨（免運｜限10斤×1）</option>
+            <option value="自取（台南官田：面交點）">自取（台南官田：面交點）</option>
+          </select>
+          <div class="help">此欄會跟上方「配送方式」同步。</div>
+        </div>
+      </div>
+
+      <!-- 地址／超商 -->
+      <div id="homeFields">
+        <div class="label">收件地址（宅配專用）</div>
+        <input class="input" name="addr" placeholder="例：台南市○○區○○路 123 號 5 樓" required>
+      </div>
+
+      <div id="cvsFields" style="display:none">
+        <div class="row">
+          <div>
+            <div class="label">超商品牌（7-11／全家）</div>
+            <select class="input" name="cvsBrand" onchange="updateCvsLink()">
+              <option value="7-11">7-11</option>
+              <option value="全家">全家</option>
+            </select>
+            <div class="help">
+              <a id="cvsFinderLink" href="https://emap.pcsc.com.tw/" target="_blank" rel="noopener">開啟 7-11 門市查詢（新視窗）</a>　
+              <button type="button" class="btn-ghost" onclick="pasteCvsFromClipboard()">貼上剪貼簿</button>
+            </div>
+          </div>
+          <div>
+            <div class="label">門市名稱 / 店號</div>
+            <input class="input" name="cvsStore" placeholder="例：台南官田門市 / 123456">
+            <div class="help">先到官方查詢頁選好門市，再回來按「貼上剪貼簿」自動回填；或手動輸入。</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div class="label">備註（到貨時段等）</div>
+        <textarea class="input" name="remark" rows="3" placeholder="例：平日 18:00 後收件"></textarea>
+      </div>
+
+      <!-- 同意條款 -->
+      <div class="line"></div>
+      <div class="label">物流與退貨說明</div>
+      <details id="policy" class="card content" style="max-height:220px;overflow:auto">
+        <summary style="cursor:pointer"><b>請展開閱讀（需捲到最底才可勾選同意）</b></summary>
+        <div class="content" style="padding-top:10px">
+          <ul>
+            <li>入帳後 1–3 個工作天內出貨（週末與節慶量大時順延）。</li>
+            <li>宅配：新竹貨運（常溫）。到貨請「全程開箱錄影」。若有運損，<b>24 小時內提供影片與照片</b>，我們協助向物流理賠。</li>
+            <li>超商取貨：<b>免運</b>，<b>限單一 10 台斤 × 1 箱</b>，且目前<b>不接受外島配送</b>。</li>
+            <li>菱角酥為油炸點心，建議冷凍保存，食用前以氣炸鍋或烤箱回溫。</li>
+            <li>依食品衛生法，非因瑕疵恕不接受鑑賞期退換。</li>
+          </ul>
+          <p class="note">請確認上述內容，捲到底即可啟用同意勾選。</p>
+        </div>
+      </details>
+      <div style="margin:8px 0">
+        <label for="agree">
+          <input type="checkbox" id="agree" disabled>
+          我已詳閱<span style="text-decoration:underline">上方</span>「物流與退貨說明」並同意
+        </label>
+        <div class="help">（若未啟用，請先展開並捲到最底）</div>
+      </div>
+
+      <button id="submitBtn" class="btn btn-block" type="submit">送出訂單</button>
+      <div id="result" class="note" style="margin-top:8px"></div>
+    </form>
+  </main>
+</aside>
+
+<!-- 訂單查詢抽屜 -->
+<aside id="queryDrawer" class="drawer" aria-hidden="true">
+  <header>
+    <strong>訂單查詢</strong>
+    <div class="btns">
+      <button class="btn" onclick="toggleQuery(false)">關閉</button>
+    </div>
+  </header>
+  <main>
+    <form id="queryForm" onsubmit="queryOrder(event)" class="form">
+      <div>
+        <div class="label">訂單編號</div>
+        <input class="input" name="orderNo" placeholder="例：K24-20251008-1234" required>
+      </div>
+      <button class="btn" type="submit" style="margin-top:8px">查詢</button>
+    </form>
+    <div class="line"></div>
+    <div id="queryCard" class="card content" style="display:none"></div>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button id="dlPngBtn" class="btn-ghost" onclick="downloadQueryPNG()" style="display:none">一鍵截圖（PNG）</button>
+      <button id="printBtn" class="btn-ghost" onclick="window.print()" style="display:none">列印 / 存 PDF</button>
+    </div>
+  </main>
+</aside>
+
+<!-- 管理員抽屜（登入＋管理面板） -->
+<aside id="adminDrawer" class="drawer" aria-hidden="true">
+  <header>
+    <strong>管理面板</strong>
+    <div class="btns">
+      <button class="btn-ghost" onclick="logoutAdmin()">登出</button>
+      <button class="btn" onclick="toggleAdmin(false)">關閉</button>
+    </div>
+  </header>
+  <main id="adminBody" class="content">
+    <!-- 內容由 JS 依登入狀態渲染 -->
+  </main>
+</aside>
+
+<!-- 浮動購物車按鈕（改橘子樣式） -->
+<button id="cartFab" class="fab" aria-label="開啟購物車" onclick="toggleDrawer(true)">
+  <span class="icon">🍊</span> 購物車 <span id="fabCount" class="fab-badge">0</span>
+</button>
+
+<!-- 不起眼的管理員按鈕 -->
+<button class="admin-btn" onclick="toggleAdmin(true)" title="管理員">🔒</button>
+
+<!-- 庫存編輯齒輪（未登入時會引導登入） -->
+<button class="gear" onclick="toggleInvEdit()" title="庫存編輯">⚙️</button>
+
+<!-- Hero -->
+<section class="hero" id="hero">
+  <div class="hero-inner wrap">
+    <div class="logo"><img id="logoImg" src="" alt="啃酥 LOGO"></div>
+    <span class="pill" id="heroPill">嘉南產地直送｜職人現炸</span>
+    <h1 id="heroTitle">啃酥｜嘉南菱角酥職人・批發零售</h1>
+    <p id="heroSub">團媽/通路/禮盒合作，冷凍保存、回烤即享酥香。支援大量出貨與企業客製。</p>
+    <div style="margin-top:14px">
+      <a id="shopNowBtn" class="btn" href="#hot" onclick="go(event,'hot')">馬上選購</a>
+    </div>
   </div>
 </section>
 
-<!-- 浮動購物車 -->
-<div id="cart" onclick="alert('開啟購物車頁面 (Demo)')">
-  <svg viewBox="0 0 512 512"><path d="M256 512c70.7 0 128-57.3 128-128H128c0 70.7 57.3 128 128 128zM480 384H32c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32h96l19.2-38.4C152.3 13.1 162.6 0 176 0h160c13.4 0 23.7 13.1 28.8 25.6L384 64h96c17.7 0 32 14.3 32 32v256c0 17.7-14.3 32-32 32z"/></svg>
-  <span id="cart-count">0</span>
-</div>
-
-<!-- 管理員面板 -->
-<div id="admin">
-  <div class="box">
-    <h2>管理員面板</h2>
-    <label>網址轉換工具：</label>
-    <input type="text" id="urlInput" placeholder="貼上 GitHub 圖片/影片網址">
-    <button onclick="convertURL()">轉換網址並複製</button>
-    <hr>
-    <button onclick="saveEdits()">確認修改</button>
-    <button onclick="closeAdmin()">關閉</button>
+<!-- 分類錨點 -->
+<nav class="subnav">
+  <div class="wrap">
+    <div class="rail" id="chipRail">
+      <button class="chip" onclick="go(event,'hot')">🔥 熱銷款</button>
+      <button class="chip" onclick="go(event,'pongan')">經典原味</button>
+      <button class="chip" onclick="go(event,'maogao')">蒜香/胡椒</button>
+      <button class="chip" onclick="toggleQuery(true)">訂單查詢</button>
+    </div>
   </div>
-</div>
+</nav>
+
+<!-- 品牌故事 + 最新鮮報 -->
+<section class="section">
+  <div class="wrap grid grid-2">
+    <div class="card content" id="aboutCard">
+      <h2 id="aboutTitle">關於「啃酥」</h2>
+      <p id="aboutP1">我們只做一件事：把最酥的菱角酥，穩穩送到你手上。</p>
+      <p id="aboutP2"><b>嘉南官田菱角</b>每日新鮮去殼與前處理，<b>職人控溫油炸</b>、低溫急凍，保留外酥內綿。</p>
+      <p id="aboutP3">不論是團購、批發或禮盒，我們都能客製重量與口味。<br><b>酥香一口，回甘不膩。</b></p>
+    </div>
+
+    <div class="card content">
+      <h2 id="newsTitle">最新鮮報｜油鍋日誌</h2>
+      <div class="rail-cards" id="newsRail"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 規格等級：獨立區塊 -->
+<section class="section">
+  <div class="wrap">
+    <div class="card content" style="padding-bottom:0">
+      <h2 id="specTitle">規格與口味</h2>
+      <p class="muted" id="specSub" style="margin-top:-6px">每包皆附回烤說明，冷凍保存 3 個月</p>
+    </div>
+    <div class="rail-cards spec-cards" id="specRail" style="padding:10px 14px"></div>
+  </div>
+</section>
+
+<!-- 熱銷 -->
+<section id="hot" class="section theme-hot">
+  <div class="wrap">
+    <div class="card content" style="padding-bottom:0">
+      <h2 id="hotTitle">🔥 熱銷款</h2>
+      <p class="muted" id="hotSub" style="margin-top:-6px">通路與團媽最常下單的組合</p>
+    </div>
+    <div class="card" style="padding:0 14px 14px">
+      <div id="hotGrid" class="product-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 分區一：經典原味 -->
+<section id="pongan" class="section theme-pongan">
+  <div class="wrap">
+    <div class="card content" style="padding-bottom:0">
+      <h2 id="sec1Title">經典原味（小農直送）</h2>
+      <p class="muted" id="sec1Sub" style="margin-top:-6px">外酥內綿｜回甘不膩｜老少咸宜</p>
+    </div>
+    <div class="card" style="padding:0 14px 14px">
+      <div id="ponganGrid" class="product-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 分區二：蒜香/胡椒 -->
+<section id="maogao" class="section theme-maogao">
+  <div class="wrap">
+    <div class="card content" style="padding-bottom:0">
+      <h2 id="sec2Title">蒜香 / 胡椒（下酒首選）</h2>
+      <p class="muted" id="sec2Sub" style="margin-top:-6px">香氣濃郁｜越吃越涮嘴</p>
+    </div>
+    <div class="card" style="padding:0 14px 14px">
+      <div id="maogaoGrid" class="product-grid"></div>
+    </div>
+  </div>
+</section>
+
+<!-- 匯款資訊 -->
+<section class="section">
+  <div class="wrap card content">
+    <h2>匯款資訊</h2>
+    <p><strong id="bankName"></strong>　戶名：<strong id="bankHolder"></strong></p>
+    <p>帳號：<strong id="bankNo"></strong></p>
+    <p class="note">
+      詢價/合作信箱：<a href="mailto:kensu.water.chestnut@gmail.com" target="_blank">kensu.water.chestnut@gmail.com</a><br>
+      批價試算表：<a href="https://docs.google.com/spreadsheets/d/1deY_CNcks1hJBxCrrDq9GfXEmDd5y53X8anLePb8ts8/edit?gid=0#gid=0" target="_blank">啃酥試算表（Google 試算表）</a>
+    </p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="content" style="text-align:center;padding-top:0">
+      <div class="muted">© 啃酥｜嘉南菱角酥職人・批發零售</div>
+      <div class="muted">面交點：台南市官田區（預約制）　|　客服：kensu.water.chestnut@gmail.com</div>
+    </div>
+  </div>
+</footer>
+
+<!-- Toast -->
+<div id="toast" class="toast" role="status" aria-live="polite">已加入購物車</div>
 
 <script>
-  let cartCount = 0;
+/** =========================
+ *  設定（全部可由管理員面板編輯）
+ *  ========================= */
+const CONFIG = {
+  BRAND_TAG: "啃酥",
+  CONTACT_EMAIL: "kensu.water.chestnut@gmail.com",
+  SHEET_URL: "https://docs.google.com/spreadsheets/d/1deY_CNcks1hJBxCrrDq9GfXEmDd5y53X8anLePb8ts8/edit?gid=0#gid=0",
+  GAS_ENDPOINT: "https://script.google.com/macros/s/AKfycbw5y8y1Yw7ymc7bP-iqV4KmxMB7l3c1wxMpPK1F6-d_vx_ejiIhCzhq0CyHPxDUNM92/exec",
 
-  // 購物邏輯
-  function addToCart(btn){
-    let card = btn.closest('.card');
-    let stock = parseInt(card.dataset.stock);
-    if(stock <= 0){ return; }
+  PRICES: {
+    ORIGIN: { "500g": { "原味": 159 }, "1kg": { "原味": 299 } },
+    FLAVOR: { "500g": { "蒜香": 169, "胡椒": 169 }, "1kg": { "蒜香": 319, "胡椒": 319 } }
+  },
 
-    cartCount++;
-    document.getElementById("cart-count").innerText = cartCount;
-    document.getElementById("cart").classList.add("shake");
-    setTimeout(()=>document.getElementById("cart").classList.remove("shake"),500);
+  SHIPPING: 160,
+  FREE_SHIP_THRESHOLD: 1800,
 
-    // 飛行動畫
-    let img = card.querySelector("img");
-    let flying = img.cloneNode();
-    let rect = img.getBoundingClientRect();
-    flying.className="flying";
-    flying.style.left=rect.left+"px"; flying.style.top=rect.top+"px"; flying.style.width=rect.width+"px";
-    document.body.appendChild(flying);
+  BANK: { name: "連線銀行(824)", holder: "張鈞泓", no: "11101-37823-13" },
 
-    let cart = document.getElementById("cart").getBoundingClientRect();
-    setTimeout(()=>{
-      flying.style.left=cart.left+"px"; flying.style.top=cart.top+"px"; flying.style.width="20px";
-      flying.style.opacity=0;
-    },50);
-    setTimeout(()=>document.body.removeChild(flying),900);
-  }
+  TEXTS: {
+    heroPill:"嘉南產地直送｜職人現炸",
+    heroTitle:"啃酥｜嘉南菱角酥職人・批發零售",
+    heroSub:"團媽/通路/禮盒合作，冷凍保存、回烤即享酥香。支援大量出貨與企業客製。",
+    ctaLabel:"馬上選購",
+    chips:["🔥 熱銷款","經典原味","蒜香/胡椒","訂單查詢"],
+    aboutTitle:"關於「啃酥」",
+    aboutP1:"我們只做一件事：把最酥的菱角酥，穩穩送到你手上。",
+    aboutP2:"嘉南官田菱角每日新鮮去殼與前處理，職人控溫油炸、低溫急凍，保留外酥內綿。",
+    aboutP3:"不論是團購、批發或禮盒，我們都能客製重量與口味。酥香一口，回甘不膩。",
+    newsTitle:"最新鮮報｜油鍋日誌",
+    specTitle:"規格與口味",
+    specSub:"每包皆附回烤說明，冷凍保存 3 個月",
+    hotTitle:"🔥 熱銷款",
+    hotSub:"通路與團媽最常下單的組合",
+    sec1Title:"經典原味（小農直送）",
+    sec1Sub:"外酥內綿｜回甘不膩｜老少咸宜",
+    sec2Title:"蒜香 / 胡椒（下酒首選）",
+    sec2Sub:"香氣濃郁｜越吃越涮嘴"
+  },
 
-  // 管理員面板
-  function openAdmin(){ document.getElementById("admin").style.display="flex"; }
-  function closeAdmin(){ document.getElementById("admin").style.display="none"; }
-
-  // 儲存編輯內容
-  function saveEdits(){
-    alert("已儲存修改 (Demo: 建議連接後端或 localStorage)");
-    closeAdmin();
-  }
-
-  // 網址轉換工具
-  function convertURL(){
-    let url = document.getElementById("urlInput").value.trim();
-    if(!url) return;
-    let raw = url.replace("github.com","raw.githubusercontent.com").replace("/blob/","");
-    navigator.clipboard.writeText(raw).then(()=>{
-      alert("已轉換並複製：\n"+raw);
-    });
-  }
-
-  // 初始化庫存狀態
-  document.querySelectorAll(".card").forEach(card=>{
-    if(parseInt(card.dataset.stock) <= 0){
-      card.classList.add("soldout");
+  IMAGES: {
+    HERO: toRaw("https://raw.githubusercontent.com/s9000721-cloud/gonglaoping/main/%E5%B0%81%E9%9D%A2%E5%9C%96.png"),
+    LOGO: toRaw("https://raw.githubusercontent.com/s9000721-cloud/gonglaoping/main/%E6%9F%91%E5%BF%83%E6%9E%9C%E5%9C%92LOGO.png"),
+    SPEC_GALLERY: [
+      toRaw("https://via.placeholder.com/1200x800?text=%E5%8D%B1%E8%AD%A6%EF%BC%9A%E7%94%A8+%E7%9C%9F%E5%84%AA%E7%BE%8E+%E7%85%A7%E7%89%87%E6%9B%BF%E6%8F%9B"),
+      "https://via.placeholder.com/1200x800?text=%E5%8F%A3%E5%91%B3%E8%A8%AD%E5%AE%9A",
+      "https://via.placeholder.com/1200x800?text=%E5%9B%9E%E7%83%A4%E6%8C%87%E5%BC%95"
+    ],
+    NEWS: [
+      {type:"video", src:"https://www.w3schools.com/html/mov_bbb.mp4", title:"今日油鍋溫度紀錄"},
+      {type:"image", src:"https://via.placeholder.com/1200x800?text=%E7%94%A8%E7%85%A7%E7%89%87%E6%9B%BF%E6%8F%9B", title:"剛出鍋的金黃"},
+      {type:"image", src:"https://via.placeholder.com/1200x800?text=%E8%A3%9D%E7%AE%B1%E7%AD%86%E8%A8%98", title:"裝箱備貨"}
+    ],
+    ORIGIN: { // 原味
+      "500g-原味": "https://via.placeholder.com/800x600?text=%E5%8E%9F%E5%91%B3+500g",
+      "1kg-原味": "https://via.placeholder.com/800x600?text=%E5%8E%9F%E5%91%B3+1kg"
+    },
+    FLAVOR: { // 蒜香/胡椒
+      "500g-蒜香": "https://via.placeholder.com/800x600?text=%E8%92%9C%E9%A6%99+500g",
+      "1kg-蒜香": "https://via.placeholder.com/800x600?text=%E8%92%9C%E9%A6%99+1kg",
+      "500g-胡椒": "https://via.placeholder.com/800x600?text=%E8%83%A1%E6%A4%92+500g",
+      "1kg-胡椒": "https://via.placeholder.com/800x600?text=%E8%83%A1%E6%A4%92+1kg"
     }
-  });
+  },
+
+  INVENTORY: {
+    "ORI05-PLN":{sold:12, stock:999},
+    "ORI10-PLN":{sold:9, stock:0},
+    "FLV05-GAR":{sold:34, stock:88},
+    "FLV10-GAR":{sold:5, stock:12},
+    "FLV05-PEP":{sold:18, stock:0},
+    "FLV10-PEP":{sold:2, stock:7}
+  }
+};
+
+// 轉 raw.githubusercontent（GitHub/一般網址皆可）：
+function toRaw(u){
+  if(!u) return u;
+  if(u.includes('raw.githubusercontent.com')) return u;
+  if(u.includes('github.com')){
+    return u.replace('https://github.com/','https://raw.githubusercontent.com/').replace('/blob/','/');
+  }
+  return u; // 非 GitHub 保持原樣
+}
 </script>
-</body>
-</html>
+
+<!-- 一鍵截圖用（不影響頁面，CDN 可換） -->
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+
+<!-- ====== 第 2 部分 JS 續上 ====== -->
+<script>
