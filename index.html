@@ -55,6 +55,11 @@
     .btn.add[disabled]{background:#cfcfcf;border-color:#cfcfcf;cursor:not-allowed}
     .note{font-size:11px;color:var(--muted)}
 
+    /* 數量控制（商品卡 & 購物車） */
+    .qtyline{display:flex;align-items:center;gap:6px;margin-top:6px}
+    .qtybtn{width:32px;height:32px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer}
+    .qtyinput{width:64px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;font:inherit;text-align:center}
+
     .cart-fab{position:fixed;right:14px;bottom:14px;z-index:80;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:#ffedd5;border:2px solid var(--brand-dark);box-shadow:0 10px 24px rgba(0,0,0,.18);cursor:pointer}
     .cart-fab svg{width:34px;height:34px}
     .cart-count{position:absolute;right:-6px;top:-6px;background:#111;color:#fff;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;border:2px solid #fff}
@@ -87,22 +92,22 @@
     .bank{margin:4px 0 0;font-size:13px;border:1px dashed var(--border);border-radius:12px;padding:10px;background:#fffced}
     .fine{font-size:12px;color:var(--muted)}
     .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-    @media (max-width:560px){.two{grid-template-columns:1fr}}
+    @media (max-width:560px){
+      .two{grid-template-columns:1fr}
+      .btn.add{width:100%} /* 手機版加入購物車滿版 */
+      .qtyline{margin-top:8px}
+    }
 
-    /* --- 管理介面（齒輪+面板） --- */
+    /* 管理齒輪（只剩 RAW 轉換） */
     .admin-gear{position:fixed;left:14px;bottom:14px;z-index:85;width:52px;height:52px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid var(--border);box-shadow:0 8px 20px rgba(0,0,0,.15);cursor:pointer}
-    .admin-pane{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:95;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:0;display:none;width:min(900px,96vw);max-height:92svh;overflow:auto}
+    .admin-pane{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:95;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:0;display:none;width:min(820px,96vw);max-height:92svh;overflow:auto}
     .admin-pane.on{display:block}
     .admin-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding:10px 12px;position:sticky;top:0;background:#fff}
     .admin-head h5{margin:0;font-size:15px}
     .admin-body{padding:12px}
-    .admin-note{background:#fffbeb;border:1px dashed var(--border);border-radius:10px;padding:10px;margin-bottom:10px;font-size:13px}
     .admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
     .admin-login{padding:14px}
     .admin-login .input{max-width:220px}
-
-    .admin-pane .two .input{min-width:0}
-    .admin-pane textarea{width:min(76ch,80vw);height:200px}
 
     footer{margin:20px 0 90px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:var(--muted)}
   </style>
@@ -154,7 +159,7 @@
     </ul>
   </section>
 
-  <!-- 橘子風浮動購物車（不跳頁） -->
+  <!-- 浮動購物車 -->
   <button class="cart-fab" id="cartFab" title="開啟購物車" onclick="openCart()">
     <span class="cart-count" id="cartCount">0</span>
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -171,7 +176,10 @@
     <div class="panel">
       <header>
         <h4>購物車</h4>
-        <button class="btn" onclick="closeCart()">關閉</button>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="clearCart()">清空</button>
+          <button class="btn" onclick="closeCart()">關閉</button>
+        </div>
       </header>
       <div class="list" id="cartList"></div>
       <div class="summary" id="cartSummary"></div>
@@ -210,8 +218,8 @@
         <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="如需統編抬頭、指定到貨日、開箱錄影等請填寫"></textarea></div>
 
         <div class="bank">
-          <strong>匯款資訊：</strong>
-          <div class="fine">戶名：酥味香企業社｜銀行：XXXX（代碼 000）｜帳號：0000000000000<br>完成送出後請匯款，<b>留言匯款後五碼</b>；我們核帳後出貨（約 3–5 個工作天）。</div>
+          <strong>匯款資訊（範例）：</strong>
+          <div class="fine">戶名：酥味香企業社｜銀行：連線銀行（代碼 824）｜帳號：111013782313<br>完成送出後請匯款，<b>留言匯款後五碼</b>；我們核帳後出貨（約 3–5 個工作天）。</div>
         </div>
         <div class="fine">送出後系統會將訂單寫入 Google 試算表並寄送確認信至您的信箱。</div>
         <div class="two">
@@ -222,24 +230,23 @@
     </div>
   </div>
 
-  <!-- ⚙️ 管理齒輪 -->
+  <!-- ⚙️ 管理齒輪（只做 RAW 轉換） -->
   <button class="admin-gear" title="管理">
     <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
       <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9.4 4a7.4 7.4 0 01-.1 1l2 1.6-2 3.5-2.4-1a7.9 7.9 0 01-1.7 1l-.4 2.6H9.2l-.4-2.6a7.9 7.9 0 01-1.7-1l-2.4 1-2-3.5 2-1.6a7.4 7.4 0 010-2L.7 9.8l2-3.5 2.4 1c.5-.4 1.1-.7 1.7-1L7.2 3h5.6l.4 2.6c.6.3 1.2.6 1.7 1l2.4-1 2 3.5-2 1.2c.1.3.1.7.1 1z" fill="#111"/>
     </svg>
   </button>
 
-  <!-- 管理面板（先登入→再顯示內容） -->
   <div class="admin-pane" id="adminPane">
     <div class="admin-head">
-      <h5>管理設定</h5>
+      <h5>RAW 轉換工具</h5>
       <div style="display:flex;gap:8px">
         <button class="btn" onclick="logoutAdmin()">登出</button>
         <button class="btn" onclick="closeAdmin()">關閉 ✕</button>
       </div>
     </div>
 
-    <!-- 未登入畫面 -->
+    <!-- 未登入 -->
     <div class="admin-login" id="adminLogin">
       <div class="label">請先登入（密碼固定 111111，僅儲存在本裝置）</div>
       <div class="admin-actions">
@@ -249,51 +256,16 @@
       <div class="fine">登入狀態會記錄在本裝置（localStorage），重新整理或重開也仍為已登入。</div>
     </div>
 
-    <!-- 已登入內容 -->
+    <!-- 已登入的 RAW 工具 -->
     <div class="admin-body" id="adminBody" style="display:none">
-      <div class="admin-note">⚠️ 本頁所有「品牌文案與產品」修改<strong>只儲存在本裝置的瀏覽器</strong>，不會同步到其他手機/電腦。若要多人共用，同步到 Google 試算表/Apps Script 後端或直接更新此檔案的預設內容。</div>
-
+      <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
+      <input class="input" id="ghUrl" placeholder="貼上 https://github.com/.../blob/.../file.png">
       <div class="admin-actions">
-        <button class="btn" onclick="saveBrand()">儲存品牌文案</button>
-        <button class="btn" onclick="saveProducts()">儲存產品 JSON</button>
-        <button class="btn" onclick="resetProducts()">恢復預設產品</button>
-        <button class="btn" onclick="resetBrand()">恢復預設品牌</button>
+        <button class="btn" onclick="convertGh()">轉換 RAW</button>
+        <button class="btn" onclick="copyRaw()">複製 RAW 連結</button>
       </div>
-
-      <div class="admin-note">Logo 建議使用 GitHub RAW 圖片連結，或 Imgur 直連。下方提供 GitHub 轉 RAW 工具。</div>
-
-      <div class="two">
-        <div>
-          <div class="label">品牌標誌（Logo 圖片 URL，支援 GitHub RAW）</div>
-          <input class="input" id="inpLogo" placeholder="https://raw.githubusercontent.com/.../logo.png">
-          <div class="label">網站標題（抬頭文字，較小字體）</div>
-          <input class="input" id="inpTitle" placeholder="啃酥菱角酥批發官網">
-          <div class="label">封面主標</div>
-          <input class="input" id="inpHeroTitle" placeholder="夜市起家，走進全台的黃金酥脆">
-          <div class="label">封面副標</div>
-          <input class="input" id="inpHeroSub" placeholder="整件與單品項｜先匯款，核帳後出貨">
-
-          <div style="margin-top:10px">
-            <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
-            <input class="input" id="ghUrl" placeholder="貼上 https://github.com/.../blob/.../file.png">
-            <div class="admin-actions">
-              <button class="btn" onclick="convertGh()">轉換 RAW</button>
-              <button class="btn" onclick="copyRaw()">複製 RAW 連結</button>
-            </div>
-            <input class="input" id="ghRawOut" placeholder="轉換結果會顯示在這裡" readonly>
-            <small class="fine">規則：把 <code>github.com/帳號/Repo/blob/分支/path/file</code> 變成 <code>raw.githubusercontent.com/帳號/Repo/分支/path/file</code>；或原網址尾巴加 <code>?raw=1</code>。</small>
-          </div>
-        </div>
-
-        <div>
-          <div class="label">產品資料（JSON，可改售價 price、規格 spec、是否售完 soldOut、免運 freeQty、運費 shipFee、圖片 img、標籤 tag）</div>
-          <textarea id="jsonBox"></textarea>
-          <small class="fine">
-            篩選標籤只保留：<b>設備</b>、<b>常溫</b>、<b>冷藏</b>、<b>冷凍</b>。<br>
-            若要把某商品歸到「設備」，請在該商品物件加上 <code>"tag":"設備"</code>；否則留空字串即可。
-          </small>
-        </div>
-      </div>
+      <input class="input" id="ghRawOut" placeholder="轉換結果會顯示在這裡" readonly>
+      <small class="fine">規則：把 <code>github.com/帳號/Repo/blob/分支/path/file</code> 變成 <code>raw.githubusercontent.com/帳號/Repo/分支/path/file</code>；或原網址尾加 <code>?raw=1</code>。</small>
     </div>
   </div>
 
@@ -304,74 +276,63 @@
   </footer>
 
   <script>
-    /* ===== 產品欄位中文備註（模板）=====
-    下面這個模板是註解用，不會被執行。照著改上面的 DEFAULT_PRODUCTS 即可。
-
+    /* ===== 產品欄位中文備註（在此修改即可，無後台表單）=====
     {
-      id: 'powder_case',     // 商品唯一ID（英數底線，勿重複）
-      tag: '',               // 類別標籤：'設備' 或 空字串（已拿掉粉類/冷藏原物料/冷凍原物料）
-      name: '啃酥專用粉',     // 品名（卡片主標的一部分）
-      type: '整件',          // '整件' 或 '單品項'（會顯示在品名後方）
-      spec: '4.5公斤 / 5包 / 1件', // 規格文字（卡片副標）
-      price: 4900,           // 售價（數字）
-      shipGroup: '常溫',     // 溫層：'常溫' | '冷藏' | '冷凍'
-      shipFee: 150,          // 此溫層商品運費的「代表金額」（會按群組取最大值）
-      freeQty: 2,            // 同溫層滿幾件免運（填 0 表示無免運）
-      minOrder: 1,           // 按「加入購物車」一次放入的最低件數
-      soldOut: false,        // 是否售完：true=卡片顯示「已售完」且無法加入
-      img: '',               // 產品圖片網址（建議 GitHub RAW / Imgur 直連）
-      note: '滿2件免運'      // 補充說明（可留空字串）
+      id: 'equip_fryer15',  // 商品唯一ID（英數底線，勿重複）
+      tag: '設備',          // 篩選標籤：'設備' 或 留空字串
+      name: '15型油炸鍋',   // 品名
+      type: '單台',         // 顯示在品名後方（例：單台、單品項、整件）
+      spec: '1台',          // 規格/單位
+      price: 9200,          // 售價（數字）
+      shipGroup: '常溫',    // 溫層：'常溫' | '冷藏' | '冷凍'
+      shipFee: 300,         // 運費（同溫層取最大值計算一次）
+      freeQty: 0,           // 滿件免運門檻（0=無免運）
+      minOrder: 1,          // 按一次加入購物車的數量
+      soldOut: false,       // 是否售完
+      soldCount: 0,         // 已售出數量（顯示用，可自行改）
+      img: '',              // 圖片URL（建議 GitHub RAW 或 Imgur 直連）
+      note: ''              // 備註（可留空）
     }
     ==================================== */
 
-    /* ===== 產品資料（保留 6 種原物料；每種含整件/單品項） ===== */
+    /* ===== 預設產品（含設備） ===== */
     const DEFAULT_PRODUCTS = [
-      // A.粉類（常溫）— 啃酥專用粉
-      { id:'powder_case',   // 商品唯一ID
-        tag:'',             // 標籤：'設備' 或空字串
-        name:'啃酥專用粉',  // 品名
-        type:'整件',        // 整件/單品項
-        spec:'4.5公斤 / 5包 / 1件', // 規格
-        price:4900,         // 售價
-        shipGroup:'常溫',   // 溫層
-        shipFee:150,        // 運費代表金額
-        freeQty:2,          // 滿件免運門檻
-        minOrder:1,         // 最低下單件數（每次加入）
-        soldOut:false,      // 已售完？
-        img:'',             // 圖片URL（RAW）
-        note:'滿2件免運'    // 備註
-      },
-      { id:'powder_single', tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包', price:980, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—' },
+      // 原物料（示例）
+      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:4900, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, soldCount:128, img:'', note:'滿2件免運'},
+      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:980,  shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, soldCount:356, img:'', note:'—'},
 
-      // B.冷藏原物料 — 啃酥乳酪丁（冷藏）
-      { id:'cheese_case',   tag:'', name:'啃酥乳酪丁', type:'整件',  spec:'1公斤 / 10包 / 1件', price:3800, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運' },
-      { id:'cheese_single', tag:'', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—' },
+      {id:'cheese_case',  tag:'', name:'啃酥乳酪丁', type:'整件',  spec:'1公斤 / 10包 / 1件', price:3800, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, soldCount:78, img:'', note:'滿1件免運'},
+      {id:'cheese_single',tag:'', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:10, minOrder:1, soldOut:false, soldCount:412, img:'', note:'—'},
 
-      // C.冷凍原物料 — 啃酥菱角仁
-      { id:'waterchest_case',   tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運' },
-      { id:'waterchest_single', tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:600,  shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—' },
+      {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:95, img:'', note:'滿2件免運'},
+      {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:600,  shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:210, img:'', note:'—'},
 
-      // C.冷凍原物料 — 啃酥芋泥丁
-      { id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運' },
-      { id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:276,  shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, img:'', note:'—' },
+      {id:'taro_case',    tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, soldCount:52, img:'', note:'滿1件免運'},
+      {id:'taro_single',  tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:276,  shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, soldCount:337, img:'', note:'—'},
 
-      // C.冷凍原物料 — 啃酥炸鮮奶
-      { id:'milkfried_case',   tag:'', name:'啃酥炸鮮奶', type:'整件',  spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運' },
-      { id:'milkfried_single', tag:'', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒',        price:106,  shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, img:'', note:'—' },
+      {id:'milkfried_case',  tag:'', name:'啃酥炸鮮奶', type:'整件',  spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, soldCount:41, img:'', note:'滿2件免運'},
+      {id:'milkfried_single',tag:'', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒',        price:106,  shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, soldCount:280, img:'', note:'—'},
 
-      // C.冷凍原物料 — 啃酥特調牛奶
-      { id:'milkmix_case',   tag:'', name:'啃酥特調牛奶', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運' },
-      { id:'milkmix_single', tag:'', name:'啃酥特調牛奶', type:'單品項', spec:'330毫升 / 1瓶',        price:75,  shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—' }
+      {id:'milkmix_case',  tag:'', name:'啃酥特調牛奶', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, soldCount:33, img:'', note:'滿1件免運'},
+      {id:'milkmix_single',tag:'', name:'啃酥特調牛奶', type:'單品項', spec:'330毫升 / 1瓶',        price:75,  shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, soldCount:402, img:'', note:'—'},
+
+      /* 設備（你提供的 6 項） */
+      {id:'equip_fryer15',  tag:'設備', name:'15型油炸鍋',  type:'單台',   spec:'1台', price:9200,  shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
+      {id:'equip_fryer25',  tag:'設備', name:'25型油炸鍋',  type:'單台',   spec:'1台', price:11200, shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
+      {id:'equip_mixer220', tag:'設備', name:'220V攪拌鍋',  type:'單台',   spec:'1台', price:11000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
+      {id:'equip_mixer110', tag:'設備', name:'110V攪拌鍋',  type:'單台',   spec:'1台', price:11000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
+      {id:'equip_timer3',   tag:'設備', name:'三合一計時器', type:'單品項', spec:'1台', price:550,   shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''},
+      {id:'equip_divider',  tag:'設備', name:'炸鍋分隔板',  type:'單品項', spec:'1個', price:1480,  shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, img:'', note:''}
     ];
 
-    /* ===== 篩選標籤（拿掉粉類/冷藏原物料/冷凍原物料，新增「設備」） ===== */
-    const TAGS = ['設備','常溫','冷藏','冷凍']; // 只留這四種可篩選
+    /* ===== 篩選標籤 ===== */
+    const TAGS = ['設備','常溫','冷藏','冷凍'];
     const GROUP_LABELS = { '常溫':'常溫', '冷藏':'冷藏', '冷凍':'冷凍' };
 
     /* ===== 狀態與儲存（本機） ===== */
-    const LS_KEY_PRODUCTS='kensu_wholesale_products_v4';
-    const LS_KEY_BRAND='kensu_wholesale_brand_v4';
-    const LS_KEY_ADMIN='kensu_admin_ok_v2';
+    const LS_KEY_PRODUCTS='kensu_wholesale_products_v6';
+    const LS_KEY_BRAND='kensu_wholesale_brand_v6';
+    const LS_KEY_ADMIN='kensu_admin_ok_v3';
 
     const brand = loadBrand();
     const products = loadProducts();
@@ -386,15 +347,8 @@
       }catch{ return DEFAULT_PRODUCTS }
     }
     function loadBrand(){
-      try{
-        return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || {
-          logo:'', title:'啃酥菱角酥批發官網',
-          heroTitle:'夜市起家，走進全台的黃金酥脆',
-          heroSub:'整件與單品項｜先匯款，核帳後出貨'
-        }
-      }catch{
-        return {logo:'',title:'啃酥菱角酥批發官網',heroTitle:'夜市起家，走進全台的黃金酥脆',heroSub:'整件與單品項｜先匯款，核帳後出貨'}
-      }
+      try{ return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || {logo:'',title:'啃酥菱角酥批發官網',heroTitle:'夜市起家，走進全台的黃金酥脆',heroSub:'整件與單品項｜先匯款，核帳後出貨'} }
+      catch{ return {logo:'',title:'啃酥菱角酥批發官網',heroTitle:'夜市起家，走進全台的黃金酥脆',heroSub:'整件與單品項｜先匯款，核帳後出貨'} }
     }
 
     /* ===== 初始化：品牌、標籤、卡片 ===== */
@@ -403,14 +357,6 @@
       document.getElementById('siteTitle').textContent=brand.title||'啃酥菱角酥批發官網';
       document.getElementById('heroTitle').textContent=brand.heroTitle||'';
       document.getElementById('heroSub').textContent=brand.heroSub||'';
-      // 若已登入，也同步填到後台欄位
-      const authed = localStorage.getItem(LS_KEY_ADMIN)==='YES';
-      if(authed){
-        document.getElementById('inpLogo').value=brand.logo||'';
-        document.getElementById('inpTitle').value=brand.title||'';
-        document.getElementById('inpHeroTitle').value=brand.heroTitle||'';
-        document.getElementById('inpHeroSub').value=brand.heroSub||'';
-      }
     }
     function uniqueTags(){ return ['全部',...TAGS] }
     function renderChips(){
@@ -428,10 +374,13 @@
       if(['常溫','冷藏','冷凍'].includes(filterOn)) return (GROUP_LABELS[p.shipGroup]===filterOn);
       return true;
     }
+
     function renderGrid(){
       const grid=document.getElementById('grid'); grid.innerHTML='';
       products.filter(matchFilter).forEach(p=>{
-        const card=document.createElement('article'); card.className='card'; const title=`${p.name}（${p.type}）`;
+        const title=`${p.name}（${p.type}）`;
+        const card=document.createElement('article'); card.className='card';
+        const qtyId = `qty_${p.id}`;
         card.innerHTML=`
           <div class="media">
             ${p.img?`<img src="${p.img}" alt="${title}">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
@@ -442,17 +391,40 @@
           <div class='body'>
             <h3>${title}</h3>
             <div class='meta'>${p.spec}</div>
+            <div class='meta'>已售出：${fmt(p.soldCount||0)}</div>
             <div class='price'>$${fmt(p.price)}</div>
-            <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCart('${p.id}', ${p.minOrder||1})">加入購物車</button>
+
+            <div class="qtyline">
+              <button class="qtybtn" onclick="cardDec('${qtyId}')">−</button>
+              <input id="${qtyId}" class="qtyinput" type="number" min="1" value="${p.minOrder||1}" oninput="cardNormalize('${qtyId}')">
+              <button class="qtybtn" onclick="cardInc('${qtyId}')">＋</button>
+            </div>
+
+            <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCartFromCard('${p.id}','${qtyId}')">加入購物車</button>
             <div class='note'>運費 $${p.shipFee}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}${p.note?`｜${p.note}`:''}</div>
           </div>`;
         grid.appendChild(card);
       })
     }
+
+    /* ===== 數量控制（商品卡） ===== */
+    function cardNormalize(qid){
+      const inp = document.getElementById(qid);
+      let v = parseInt(inp.value||'1',10);
+      if(isNaN(v) || v<1) v = 1;
+      inp.value = v;
+    }
+    function cardInc(qid){ const inp=document.getElementById(qid); cardNormalize(qid); inp.value = parseInt(inp.value,10)+1; }
+    function cardDec(qid){ const inp=document.getElementById(qid); cardNormalize(qid); inp.value = Math.max(1, parseInt(inp.value,10)-1); }
+    function addToCartFromCard(pid,qid){
+      const inp=document.getElementById(qid); cardNormalize(qid);
+      addToCart(pid, parseInt(inp.value,10));
+    }
+
     function fmt(n){ return Number(n).toLocaleString('zh-TW') }
     function scrollToStore(){ document.getElementById('store').scrollIntoView({behavior:'smooth'}) }
 
-    /* ===== 購物車：不跳頁；僅 + / -；含明細 ===== */
+    /* ===== 購物車：不跳頁；清空；輸入/按鈕改數量 ===== */
     function toast(msg){
       const t=document.createElement('div'); t.textContent=msg;
       t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;opacity:.96;z-index:120';
@@ -464,8 +436,9 @@
       updateCartCount(); renderCart(); toast('已加入購物車');
     }
     function updateCartCount(){ let totalQty=0; cart.forEach(v=>totalQty+=v.qty); document.getElementById('cartCount').textContent=totalQty }
-    function openCart(){ document.getElementById('drawer').classList.add('on') }
+    function openCart(){ document.getElementById('drawer').classList.add('on'); renderCart() }
     function closeCart(){ document.getElementById('drawer').classList.remove('on') }
+    function clearCart(){ if(confirm('確定要清空購物車嗎？')){ cart.clear(); updateCartCount(); renderCart(); } }
 
     function renderCart(){
       const list=document.getElementById('cartList'); list.innerHTML='';
@@ -480,6 +453,7 @@
 
         const subLine=product.price*qty;
         const item=document.createElement('div'); item.className='item';
+        const inputId = `cart_qty_${product.id}`;
         item.innerHTML=`
           <div style='width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center'>
             ${product.img?`<img src='${product.img}' style='width:100%;height:100%;object-fit:cover'>`:'—'}
@@ -487,10 +461,11 @@
           <div>
             <div style='font-weight:700'>${product.name}（${product.type}）</div>
             <div class='item-sub'>${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}</div>
+            <div class='item-sub'>已售出：${fmt(product.soldCount||0)}</div>
           </div>
           <div class='qty'>
             <button onclick="decQty('${product.id}')">−</button>
-            <div>${qty}</div>
+            <input id="${inputId}" class="qtyinput" type="number" min="1" value="${qty}" oninput="setQty('${product.id}', this.value)">
             <button onclick="incQty('${product.id}')">＋</button>
           </div>`;
         list.appendChild(item);
@@ -517,6 +492,11 @@
     }
     function incQty(pid){ const row=cart.get(pid); if(!row) return; row.qty++; cart.set(pid,row); updateCartCount(); renderCart(); }
     function decQty(pid){ const row=cart.get(pid); if(!row) return; row.qty--; if(row.qty<=0) cart.delete(pid); else cart.set(pid,row); updateCartCount(); renderCart(); }
+    function setQty(pid,val){
+      let v = parseInt(val||'1',10); if(isNaN(v)||v<1) v=1;
+      const row=cart.get(pid); if(!row) return;
+      row.qty=v; cart.set(pid,row); updateCartCount(); renderCart();
+    }
 
     /* ===== 結帳（可串接 Google 試算表 + Gmail） ===== */
     const GAS_ENDPOINT=''; // ← 貼 Apps Script Web App URL（留空則只模擬送出）
@@ -552,7 +532,7 @@
       }catch(err){ console.error(err); alert('送出失敗，請稍後再試或聯繫客服。') }
     }
 
-    /* ===== 管理員（齒輪 → 登入 → 顯示設定；密碼 111111，僅本機） ===== */
+    /* ===== 管理員（齒輪 → 登入 → RAW 工具；密碼 111111，僅本機） ===== */
     const gearBtn = document.querySelector('.admin-gear');
     gearBtn.addEventListener('click', openAdmin);
 
@@ -561,76 +541,20 @@
       const authed = localStorage.getItem(LS_KEY_ADMIN)==='YES';
       document.getElementById('adminLogin').style.display = authed ? 'none' : 'block';
       document.getElementById('adminBody').style.display  = authed ? 'block' : 'none';
-      if(authed){
-        // 同步現有資料到表單
-        document.getElementById('inpLogo').value=brand.logo||'';
-        document.getElementById('inpTitle').value=brand.title||'';
-        document.getElementById('inpHeroTitle').value=brand.heroTitle||'';
-        document.getElementById('inpHeroSub').value=brand.heroSub||'';
-        document.getElementById('jsonBox').value=JSON.stringify(products,null,2);
-      }
     }
-    function closeAdmin(){
-      document.getElementById('adminPane').classList.remove('on');
-    }
+    function closeAdmin(){ document.getElementById('adminPane').classList.remove('on') }
     function adminLogin(){
       const pass=document.getElementById('adminPass').value;
-      if(pass==='111111'){
-        localStorage.setItem(LS_KEY_ADMIN,'YES');
-        openAdmin();
-      }else{
-        alert('密碼錯誤');
-      }
+      if(pass==='111111'){ localStorage.setItem(LS_KEY_ADMIN,'YES'); openAdmin(); }
+      else{ alert('密碼錯誤'); }
     }
-    function logoutAdmin(){
-      localStorage.removeItem(LS_KEY_ADMIN);
-      openAdmin();
-    }
-    function saveBrand(){
-      if(localStorage.getItem(LS_KEY_ADMIN)!=='YES'){ alert('請先登入管理員'); return }
-      const next={
-        logo:document.getElementById('inpLogo').value,
-        title:document.getElementById('inpTitle').value,
-        heroTitle:document.getElementById('inpHeroTitle').value,
-        heroSub:document.getElementById('inpHeroSub').value
-      };
-      localStorage.setItem(LS_KEY_BRAND, JSON.stringify(next));
-      Object.assign(brand,next);
-      applyBrand();
-      alert('品牌文案已儲存（只在本裝置生效）。');
-    }
-    function saveProducts(){
-      if(localStorage.getItem(LS_KEY_ADMIN)!=='YES'){ alert('請先登入管理員'); return }
-      try{
-        const obj=JSON.parse(document.getElementById('jsonBox').value||'[]');
-        if(!Array.isArray(obj)||obj.length===0){
-          if(!confirm('偵測到空陣列，這會讓前台沒有任何產品。確定仍要儲存嗎？')) return;
-        }
-        localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(obj));
-        alert('產品 JSON 已儲存（只在本裝置生效）。重新整理頁面以套用。');
-      }catch{ alert('JSON 格式錯誤，請檢查逗號 / 括號。') }
-    }
-    function resetProducts(){
-      if(localStorage.getItem(LS_KEY_ADMIN)!=='YES'){ alert('請先登入管理員'); return }
-      if(confirm('確定恢復預設產品？本機所有自訂產品將被覆蓋。')){
-        localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(DEFAULT_PRODUCTS));
-        document.getElementById('jsonBox').value=JSON.stringify(DEFAULT_PRODUCTS,null,2);
-        alert('已恢復預設產品，重新整理後生效。');
-      }
-    }
-    function resetBrand(){
-      if(localStorage.getItem(LS_KEY_ADMIN)!=='YES'){ alert('請先登入管理員'); return }
-      const def={ logo:'', title:'啃酥菱角酥批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件與單品項｜先匯款，核帳後出貨' };
-      localStorage.setItem(LS_KEY_BRAND, JSON.stringify(def));
-      alert('已恢復預設品牌，重新整理後生效。');
-    }
+    function logoutAdmin(){ localStorage.removeItem(LS_KEY_ADMIN); openAdmin(); }
 
     /* ===== GitHub ➜ RAW 轉換器 ===== */
     function githubToRaw(url){
       try{
         const u=new URL(url);
         if(u.hostname==='github.com'){
-          // /user/repo/blob/branch/path -> raw.githubusercontent.com/user/repo/branch/path
           const parts=u.pathname.split('/').filter(Boolean);
           const idx=parts.indexOf('blob');
           if(idx>0){
@@ -640,17 +564,12 @@
             return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${rest}`;
           }
         }
-        // fallback: 加 ?raw=1
         if(!url.includes('?')) return url+'?raw=1';
         return url+'&raw=1';
       }catch{ return url }
     }
     function convertGh(){ const url=document.getElementById('ghUrl').value.trim(); document.getElementById('ghRawOut').value=githubToRaw(url) }
-    function copyRaw(){
-      const o=document.getElementById('ghRawOut');
-      o.select(); document.execCommand('copy');
-      alert('已複製 RAW 連結');
-    }
+    function copyRaw(){ const o=document.getElementById('ghRawOut'); o.select(); document.execCommand('copy'); alert('已複製 RAW 連結') }
 
     /* ===== 啟動 ===== */
     applyBrand();
