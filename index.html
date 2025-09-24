@@ -2,114 +2,134 @@
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>啃酥菱角酥｜批發官網</title>
-  <meta name="description" content="啃酥菱角酥批發官網：常溫、冷藏、冷凍與超商取貨多種品項，下單後先匯款，核帳後出貨。" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  />
+  <title>啃酥菱角酥批發官網</title>
+  <meta
+    name="description"
+    content="啃酥菱角酥批發官網：A.粉類、B.冷藏原物料、C.冷凍原物料。整件與單品項。下單先填資料、先匯款，核帳後出貨。"
+  />
   <style>
-    :root{
-      --bg:#faf7f2; --surface:#ffffff; --ink:#111827; --muted:#6b7280; --brand:#f59e0b; --brand-dark:#d97706; --ok:#16a34a; --bad:#ef4444;
-      --border:#e5e7eb; --shadow:0 12px 28px rgba(0,0,0,.06);
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --ink: #111827;
+      --muted: #6b7280;
+      --brand: #f59e0b;
+      --brand-dark: #d97706;
+      --ok: #16a34a;
+      --bad: #ef4444;
+      --border: #e5e7eb;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
     }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC","Helvetica Neue",Arial,sans-serif}
-    a{color:inherit}
-    .wrap{max-width:1100px;margin:0 auto;padding:0 16px}
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif; }
+    a { color: inherit; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 12px; }
 
     /* ===== Header ===== */
-    header{position:sticky;top:0;z-index:60;background:rgba(255,255,255,.86);backdrop-filter:saturate(1.2) blur(10px);border-bottom:1px solid var(--border)}
-    .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0}
-    .brand{display:flex;align-items:center;gap:12px}
-    .brand img{width:44px;height:44px;object-fit:contain;border-radius:10px;border:1px solid var(--border);background:#fff}
-    .brand h1{font-size:18px;margin:0;font-weight:800;letter-spacing:.5px}
-    nav{display:flex;gap:14px;font-size:14px}
-    nav a{padding:6px 10px;border-radius:9px;border:1px solid transparent}
-    nav a:hover{border-color:var(--border);background:#fff}
+    header { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.9); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid var(--border); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; }
+    .brand { display: flex; align-items: center; gap: 8px; }
+    .brand img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+    .brand h1 { font-size: 15px; margin: 0; font-weight: 800; letter-spacing: .2px; }
+    nav { display: flex; gap: 8px; font-size: 13px; }
+    nav a { padding: 6px 8px; border-radius: 9px; border: 1px solid transparent; }
+    nav a:hover { border-color: var(--border); background: #fff; }
 
     /* ===== Hero ===== */
-    .hero{position:relative;margin:0 0 18px;background:linear-gradient(180deg,#fff,rgba(255,255,255,0)),url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop');
-      background-size:cover;background-position:center;min-height:44svh;border-bottom:1px solid var(--border)}
-    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,.0) 55%)}
-    .hero .hero-inner{position:relative;z-index:1;display:grid;align-items:end;min-height:44svh}
-    .hero .copy{padding:28px 0 30px;color:#fff}
-    .hero .kicker{display:inline-block;background:rgba(0,0,0,.35);padding:6px 10px;border:1px solid rgba(255,255,255,.25);border-radius:999px;font-size:12px;margin-bottom:12px}
-    .hero h2{font-size: clamp(28px, 4.6vw, 48px); line-height:1.15;margin:0 0 8px;font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.22)}
-    .hero p{margin:0;font-size:clamp(14px,2.5vw,16px);opacity:.95}
-    .cta{margin-top:14px;display:flex;gap:10px;flex-wrap:wrap}
-    .btn{appearance:none;border:none;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer}
-    .btn.brand{background:var(--brand);color:#111;border:1px solid var(--brand-dark)}
-    .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+    .hero { position: relative; margin: 0 0 12px; background: linear-gradient(180deg,#fff,rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop'); background-size: cover; background-position: center; min-height: 42svh; border-bottom: 1px solid var(--border); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,0) 55%); }
+    .hero .hero-inner { position: relative; z-index: 1; display: grid; align-items: end; min-height: 42svh; }
+    .hero .copy { padding: 22px 0 26px; color: #fff; }
+    .hero .kicker { display: inline-block; background: rgba(0,0,0,.35); padding: 4px 8px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; font-size: 11px; margin-bottom: 8px; }
+    .hero h2 { font-size: clamp(24px, 4.2vw, 42px); line-height: 1.15; margin: 0 0 6px; font-weight: 900; text-shadow: 0 2px 12px rgba(0,0,0,.22); }
+    .hero p { margin: 0; font-size: clamp(13px, 2.3vw, 15px); opacity: .95; }
+    .cta { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn { appearance: none; border: none; border-radius: 12px; padding: 10px 14px; font-weight: 700; cursor: pointer; }
+    .btn.brand { background: var(--brand); color: #111; border: 1px solid var(--brand-dark); }
+    .btn.ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.35); }
 
-    /* ===== Filters / chips ===== */
-    .chips{display:flex;gap:8px;flex-wrap:wrap;padding:14px 0 6px}
-    .chip{padding:8px 12px;border:1px solid var(--border);border-radius:999px;background:#fff;font-size:13px;cursor:pointer}
-    .chip.is-on{border-color:var(--brand);box-shadow:0 2px 10px rgba(245,158,11,.25)}
+    /* ===== Chips (single row, scrollable) ===== */
+    .chips { display: inline-flex; gap: 8px; padding: 10px 0 4px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip { padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-size: 12px; cursor: pointer; }
+    .chip.is-on { border-color: var(--brand); box-shadow: 0 2px 10px rgba(245,158,11,.25); }
 
-    /* ===== Grid / Cards ===== */
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 14px}
-    @media (min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
-    .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
-    .card .media{aspect-ratio:4/3;background:#f3f4f6;display:grid;place-items:center;overflow:hidden}
-    .card .media img{width:100%;height:100%;object-fit:cover}
-    .soldout{position:absolute;inset:auto 10px 10px auto;background:rgba(17,24,39,.85);color:#fff;padding:6px 10px;border-radius:10px;font-size:12px;z-index:2}
-    .badge{position:absolute;left:10px;top:10px;background:#fff;border:1px solid var(--border);font-size:12px;border-radius:999px;padding:4px 8px}
-    .body{padding:12px}
-    .body h3{margin:0 0 4px;font-size:16px}
-    .meta{color:var(--muted);font-size:12px}
-    .price{margin-top:6px;font-weight:800;color:#b45309}
-    .btn.add{margin:10px 0 2px;background:#111;color:#fff;border-radius:12px;padding:10px 12px;border:1px solid #111}
-    .btn.add[disabled]{background:#cfcfcf;border-color:#cfcfcf;cursor:not-allowed}
-    .note{font-size:12px;color:var(--muted)}
+    /* ===== Grid / Cards (mobile-first) ===== */
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
+    @media (min-width: 860px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
+    .card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+    .card .media { aspect-ratio: 4 / 3; background: #f3f4f6; display: grid; place-items: center; overflow: hidden; }
+    .card .media img { width: 100%; height: 100%; object-fit: cover; }
+    .soldout { position: absolute; inset: auto 8px 8px auto; background: rgba(17,24,39,.85); color: #fff; padding: 4px 8px; border-radius: 10px; font-size: 11px; z-index: 2; }
+    .badge { position: absolute; left: 8px; top: 8px; background: #fff; border: 1px solid var(--border); font-size: 11px; border-radius: 999px; padding: 3px 7px; }
+    .body { padding: 10px; }
+    .body h3 { margin: 0 0 2px; font-size: 15px; }
+    .meta { color: var(--muted); font-size: 12px; }
+    .price { margin-top: 6px; font-weight: 800; color: #b45309; }
+    .btn.add { margin: 8px 0 2px; background: #111; color: #fff; border-radius: 12px; padding: 9px 12px; border: 1px solid #111; }
+    .btn.add[disabled] { background: #cfcfcf; border-color: #cfcfcf; cursor: not-allowed; }
+    .note { font-size: 11px; color: var(--muted); }
 
     /* ===== Floating Cart (orange icon) ===== */
-    .cart-fab{position:fixed;right:16px;bottom:16px;z-index:80;display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:#ffedd5;border:2px solid var(--brand-dark);box-shadow:0 10px 24px rgba(0,0,0,.18);cursor:pointer}
-    .cart-fab svg{width:36px;height:36px}
-    .cart-count{position:absolute;right:-6px;top:-6px;background:#111;color:#fff;border-radius:999px;min-width:24px;height:24px;display:grid;place-items:center;font-size:12px;border:2px solid #fff}
+    .cart-fab { position: fixed; right: 14px; bottom: 14px; z-index: 80; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #ffedd5; border: 2px solid var(--brand-dark); box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
+    .cart-fab svg { width: 34px; height: 34px; }
+    .cart-count { position: absolute; right: -6px; top: -6px; background: #111; color: #fff; border-radius: 999px; min-width: 22px; height: 22px; display: grid; place-items: center; font-size: 12px; border: 2px solid #fff; }
 
     /* ===== Cart Drawer ===== */
-    .drawer{position:fixed;inset:0;z-index:90;display:none}
-    .drawer.on{display:block}
-    .drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.36)}
-    .panel{position:absolute;right:0;top:0;bottom:0;width:min(520px,100%);background:#fff;box-shadow:-12px 0 28px rgba(0,0,0,.25);display:flex;flex-direction:column}
-    .panel header{padding:14px 14px;border-bottom:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:space-between}
-    .panel header h4{margin:0;font-size:18px}
-    .list{flex:1;overflow:auto;padding:12px}
-    .item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:8px;margin-bottom:8px}
-    .qty{display:flex;align-items:center;gap:6px}
-    .qty button{width:28px;height:28px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer}
-    .summary{border-top:1px dashed var(--border);padding:12px}
-    .row{display:flex;justify-content:space-between;font-size:14px;margin:6px 0}
-    .row em{color:var(--muted);font-style:normal}
-    .row .ok{color:var(--ok)} .row .warn{color:#b45309}
-    .checkout{padding:12px;border-top:1px solid var(--border);}
-    .btn.full{width:100%;background:var(--brand);border:1px solid var(--brand-dark);color:#111;font-weight:900}
+    .drawer { position: fixed; inset: 0; z-index: 90; display: none; }
+    .drawer.on { display: block; }
+    .drawer .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.36); }
+    .panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(520px, 100%); background: #fff; box-shadow: -12px 0 28px rgba(0,0,0,.25); display: flex; flex-direction: column; }
+    .panel header { padding: 12px; border-bottom: 1px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: space-between; }
+    .panel header h4 { margin: 0; font-size: 17px; }
+    .list { flex: 1; overflow: auto; padding: 10px; }
+    .item { display: grid; grid-template-columns: 56px 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 12px; padding: 8px; margin-bottom: 8px; }
+    .item-sub { font-size: 12px; color: var(--muted); }
+    .qty { display: flex; align-items: center; gap: 6px; }
+    .qty button { width: 28px; height: 28px; border: 1px solid var(--border); background: #fff; border-radius: 8px; cursor: pointer; }
+    .summary { border-top: 1px dashed var(--border); padding: 10px; }
+    .row { display: flex; justify-content: space-between; font-size: 14px; margin: 6px 0; }
+    .row em { color: var(--muted); font-style: normal; }
+    .row .ok { color: var(--ok); } .row .warn { color: #b45309; }
+    .checkout { padding: 10px; border-top: 1px solid var(--border); }
+    .btn.full { width: 100%; background: var(--brand); border: 1px solid var(--brand-dark); color: #111; font-weight: 900; }
 
     /* ===== Checkout (Step 2) ===== */
-    .sheet{position:fixed;inset:0;z-index:95;display:none}
-    .sheet.on{display:block}
-    .sheet .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.36)}
-    .sheet .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,96%);max-height:90svh;overflow:auto;padding:16px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)}
-    .form{display:grid;grid-template-columns:1fr;gap:10px}
-    .label{font-size:12px;color:var(--muted)}
-    .input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font:inherit;background:#fff}
-    .bank{margin:6px 0 0;font-size:13px;border:1px dashed var(--border);border-radius:12px;padding:10px;background:#fffced}
-    .fine{font-size:12px;color:var(--muted)}
-    .two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .sheet { position: fixed; inset: 0; z-index: 95; display: none; }
+    .sheet.on { display: block; }
+    .sheet .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.36); }
+    .sheet .card { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(720px, 96%); max-height: 90svh; overflow: auto; padding: 14px; border-radius: 16px; background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .form { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .label { font-size: 12px; color: var(--muted); }
+    .input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 10px; font: inherit; font-size: 16px; background: #fff; }
+    .bank { margin: 4px 0 0; font-size: 13px; border: 1px dashed var(--border); border-radius: 12px; padding: 10px; background: #fffced; }
+    .fine { font-size: 12px; color: var(--muted); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 560px) { .two { grid-template-columns: 1fr; } }
 
     /* ===== Admin (local only) ===== */
-    .admin-badge{position:fixed;left:10px;bottom:10px;z-index:85;opacity:.6}
-    .admin-pane{position:fixed;left:10px;bottom:54px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:var(--shadow);padding:10px;display:none;max-width:92vw}
-    .admin-pane.on{display:block}
-    .admin-pane h5{margin:0 0 6px}
-    .admin-pane small{color:var(--muted)}
-    .admin-pane textarea{width:min(72ch,80vw);height:140px}
+    .admin-badge { position: fixed; left: 10px; bottom: 10px; z-index: 85; opacity: .7; }
+    .admin-pane { position: fixed; left: 10px; bottom: 54px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 10px; display: none; max-width: 92vw; }
+    .admin-pane.on { display: block; }
+    .admin-pane h5 { margin: 0 0 6px; }
+    .admin-pane small { color: var(--muted); }
+    .admin-pane textarea { width: min(72ch, 80vw); height: 160px; }
+
+    /* ===== Footer ===== */
+    footer { margin: 20px 0 90px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap topbar">
       <div class="brand">
-        <img id="logoImg" src="https://i.imgur.com/9Xx0m3H.png" alt="KenSu Logo"/>
-        <h1 id="siteTitle">啃酥菱角酥｜批發官網</h1>
+        <img id="logoImg" src="https://i.imgur.com/9Xx0m3H.png" alt="KenSu Logo" />
+        <h1 id="siteTitle">啃酥菱角酥批發官網</h1>
       </div>
       <nav>
         <a href="#store">馬上選購</a>
@@ -125,7 +145,7 @@
       <div class="copy">
         <span class="kicker" id="heroKicker">KenSu Wholesale</span>
         <h2 id="heroTitle">夜市起家，走進全台的黃金酥脆</h2>
-        <p id="heroSub">整件批發｜常溫・冷藏・冷凍・超商取貨 — 先匯款，核帳後出貨（約3–5個工作天）</p>
+        <p id="heroSub">整件與單品項批發｜常溫・冷藏・冷凍 — 先匯款，核帳後出貨</p>
         <div class="cta">
           <button class="btn brand" onclick="scrollToStore()">🛒 馬上選購</button>
           <button class="btn ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">品牌故事</button>
@@ -141,23 +161,22 @@
   </section>
 
   <!-- About / News -->
-  <section class="wrap" id="about" style="padding:28px 0 8px">
+  <section class="wrap" id="about" style="padding:18px 0 6px">
     <h3>關於我們</h3>
-    <p>啃酥從夜市小攤發跡，主打菱角酥、芋泥酥、炸鮮奶與飲品原料。為了讓更多非加盟夥伴也能穩定取得原物料，我們開放<strong>整件批發</strong>下單。完成下單後，請依畫面顯示匯款資訊完成匯款；我們核帳後才會安排出貨。</p>
+    <p>啃酥從夜市小攤發跡，主打菱角酥、芋泥酥、炸鮮奶與飲品原料。為了讓非加盟夥伴也能穩定取得原物料，我們開放<strong>整件與單品項</strong>批發。完成下單後，請依畫面顯示匯款資訊完成匯款；我們核帳後安排出貨。</p>
   </section>
-  <section class="wrap" id="news" style="padding:0 0 80px">
+  <section class="wrap" id="news" style="padding:0 0 8px">
     <h3>最新鮮報</h3>
     <ul>
       <li>🧊 冷藏/冷凍品需全程低溫配送；不同溫層恕無法合併出貨與運費。</li>
       <li>🚚 免運規則：依<strong>溫層群組</strong>計算，達各群組門檻即免運（規則寫在產品卡）。</li>
-      <li>📦 出貨時程：核帳後約 3–5 個工作天。急件請先於右下角留言與我們確認。</li>
+      <li>📦 出貨時程：核帳後約 3–5 個工作天。</li>
     </ul>
   </section>
 
   <!-- Floating Cart (Orange) -->
   <button class="cart-fab" id="cartFab" title="開啟購物車" onclick="openCart()">
     <span class="cart-count" id="cartCount">0</span>
-    <!-- 小橘子 + 車 -->
     <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <circle cx="64" cy="64" r="36" fill="#f59e0b" stroke="#d97706" stroke-width="6" />
       <path d="M20 36h16l10 46h42l6-28H54" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
@@ -208,7 +227,7 @@
           </div>
         </div>
         <div><div class="label">收件地址 / 取貨門市</div><input class="input" name="address" required></div>
-        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="如需統編抬頭、指定到貨日、開箱錄影等需求請填寫"></textarea></div>
+        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="如需統編抬頭、指定到貨日、開箱錄影等請填寫"></textarea></div>
 
         <div class="bank">
           <strong>匯款資訊：</strong>
@@ -226,100 +245,111 @@
   <!-- Admin (local quick edit) -->
   <button class="admin-badge btn" onclick="toggleAdmin()">🔒 管理員</button>
   <div class="admin-pane" id="adminPane">
-    <h5>快速設定（本機瀏覽器儲存，可貼上 LOGO/文案，或直接編輯產品 JSON）</h5>
-    <div class="fine">＊正式上線請改成後端資料庫或 Google 試算表。預設帳密：<b>admin / 111111</b></div>
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin:8px 0">
-      <input class="input" id="adminUser" placeholder="帳號：admin" style="max-width:160px">
-      <input class="input" id="adminPass" type="password" placeholder="密碼：111111" style="max-width:160px">
+    <h5>快速設定（本機儲存）</h5>
+    <div class="fine">登入密碼統一 <b>111111</b>（只顯示在本機，會記錄於裝置）。</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+      <input class="input" id="adminPass" type="password" placeholder="請輸入管理密碼" style="max-width:180px">
       <button class="btn" onclick="adminLogin()">登入</button>
       <button class="btn" onclick="saveBrand()">儲存品牌文案</button>
       <button class="btn" onclick="saveProducts()">儲存產品 JSON</button>
     </div>
     <div class="two">
       <div>
-        <div class="label">LOGO URL</div>
+        <div class="label">LOGO URL（可貼 GitHub RAW）</div>
         <input class="input" id="inpLogo" placeholder="https://...png">
         <div class="label">網站標題</div>
-        <input class="input" id="inpTitle" placeholder="啃酥菱角酥｜批發官網">
+        <input class="input" id="inpTitle" placeholder="啃酥菱角酥批發官網">
         <div class="label">封面主標</div>
         <input class="input" id="inpHeroTitle" placeholder="夜市起家，走進全台的黃金酥脆">
         <div class="label">封面副標</div>
-        <input class="input" id="inpHeroSub" placeholder="整件批發｜常溫・冷藏・冷凍…">
+        <input class="input" id="inpHeroSub" placeholder="整件與單品項｜先匯款，核帳後出貨">
+
+        <div style="margin-top:10px">
+          <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
+          <input class="input" id="ghUrl" placeholder="貼上 GitHub 檔案網址（含 blob）">
+          <div class="two">
+            <button class="btn" onclick="convertGh()">轉換 RAW</button>
+            <button class="btn" onclick="copyRaw()">複製 RAW 連結</button>
+          </div>
+          <input class="input" id="ghRawOut" placeholder="轉換結果會顯示在這裡" readonly>
+          <small class="fine">教學：把 <code>https://github.com/用戶/Repo/blob/分支/path/file.png</code> 轉成 <code>https://raw.githubusercontent.com/用戶/Repo/分支/path/file.png</code>；或直接在原網址後面加 <code>?raw=1</code>。</small>
+        </div>
       </div>
       <div>
-        <div class="label">產品資料（JSON，可直接改價、改售完 soldOut:true、調整免運門檻 freeQty 等）</div>
+        <div class="label">產品資料（JSON：可改售價 price、規格 spec、是否售完 soldOut、免運 freeQty、運費 shipFee）</div>
         <textarea id="jsonBox"></textarea>
       </div>
     </div>
-    <small>提示：修改後按「儲存」，重新整理頁面即可看到變更；只影響本機（localStorage）。</small>
+    <small>修改後按「儲存」，重新整理頁面即可看到變更（只影響本機）。</small>
   </div>
+
+  <footer class="wrap">
+    <div>酥味香企業社｜統編 93428964</div>
+    <div>地址：台中市石岡區石岡街61號</div>
+    <div>連絡電話：0933-721-978</div>
+  </footer>
 
   <script>
     /* ===========================================================
-     * 1) 資料模型（可由後端/Google Sheets 產出對應 JSON）
-     *    欄位說明：
-     *    id, name, spec, price, shipGroup('常溫'|'冷藏'|'冷凍'|'超商'), shipFee, freeQty(達到幾件免運，0=不適用), 
-     *    minOrder(最小購買件數，預設1), soldOut, tag(分類字母 A/B/C/D/E/F/G), img, note（卡片右下小字）
+     * 1) 資料模型（只保留六種原物料；各留「整件」與「單品項」）
+     *    欄位：id, tag('A.粉類'|'B.冷藏原物料'|'C.冷凍原物料'), name, spec, price, type('整件'|'單品項'),
+     *         shipGroup('常溫'|'冷藏'|'冷凍'|'超商'), shipFee, freeQty, minOrder, soldOut, img, note
      * =========================================================== */
     const DEFAULT_PRODUCTS = [
-      {id:'p01', tag:'A.粉類', name:'(整件)啃酥專用粉', spec:'4.5公斤 / 5包 / 1件', price:4900, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
-      {id:'p02', tag:'C.冷凍原物料', name:'(整件)啃酥菱角仁', spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
-      {id:'p03', tag:'C.冷凍原物料', name:'(整件)啃酥乳酪丁', spec:'1公斤 / 10包 / 1件', price:3800, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p04', tag:'C.冷凍原物料', name:'(整件)啃酥芋泥丁', spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p05', tag:'C.冷凍原物料', name:'(整件)啃酥炸鮮奶', spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
-      {id:'p06', tag:'C.冷凍原物料', name:'(整件)啃酥特調牛奶', spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p07', tag:'E.包裝耗材', name:'(整件)4兩紙袋', spec:'5000個 / 1箱', price:1900, shipGroup:'常溫', shipFee:150, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p08', tag:'E.包裝耗材', name:'(整件)1杯塑膠袋', spec:'3000個 / 1件', price:150, shipGroup:'常溫', shipFee:150, freeQty:1, minOrder:1, soldOut:true, img:'', note:'缺貨'},
-      {id:'p09', tag:'E.包裝耗材', name:'(整件)4兩塑膠袋', spec:'3000個 / 1件', price:1000, shipGroup:'常溫', shipFee:150, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p10', tag:'E.包裝耗材', name:'(整件)4兩竹籤', spec:'20包 / 1件', price:150, shipGroup:'常溫', shipFee:150, freeQty:1, minOrder:1, soldOut:true, img:'', note:'就近南北雜貨購買'},
-      {id:'p11', tag:'F.油品', name:'(單品項)美食家耐炸油', spec:'18公升 / 1桶', price:150, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:0, soldOut:true, img:'', note:'就近南北雜貨購買'},
-      {id:'p12', tag:'G.調味料', name:'(單品項)飛燕煉乳', spec:'1300公克 / 24罐 / 1件', price:150, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:0, soldOut:true, img:'', note:'就近南北雜貨購買'},
-      {id:'p13', tag:'D.飲品原物料', name:'(單品項)香濃奶茶粉', spec:'600克 / 包', price:200, shipGroup:'超商', shipFee:60, freeQty:3, minOrder:1, soldOut:false, img:'', note:'滿3件免運'},
-      {id:'p14', tag:'D.飲品原物料', name:'(單品項)大麥', spec:'600克 / 包', price:120, shipGroup:'超商', shipFee:60, freeQty:3, minOrder:1, soldOut:false, img:'', note:'滿3件免運'},
-      {id:'p15', tag:'D.飲品原物料', name:'(單品項)酸梅湯', spec:'160克 / 包', price:135, shipGroup:'超商', shipFee:60, freeQty:3, minOrder:1, soldOut:false, img:'', note:'滿3件免運'},
-      {id:'p16', tag:'D.飲品原物料', name:'(單品項)玫瑰仙渣茶包', spec:'20包', price:250, shipGroup:'超商', shipFee:60, freeQty:3, minOrder:1, soldOut:false, img:'', note:'滿3件免運'},
-      {id:'p17', tag:'D.飲品原物料', name:'(單品項)青茶茶葉', spec:'600克 / 包', price:280, shipGroup:'超商', shipFee:60, freeQty:3, minOrder:1, soldOut:false, img:'', note:'滿3件免運'},
-      {id:'p18', tag:'B.冷藏原物料', name:'(整件)芋泥丁7盒+乳酪丁7盒', spec:'各7包 / 1件', price:4589, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p19', tag:'B.冷藏原物料', name:'(單品項)加厚蝦餅（整片半成品）', spec:'15片 / 1包', price:900, shipGroup:'冷凍', shipFee:200, freeQty:4, minOrder:1, soldOut:false, img:'', note:'滿4件免運'},
-      {id:'p20', tag:'G.調味料', name:'(整件)泰式醬', spec:'1.13公斤 / 15罐 / 1件', price:1485, shipGroup:'常溫', shipFee:150, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
-      {id:'p21', tag:'G.調味料', name:'(單品項)椒鹽撒粉', spec:'600克 / 1盒', price:150, shipGroup:'常溫', shipFee:150, freeQty:10, minOrder:1, soldOut:true, img:'', note:'就近南北雜貨購買'},
-      {id:'p22', tag:'G.調味料', name:'(單品項)辣粉撒粉', spec:'—', price:150, shipGroup:'常溫', shipFee:150, freeQty:10, minOrder:1, soldOut:true, img:'', note:'就近南北雜貨購買'},
-      {id:'p23', tag:'C.冷凍原物料', name:'(單品項)啃酥乳酪丁', spec:'1公斤 / 包', price:380, shipGroup:'冷藏', shipFee:180, freeQty:10, minOrder:1, soldOut:false, img:'', note:''},
-      {id:'p24', tag:'B.冷藏原物料', name:'(單品項)啃酥芋泥丁', spec:'750公克 / 盒', price:276, shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, img:'', note:''},
-      {id:'p25', tag:'C.冷凍原物料', name:'(單品項)啃酥特調牛奶', spec:'330毫升 / 瓶', price:75, shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, img:'', note:''},
-      {id:'p26', tag:'C.冷凍原物料', name:'(單品項)啃酥炸鮮奶', spec:'6條 / 盒', price:106, shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, img:'', note:''}
+      // A.粉類（常溫）— 啃酥專用粉
+      {id:'powder_case', tag:'A.粉類', name:'啃酥專用粉', type:'整件', spec:'4.5公斤 / 5包 / 1件', price:4900, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'powder_single', tag:'A.粉類', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包', price:980, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // B.冷藏原物料 — 啃酥乳酪丁（冷藏）
+      {id:'cheese_case', tag:'B.冷藏原物料', name:'啃酥乳酪丁', type:'整件', spec:'1公斤 / 10包 / 1件', price:3800, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'cheese_single', tag:'B.冷藏原物料', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包', price:380, shipGroup:'冷藏', shipFee:180, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥菱角仁（冷凍）
+      {id:'waterchest_case', tag:'C.冷凍原物料', name:'啃酥菱角仁', type:'整件', spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'waterchest_single', tag:'C.冷凍原物料', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包', price:600, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥芋泥丁（冷凍）
+      {id:'taro_case', tag:'C.冷凍原物料', name:'啃酥芋泥丁', type:'整件', spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'taro_single', tag:'C.冷凍原物料', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒', price:276, shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥炸鮮奶（冷凍）
+      {id:'milkfried_case', tag:'C.冷凍原物料', name:'啃酥炸鮮奶', type:'整件', spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'milkfried_single', tag:'C.冷凍原物料', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒', price:106, shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥特調牛奶（冷凍）
+      {id:'milkmix_case', tag:'C.冷凍原物料', name:'啃酥特調牛奶', type:'整件', spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'milkmix_single', tag:'C.冷凍原物料', name:'啃酥特調牛奶', type:'單品項', spec:'330毫升 / 1瓶', price:75, shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—'}
     ];
 
-    const GROUP_LABELS = { '常溫':'常溫', '冷藏':'冷藏', '冷凍':'冷凍', '超商':'超商取貨' };
+    // 僅保留指定標籤與溫層
+    const TAGS = ['A.粉類', 'B.冷藏原物料', 'C.冷凍原物料', '常溫', '冷藏', '冷凍'];
+    const GROUP_LABELS = { 常溫: '常溫', 冷藏: '冷藏', 冷凍: '冷凍' };
 
     /* ===========================================================
      * 2) 狀態與儲存
      * =========================================================== */
-    const LS_KEY_PRODUCTS = 'kensu_wholesale_products_v1';
-    const LS_KEY_BRAND = 'kensu_wholesale_brand_v1';
+    const LS_KEY_PRODUCTS = 'kensu_wholesale_products_v2';
+    const LS_KEY_BRAND = 'kensu_wholesale_brand_v2';
+    const LS_KEY_ADMIN = 'kensu_admin_ok_v1';
 
     const brand = loadBrand();
     const products = loadProducts();
     let filterOn = '全部';
     const cart = new Map(); // id -> { product, qty }
 
-    function loadProducts(){
-      try{ return JSON.parse(localStorage.getItem(LS_KEY_PRODUCTS)) || DEFAULT_PRODUCTS; }catch{ return DEFAULT_PRODUCTS }
+    function loadProducts() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY_PRODUCTS)) || DEFAULT_PRODUCTS; } catch { return DEFAULT_PRODUCTS; }
     }
-    function loadBrand(){
-      try{
-        return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || {
-          logo:'', title:'啃酥菱角酥｜批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件批發｜常溫・冷藏・冷凍・超商取貨 — 先匯款，核帳後出貨（約3–5個工作天）'
-        };
-      }catch{ return {logo:'', title:'啃酥菱角酥｜批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件批發｜常溫・冷藏・冷凍・超商取貨 — 先匯款，核帳後出貨（約3–5個工作天）'} }
+    function loadBrand() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || { logo:'', title:'啃酥菱角酥批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件與單品項｜先匯款，核帳後出貨' }; } catch { return { logo:'', title:'啃酥菱角酥批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件與單品項｜先匯款，核帳後出貨' }; }
     }
 
     /* ===========================================================
      * 3) 初始化：品牌文案 + 篩選 + 卡片渲染
      * =========================================================== */
     function applyBrand(){
-      if(brand.logo){ document.getElementById('logoImg').src = brand.logo }
-      document.getElementById('siteTitle').textContent = brand.title || '啃酥菱角酥｜批發官網';
+      if (brand.logo) document.getElementById('logoImg').src = brand.logo;
+      document.getElementById('siteTitle').textContent = brand.title || '啃酥菱角酥批發官網';
       document.getElementById('heroTitle').textContent = brand.heroTitle || '';
       document.getElementById('heroSub').textContent = brand.heroSub || '';
       // 管理面板預填
@@ -330,100 +360,106 @@
     }
 
     function uniqueTags(){
-      const tags = Array.from(new Set(products.map(p=>p.tag)));
-      return ['全部', ...tags, '常溫','冷藏','冷凍','超商取貨'];
+      // 固定為需求指定的標籤（含「全部」在 chips 內第一個）
+      return ['全部', ...TAGS];
     }
 
     function renderChips(){
       const chips = document.getElementById('chips');
       chips.innerHTML = '';
-      uniqueTags().forEach(t=>{
+      uniqueTags().forEach(t => {
         const btn = document.createElement('button');
-        btn.className = 'chip' + (t===filterOn?' is-on':'');
+        btn.className = 'chip' + (t === filterOn ? ' is-on' : '');
         btn.textContent = t;
-        btn.onclick = ()=>{ filterOn=t; renderGrid(); };
+        btn.onclick = () => { filterOn = t; renderGrid(); };
         chips.appendChild(btn);
       });
     }
 
     function matchFilter(p){
-      if(filterOn==='全部') return true;
-      if(['常溫','冷藏','冷凍','超商取貨'].includes(filterOn)) return GROUP_LABELS[p.shipGroup]===filterOn;
-      return p.tag===filterOn;
+      if (filterOn === '全部') return true;
+      if (['常溫','冷藏','冷凍'].includes(filterOn)) return GROUP_LABELS[p.shipGroup] === filterOn;
+      return p.tag === filterOn;
     }
 
     function renderGrid(){
       const grid = document.getElementById('grid');
-      grid.innerHTML='';
-      products.filter(matchFilter).forEach(p=>{
+      grid.innerHTML = '';
+      products.filter(matchFilter).forEach(p => {
         const card = document.createElement('article');
-        card.className='card';
+        card.className = 'card';
+        const title = `${p.name}（${p.type}）`;
         card.innerHTML = `
           <div class="media">
-            ${p.img?`<img src="${p.img}" alt="${p.name}">`:`<span style="color:#9ca3af">(尚未上傳圖片)</span>`}
-            <span class="badge">${p.tag}｜${GROUP_LABELS[p.shipGroup]||p.shipGroup}</span>
-            ${p.soldOut?`<span class="soldout">已售完</span>`:''}
+            ${p.img ? `<img src="${p.img}" alt="${title}">` : `<span style="color:#9ca3af">(尚未上傳圖片)</span>`}
+            <span class="badge">${p.tag}｜${GROUP_LABELS[p.shipGroup] || p.shipGroup}</span>
+            ${p.soldOut ? `<span class="soldout">已售完</span>` : ''}
           </div>
           <div class="body">
-            <h3>${p.name}</h3>
+            <h3>${title}</h3>
             <div class="meta">${p.spec}</div>
             <div class="price">$${fmt(p.price)}</div>
-            <button class="btn add" ${p.soldOut||p.minOrder===0? 'disabled':''} onclick="addToCart('${p.id}', ${p.minOrder||1})">加入購物車</button>
-            <div class="note">${p.note||''}｜運費 $${p.shipFee}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}</div>
+            <button class="btn add" ${p.soldOut || p.minOrder===0 ? 'disabled' : ''} onclick="addToCart('${p.id}', ${p.minOrder || 1})">加入購物車</button>
+            <div class="note">運費 $${p.shipFee}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}${p.note?`｜${p.note}`:''}</div>
           </div>`;
         grid.appendChild(card);
-      })
+      });
     }
 
-    function fmt(n){ return Number(n).toLocaleString('zh-TW') }
-
-    function scrollToStore(){ document.getElementById('store').scrollIntoView({behavior:'smooth'}) }
+    function fmt(n){ return Number(n).toLocaleString('zh-TW'); }
+    function scrollToStore(){ document.getElementById('store').scrollIntoView({ behavior:'smooth' }); }
 
     /* ===========================================================
-     * 4) 購物車：加入 / 渲染 / 運費計算（以溫層群組計算）
-     *    規則：同一 shipGroup 的商品合計數量 >= groupFreeQty → 該群組免運
-     *    groupFreeQty = 取該群組內商品的「最小」freeQty（>0）作為門檻；若皆為 0，則無免運
-     *    運費收一次，以該群組中「最高」shipFee 為主（可依需求改）
+     * 4) 購物車：加入 / 渲染 / 運費計算
+     *    需求：加入商品時「不跳轉購物車頁」→ 僅顯示提示，數量只允許 +/-
      * =========================================================== */
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;opacity:.96;z-index:120';
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.remove(); }, 1500);
+    }
+
     function addToCart(pid, qty=1){
-      const p = products.find(x=>x.id===pid);
+      const p = products.find(x => x.id === pid);
       if(!p) return;
-      const row = cart.get(pid) || { product:p, qty:0 };
+      const row = cart.get(pid) || { product: p, qty: 0 };
       row.qty += qty;
       cart.set(pid, row);
       updateCartCount();
-      openCart();
       renderCart();
+      toast('已加入購物車'); // 不自動打開購物車
     }
 
     function updateCartCount(){
-      let totalQty = 0; cart.forEach(v=> totalQty += v.qty);
+      let totalQty = 0; cart.forEach(v => totalQty += v.qty);
       document.getElementById('cartCount').textContent = totalQty;
     }
 
-    function openCart(){ document.getElementById('drawer').classList.add('on') }
-    function closeCart(){ document.getElementById('drawer').classList.remove('on') }
+    function openCart(){ document.getElementById('drawer').classList.add('on'); }
+    function closeCart(){ document.getElementById('drawer').classList.remove('on'); }
 
     function renderCart(){
       const list = document.getElementById('cartList');
       list.innerHTML = '';
       let sub = 0; let groups = {};
-      cart.forEach(({product, qty})=>{
+      cart.forEach(({product, qty}) => {
         sub += product.price * qty;
         const g = product.shipGroup;
-        groups[g] ||= {qty:0, feeMax:0, freeCandidates:[], name:GROUP_LABELS[g]||g};
+        groups[g] ||= { qty: 0, feeMax: 0, freeCandidates: [], name: GROUP_LABELS[g] || g };
         groups[g].qty += qty;
-        groups[g].feeMax = Math.max(groups[g].feeMax, Number(product.shipFee)||0);
-        if(product.freeQty>0) groups[g].freeCandidates.push(product.freeQty);
+        groups[g].feeMax = Math.max(groups[g].feeMax, Number(product.shipFee) || 0);
+        if(product.freeQty > 0) groups[g].freeCandidates.push(product.freeQty);
 
         const item = document.createElement('div');
-        item.className='item';
+        item.className = 'item';
+        const subLine = product.price * qty;
         item.innerHTML = `
           <div style="width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center">${product.img?`<img src="${product.img}" style="width:100%;height:100%;object-fit:cover">`:'—'}</div>
           <div>
-            <div style="font-weight:700">${product.name}</div>
-            <div class="fine">${product.spec}</div>
-            <div style="color:#b45309">$${fmt(product.price)}</div>
+            <div style="font-weight:700">${product.name}（${product.type}）</div>
+            <div class="item-sub">${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}</div>
           </div>
           <div class="qty">
             <button onclick="decQty('${product.id}')">−</button>
@@ -435,19 +471,24 @@
 
       const sum = document.getElementById('cartSummary');
       let ship = 0; let shipRows = '';
-      Object.entries(groups).forEach(([key,g])=>{
-        const groupFreeQty = g.freeCandidates.length? Math.min(...g.freeCandidates) : 0;
+      Object.entries(groups).forEach(([key, g]) => {
+        const groupFreeQty = g.freeCandidates.length ? Math.min(...g.freeCandidates) : 0;
         const free = groupFreeQty>0 && g.qty >= groupFreeQty;
-        const fee = free? 0 : g.feeMax;
+        const fee = free ? 0 : g.feeMax;
         ship += fee;
         const need = Math.max(0, (groupFreeQty||0) - g.qty);
-        const hint = groupFreeQty? (free? '<span class="ok">已達免運</span>' : `<span class="warn">尚差 ${need} 件免運</span>`) : '<em>此群組無免運</em>';
+        const hint = groupFreeQty ? (free ? '<span class="ok">已達免運</span>' : `<span class="warn">尚差 ${need} 件免運</span>`) : '<em>此群組無免運</em>';
         shipRows += `<div class="row"><div>${g.name} 運費</div><div>$${fmt(fee)}　${hint}</div></div>`;
-      })
+      });
       const total = sub + ship;
+
+      // 明細：總件數、群組件數
+      let totalQty = 0; cart.forEach(v => totalQty += v.qty);
+      let groupDetail = Object.entries(groups).map(([k,g])=>`${g.name}:${g.qty}件`).join('、');
 
       sum.innerHTML = `
         <div class="row"><div>商品小計</div><div>$${fmt(sub)}</div></div>
+        <div class="row"><div>件數明細</div><div>${totalQty} 件（${groupDetail||'—'}）</div></div>
         ${shipRows || '<div class="row"><div>運費</div><div>$0</div></div>'}
         <div class="row" style="border-top:1px solid var(--border);padding-top:8px;font-weight:900"><div>應付總額</div><div>$${fmt(total)}</div></div>
         <div class="fine">＊不同溫層分開計算運費與免運門檻；實際出貨以匯款核帳為準。</div>`;
@@ -458,13 +499,11 @@
 
     /* ===========================================================
      * 5) 結帳流程（先填資料→送出到 Google Apps Script）
-     *    將 GAS 部署後的網址填入 GAS_ENDPOINT。
-     *    若未設定，會以 console.log 模擬送出。
      * =========================================================== */
-    const GAS_ENDPOINT = '';// 例：'https://script.google.com/macros/s/XXXX/exec'
+    const GAS_ENDPOINT = '';// 部署後貼上 Web App URL
 
-    function goCheckout(){ if(cart.size===0){ alert('請先加入商品'); return } document.getElementById('sheet').classList.add('on') }
-    function closeSheet(){ document.getElementById('sheet').classList.remove('on') }
+    function goCheckout(){ if(cart.size===0){ alert('請先加入商品'); return } document.getElementById('sheet').classList.add('on'); }
+    function closeSheet(){ document.getElementById('sheet').classList.remove('on'); }
 
     async function submitOrder(e){
       e.preventDefault();
@@ -472,7 +511,7 @@
       // 整理購物車
       let items = []; let sub=0; let ship=0; let groups={};
       cart.forEach(({product,qty})=>{
-        items.push({id:product.id,name:product.name,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
+        items.push({id:product.id,name:product.name,type:product.type,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
         sub += product.price*qty;
         const g=product.shipGroup; groups[g] ||= {qty:0,fee:0,freeCandidates:[]};
         groups[g].qty += qty; groups[g].fee = Math.max(groups[g].fee, product.shipFee||0); if(product.freeQty>0) groups[g].freeCandidates.push(product.freeQty);
@@ -489,32 +528,36 @@
 
       if(!GAS_ENDPOINT){
         console.log('DEV payload →', payload);
-        alert('已模擬送出訂單（尚未串接後端）。請設定 Apps Script 網址後即可正式寫入試算表並寄信。\n總額：$'+fmt(total));
+        alert('已模擬送出訂單（尚未串接後端）。請設定 Apps Script 網址後即可正式寫入試算表並寄信。
+總額：$'+fmt(total));
         closeSheet(); closeCart(); return;
       }
 
       try{
-        const res = await fetch(GAS_ENDPOINT, {method:'POST', mode:'no-cors', body: JSON.stringify(payload)});
+        await fetch(GAS_ENDPOINT, {method:'POST', mode:'no-cors', body: JSON.stringify(payload)});
         alert('訂單已送出！請依匯款資訊匯款，我們核帳後出貨。');
         cart.clear(); updateCartCount(); closeSheet(); closeCart();
-      }catch(err){
-        console.error(err); alert('送出失敗，請稍後再試或聯繫客服。')
-      }
+      }catch(err){ console.error(err); alert('送出失敗，請稍後再試或聯繫客服。'); }
     }
 
     /* ===========================================================
-     * 6) 管理員（本機）
-     *    - 登入：admin / 111111
-     *    - 可改 LOGO/標題/封面文字與產品 JSON（儲存於 localStorage）
+     * 6) 管理員（本機）：密碼 111111（不顯示在畫面；僅本機存記錄）
      * =========================================================== */
-    function toggleAdmin(){ document.getElementById('adminPane').classList.toggle('on'); document.getElementById('jsonBox').value = JSON.stringify(products,null,2) }
+    function toggleAdmin(){
+      const pane = document.getElementById('adminPane');
+      pane.classList.toggle('on');
+      document.getElementById('jsonBox').value = JSON.stringify(products, null, 2);
+    }
     function adminLogin(){
-      const u = document.getElementById('adminUser').value || 'admin';
-      const p = document.getElementById('adminPass').value || '111111';
-      if(u==='admin' && p==='111111'){ alert('已登入（本機）'); }
-      else{ alert('帳密錯誤（預設 admin / 111111）'); }
+      const ok = localStorage.getItem(LS_KEY_ADMIN) === 'YES';
+      const pass = document.getElementById('adminPass').value;
+      if(ok || pass === '111111'){
+        localStorage.setItem(LS_KEY_ADMIN,'YES');
+        alert('已登入（本機）');
+      }else{ alert('密碼錯誤'); }
     }
     function saveBrand(){
+      if(localStorage.getItem(LS_KEY_ADMIN) !== 'YES'){ alert('請先登入管理員'); return; }
       const next = {
         logo: document.getElementById('inpLogo').value,
         title: document.getElementById('inpTitle').value,
@@ -522,15 +565,649 @@
         heroSub: document.getElementById('inpHeroSub').value,
       };
       localStorage.setItem(LS_KEY_BRAND, JSON.stringify(next));
-      alert('品牌文案已儲存（本機）。重新整理後生效。');
+      applyBrand();
+      alert('品牌文案已儲存（本機）。');
     }
     function saveProducts(){
+      if(localStorage.getItem(LS_KEY_ADMIN) !== 'YES'){ alert('請先登入管理員'); return; }
       try{
         const obj = JSON.parse(document.getElementById('jsonBox').value||'[]');
         localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(obj));
         alert('產品 JSON 已儲存（本機）。重新整理頁面以套用。');
       }catch{ alert('JSON 格式錯誤，請檢查逗號 / 括號。') }
     }
+
+    // GitHub ➜ RAW 轉換
+    function githubToRaw(url){
+      try{
+        const u = new URL(url);
+        if(u.hostname === 'github.com'){
+          // /user/repo/blob/branch/path -> raw.githubusercontent.com/user/repo/branch/path
+          const parts = u.pathname.split('/').filter(Boolean);
+          const idx = parts.indexOf('blob');
+          if(idx>0){
+            const user = parts[0], repo = parts[1];
+            const branch = parts[3];
+            const rest = parts.slice(4).join('/');
+            return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${rest}`;
+          }
+        }
+        // fallback: 加 ?raw=1
+        if(!url.includes('?')) return url + '?raw=1';
+        return url + '&raw=1';
+      }catch{ return url }
+    }
+    function convertGh(){ const url = document.getElementById('ghUrl').value.trim(); document.getElementById('ghRawOut').value = githubToRaw(url); }
+    function copyRaw(){ const o=document.getElementById('ghRawOut'); o.select(); document.execCommand('copy'); alert('已複製 RAW 連結'); }
+
+    // 啟動
+    applyBrand();
+    renderChips();
+    renderGrid();
+  </script>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no"
+  />
+  <title>啃酥菱角酥批發官網</title>
+  <meta
+    name="description"
+    content="啃酥菱角酥批發官網：A.粉類、B.冷藏原物料、C.冷凍原物料。整件與單品項。下單先填資料、先匯款，核帳後出貨。"
+  />
+  <style>
+    :root {
+      --bg: #faf7f2;
+      --surface: #ffffff;
+      --ink: #111827;
+      --muted: #6b7280;
+      --brand: #f59e0b;
+      --brand-dark: #d97706;
+      --ok: #16a34a;
+      --bad: #ef4444;
+      --border: #e5e7eb;
+      --shadow: 0 12px 28px rgba(0, 0, 0, 0.06);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; background: var(--bg); color: var(--ink); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif; }
+    a { color: inherit; }
+    .wrap { max-width: 1100px; margin: 0 auto; padding: 0 12px; }
+
+    /* ===== Header ===== */
+    header { position: sticky; top: 0; z-index: 60; background: rgba(255,255,255,.9); backdrop-filter: saturate(1.2) blur(10px); border-bottom: 1px solid var(--border); }
+    .topbar { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 0; }
+    .brand { display: flex; align-items: center; gap: 8px; }
+    .brand img { width: 38px; height: 38px; object-fit: contain; border-radius: 8px; border: 1px solid var(--border); background: #fff; }
+    .brand h1 { font-size: 15px; margin: 0; font-weight: 800; letter-spacing: .2px; }
+    nav { display: flex; gap: 8px; font-size: 13px; }
+    nav a { padding: 6px 8px; border-radius: 9px; border: 1px solid transparent; }
+    nav a:hover { border-color: var(--border); background: #fff; }
+
+    /* ===== Hero ===== */
+    .hero { position: relative; margin: 0 0 12px; background: linear-gradient(180deg,#fff,rgba(255,255,255,0)), url('https://images.unsplash.com/photo-1504754524776-8f4f37790ca0?q=80&w=1600&auto=format&fit=crop'); background-size: cover; background-position: center; min-height: 42svh; border-bottom: 1px solid var(--border); }
+    .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(0,0,0,.35), rgba(0,0,0,0) 55%); }
+    .hero .hero-inner { position: relative; z-index: 1; display: grid; align-items: end; min-height: 42svh; }
+    .hero .copy { padding: 22px 0 26px; color: #fff; }
+    .hero .kicker { display: inline-block; background: rgba(0,0,0,.35); padding: 4px 8px; border: 1px solid rgba(255,255,255,.25); border-radius: 999px; font-size: 11px; margin-bottom: 8px; }
+    .hero h2 { font-size: clamp(24px, 4.2vw, 42px); line-height: 1.15; margin: 0 0 6px; font-weight: 900; text-shadow: 0 2px 12px rgba(0,0,0,.22); }
+    .hero p { margin: 0; font-size: clamp(13px, 2.3vw, 15px); opacity: .95; }
+    .cta { margin-top: 10px; display: flex; gap: 8px; flex-wrap: wrap; }
+    .btn { appearance: none; border: none; border-radius: 12px; padding: 10px 14px; font-weight: 700; cursor: pointer; }
+    .btn.brand { background: var(--brand); color: #111; border: 1px solid var(--brand-dark); }
+    .btn.ghost { background: rgba(255,255,255,.12); color: #fff; border: 1px solid rgba(255,255,255,.35); }
+
+    /* ===== Chips (single row, scrollable) ===== */
+    .chips { display: inline-flex; gap: 8px; padding: 10px 0 4px; overflow-x: auto; white-space: nowrap; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+    .chips::-webkit-scrollbar { display: none; }
+    .chip { padding: 6px 10px; border: 1px solid var(--border); border-radius: 999px; background: #fff; font-size: 12px; cursor: pointer; }
+    .chip.is-on { border-color: var(--brand); box-shadow: 0 2px 10px rgba(245,158,11,.25); }
+
+    /* ===== Grid / Cards (mobile-first) ===== */
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    @media (max-width: 360px) { .grid { grid-template-columns: 1fr; } }
+    @media (min-width: 860px) { .grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; } }
+    .card { position: relative; background: var(--surface); border: 1px solid var(--border); border-radius: 16px; box-shadow: var(--shadow); overflow: hidden; display: flex; flex-direction: column; }
+    .card .media { aspect-ratio: 4 / 3; background: #f3f4f6; display: grid; place-items: center; overflow: hidden; }
+    .card .media img { width: 100%; height: 100%; object-fit: cover; }
+    .soldout { position: absolute; inset: auto 8px 8px auto; background: rgba(17,24,39,.85); color: #fff; padding: 4px 8px; border-radius: 10px; font-size: 11px; z-index: 2; }
+    .badge { position: absolute; left: 8px; top: 8px; background: #fff; border: 1px solid var(--border); font-size: 11px; border-radius: 999px; padding: 3px 7px; }
+    .body { padding: 10px; }
+    .body h3 { margin: 0 0 2px; font-size: 15px; }
+    .meta { color: var(--muted); font-size: 12px; }
+    .price { margin-top: 6px; font-weight: 800; color: #b45309; }
+    .btn.add { margin: 8px 0 2px; background: #111; color: #fff; border-radius: 12px; padding: 9px 12px; border: 1px solid #111; }
+    .btn.add[disabled] { background: #cfcfcf; border-color: #cfcfcf; cursor: not-allowed; }
+    .note { font-size: 11px; color: var(--muted); }
+
+    /* ===== Floating Cart (orange icon) ===== */
+    .cart-fab { position: fixed; right: 14px; bottom: 14px; z-index: 80; display: grid; place-items: center; width: 60px; height: 60px; border-radius: 50%; background: #ffedd5; border: 2px solid var(--brand-dark); box-shadow: 0 10px 24px rgba(0,0,0,.18); cursor: pointer; }
+    .cart-fab svg { width: 34px; height: 34px; }
+    .cart-count { position: absolute; right: -6px; top: -6px; background: #111; color: #fff; border-radius: 999px; min-width: 22px; height: 22px; display: grid; place-items: center; font-size: 12px; border: 2px solid #fff; }
+
+    /* ===== Cart Drawer ===== */
+    .drawer { position: fixed; inset: 0; z-index: 90; display: none; }
+    .drawer.on { display: block; }
+    .drawer .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.36); }
+    .panel { position: absolute; right: 0; top: 0; bottom: 0; width: min(520px, 100%); background: #fff; box-shadow: -12px 0 28px rgba(0,0,0,.25); display: flex; flex-direction: column; }
+    .panel header { padding: 12px; border-bottom: 1px solid var(--border); background: #fff; display: flex; align-items: center; justify-content: space-between; }
+    .panel header h4 { margin: 0; font-size: 17px; }
+    .list { flex: 1; overflow: auto; padding: 10px; }
+    .item { display: grid; grid-template-columns: 56px 1fr auto; gap: 10px; align-items: center; border: 1px solid var(--border); border-radius: 12px; padding: 8px; margin-bottom: 8px; }
+    .item-sub { font-size: 12px; color: var(--muted); }
+    .qty { display: flex; align-items: center; gap: 6px; }
+    .qty button { width: 28px; height: 28px; border: 1px solid var(--border); background: #fff; border-radius: 8px; cursor: pointer; }
+    .summary { border-top: 1px dashed var(--border); padding: 10px; }
+    .row { display: flex; justify-content: space-between; font-size: 14px; margin: 6px 0; }
+    .row em { color: var(--muted); font-style: normal; }
+    .row .ok { color: var(--ok); } .row .warn { color: #b45309; }
+    .checkout { padding: 10px; border-top: 1px solid var(--border); }
+    .btn.full { width: 100%; background: var(--brand); border: 1px solid var(--brand-dark); color: #111; font-weight: 900; }
+
+    /* ===== Checkout (Step 2) ===== */
+    .sheet { position: fixed; inset: 0; z-index: 95; display: none; }
+    .sheet.on { display: block; }
+    .sheet .backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.36); }
+    .sheet .card { position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: min(720px, 96%); max-height: 90svh; overflow: auto; padding: 14px; border-radius: 16px; background: #fff; border: 1px solid var(--border); box-shadow: var(--shadow); }
+    .form { display: grid; grid-template-columns: 1fr; gap: 8px; }
+    .label { font-size: 12px; color: var(--muted); }
+    .input, select, textarea { width: 100%; padding: 10px; border: 1px solid var(--border); border-radius: 10px; font: inherit; font-size: 16px; background: #fff; }
+    .bank { margin: 4px 0 0; font-size: 13px; border: 1px dashed var(--border); border-radius: 12px; padding: 10px; background: #fffced; }
+    .fine { font-size: 12px; color: var(--muted); }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    @media (max-width: 560px) { .two { grid-template-columns: 1fr; } }
+
+    /* ===== Admin (local only) ===== */
+    .admin-badge { position: fixed; left: 10px; bottom: 10px; z-index: 85; opacity: .7; }
+    .admin-pane { position: fixed; left: 10px; bottom: 54px; background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: var(--shadow); padding: 10px; display: none; max-width: 92vw; }
+    .admin-pane.on { display: block; }
+    .admin-pane h5 { margin: 0 0 6px; }
+    .admin-pane small { color: var(--muted); }
+    .admin-pane textarea { width: min(72ch, 80vw); height: 160px; }
+
+    /* ===== Footer ===== */
+    footer { margin: 20px 0 90px; padding-top: 12px; border-top: 1px solid var(--border); font-size: 12px; color: var(--muted); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="brand">
+        <img id="logoImg" src="https://i.imgur.com/9Xx0m3H.png" alt="KenSu Logo" />
+        <h1 id="siteTitle">啃酥菱角酥批發官網</h1>
+      </div>
+      <nav>
+        <a href="#store">馬上選購</a>
+        <a href="#about">關於我們</a>
+        <a href="#news">最新鮮報</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="copy">
+        <span class="kicker" id="heroKicker">KenSu Wholesale</span>
+        <h2 id="heroTitle">夜市起家，走進全台的黃金酥脆</h2>
+        <p id="heroSub">整件與單品項批發｜常溫・冷藏・冷凍 — 先匯款，核帳後出貨</p>
+        <div class="cta">
+          <button class="btn brand" onclick="scrollToStore()">🛒 馬上選購</button>
+          <button class="btn ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">品牌故事</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Filters / Chips -->
+  <section class="wrap" id="store">
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <!-- About / News -->
+  <section class="wrap" id="about" style="padding:18px 0 6px">
+    <h3>關於我們</h3>
+    <p>啃酥從夜市小攤發跡，主打菱角酥、芋泥酥、炸鮮奶與飲品原料。為了讓非加盟夥伴也能穩定取得原物料，我們開放<strong>整件與單品項</strong>批發。完成下單後，請依畫面顯示匯款資訊完成匯款；我們核帳後安排出貨。</p>
+  </section>
+  <section class="wrap" id="news" style="padding:0 0 8px">
+    <h3>最新鮮報</h3>
+    <ul>
+      <li>🧊 冷藏/冷凍品需全程低溫配送；不同溫層恕無法合併出貨與運費。</li>
+      <li>🚚 免運規則：依<strong>溫層群組</strong>計算，達各群組門檻即免運（規則寫在產品卡）。</li>
+      <li>📦 出貨時程：核帳後約 3–5 個工作天。</li>
+    </ul>
+  </section>
+
+  <!-- Floating Cart (Orange) -->
+  <button class="cart-fab" id="cartFab" title="開啟購物車" onclick="openCart()">
+    <span class="cart-count" id="cartCount">0</span>
+    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="64" cy="64" r="36" fill="#f59e0b" stroke="#d97706" stroke-width="6" />
+      <path d="M20 36h16l10 46h42l6-28H54" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="52" cy="96" r="6" fill="#111"/><circle cx="88" cy="96" r="6" fill="#111"/>
+      <path d="M64 22c-10 0-18 8-18 18 10-6 20-6 36 0-2-10-10-18-18-18z" fill="#fed7aa" stroke="#d97706" stroke-width="4"/>
+    </svg>
+  </button>
+
+  <!-- Cart Drawer -->
+  <div class="drawer" id="drawer">
+    <div class="backdrop" onclick="closeCart()"></div>
+    <div class="panel">
+      <header>
+        <h4>購物車</h4>
+        <button class="btn" onclick="closeCart()">關閉</button>
+      </header>
+      <div class="list" id="cartList"></div>
+      <div class="summary" id="cartSummary"></div>
+      <div class="checkout">
+        <button class="btn full" onclick="goCheckout()">前往結帳（先填資料後匯款）</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checkout Sheet -->
+  <div class="sheet" id="sheet">
+    <div class="backdrop" onclick="closeSheet()"></div>
+    <div class="card">
+      <h3 style="margin:6px 0 10px">填寫出貨資料</h3>
+      <form id="orderForm" class="form" onsubmit="submitOrder(event)">
+        <div class="two">
+          <div><div class="label">公司/店名（或姓名）</div><input class="input" name="buyer" required></div>
+          <div><div class="label">聯絡電話</div><input class="input" name="phone" required></div>
+        </div>
+        <div class="two">
+          <div><div class="label">Email（收通知）</div><input class="input" name="email" type="email" required></div>
+          <div><div class="label">LINE ID（選填）</div><input class="input" name="line"></div>
+        </div>
+        <div class="two">
+          <div><div class="label">收件人</div><input class="input" name="recipient" required></div>
+          <div><div class="label">出貨方式</div>
+            <select name="ship_note" class="input" required>
+              <option value="常溫配送">常溫配送</option>
+              <option value="冷藏配送">冷藏配送</option>
+              <option value="冷凍配送">冷凍配送</option>
+              <option value="超商取貨">超商取貨（限可寄品項）</option>
+            </select>
+          </div>
+        </div>
+        <div><div class="label">收件地址 / 取貨門市</div><input class="input" name="address" required></div>
+        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="如需統編抬頭、指定到貨日、開箱錄影等請填寫"></textarea></div>
+
+        <div class="bank">
+          <strong>匯款資訊：</strong>
+          <div class="fine">戶名：酥味香企業社｜銀行：XXXX（代碼 000）｜帳號：0000000000000<br>完成送出後請匯款，<b>留言匯款後五碼</b>；我們核帳後出貨（約 3–5 個工作天）。</div>
+        </div>
+        <div class="fine">送出後系統會將訂單寫入 Google 試算表並寄送確認信至您的信箱。</div>
+        <div class="two">
+          <button type="button" class="btn" onclick="closeSheet()">取消</button>
+          <button type="submit" class="btn brand">送出訂單（未付款不出貨）</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Admin (local quick edit) -->
+  <button class="admin-badge btn" onclick="toggleAdmin()">🔒 管理員</button>
+  <div class="admin-pane" id="adminPane">
+    <h5>快速設定（本機儲存）</h5>
+    <div class="fine">登入密碼統一 <b>111111</b>（只顯示在本機，會記錄於裝置）。</div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin:8px 0">
+      <input class="input" id="adminPass" type="password" placeholder="請輸入管理密碼" style="max-width:180px">
+      <button class="btn" onclick="adminLogin()">登入</button>
+      <button class="btn" onclick="saveBrand()">儲存品牌文案</button>
+      <button class="btn" onclick="saveProducts()">儲存產品 JSON</button>
+    </div>
+    <div class="two">
+      <div>
+        <div class="label">LOGO URL（可貼 GitHub RAW）</div>
+        <input class="input" id="inpLogo" placeholder="https://...png">
+        <div class="label">網站標題</div>
+        <input class="input" id="inpTitle" placeholder="啃酥菱角酥批發官網">
+        <div class="label">封面主標</div>
+        <input class="input" id="inpHeroTitle" placeholder="夜市起家，走進全台的黃金酥脆">
+        <div class="label">封面副標</div>
+        <input class="input" id="inpHeroSub" placeholder="整件與單品項｜先匯款，核帳後出貨">
+
+        <div style="margin-top:10px">
+          <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
+          <input class="input" id="ghUrl" placeholder="貼上 GitHub 檔案網址（含 blob）">
+          <div class="two">
+            <button class="btn" onclick="convertGh()">轉換 RAW</button>
+            <button class="btn" onclick="copyRaw()">複製 RAW 連結</button>
+          </div>
+          <input class="input" id="ghRawOut" placeholder="轉換結果會顯示在這裡" readonly>
+          <small class="fine">教學：把 <code>https://github.com/用戶/Repo/blob/分支/path/file.png</code> 轉成 <code>https://raw.githubusercontent.com/用戶/Repo/分支/path/file.png</code>；或直接在原網址後面加 <code>?raw=1</code>。</small>
+        </div>
+      </div>
+      <div>
+        <div class="label">產品資料（JSON：可改售價 price、規格 spec、是否售完 soldOut、免運 freeQty、運費 shipFee）</div>
+        <textarea id="jsonBox"></textarea>
+      </div>
+    </div>
+    <small>修改後按「儲存」，重新整理頁面即可看到變更（只影響本機）。</small>
+  </div>
+
+  <footer class="wrap">
+    <div>酥味香企業社｜統編 93428964</div>
+    <div>地址：台中市石岡區石岡街61號</div>
+    <div>連絡電話：0933-721-978</div>
+  </footer>
+
+  <script>
+    /* ===========================================================
+     * 1) 資料模型（只保留六種原物料；各留「整件」與「單品項」）
+     *    欄位：id, tag('A.粉類'|'B.冷藏原物料'|'C.冷凍原物料'), name, spec, price, type('整件'|'單品項'),
+     *         shipGroup('常溫'|'冷藏'|'冷凍'|'超商'), shipFee, freeQty, minOrder, soldOut, img, note
+     * =========================================================== */
+    const DEFAULT_PRODUCTS = [
+      // A.粉類（常溫）— 啃酥專用粉
+      {id:'powder_case', tag:'A.粉類', name:'啃酥專用粉', type:'整件', spec:'4.5公斤 / 5包 / 1件', price:4900, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'powder_single', tag:'A.粉類', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包', price:980, shipGroup:'常溫', shipFee:150, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // B.冷藏原物料 — 啃酥乳酪丁（冷藏）
+      {id:'cheese_case', tag:'B.冷藏原物料', name:'啃酥乳酪丁', type:'整件', spec:'1公斤 / 10包 / 1件', price:3800, shipGroup:'冷藏', shipFee:180, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'cheese_single', tag:'B.冷藏原物料', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包', price:380, shipGroup:'冷藏', shipFee:180, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥菱角仁（冷凍）
+      {id:'waterchest_case', tag:'C.冷凍原物料', name:'啃酥菱角仁', type:'整件', spec:'3公斤 / 4包 / 1件', price:2400, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'waterchest_single', tag:'C.冷凍原物料', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包', price:600, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥芋泥丁（冷凍）
+      {id:'taro_case', tag:'C.冷凍原物料', name:'啃酥芋泥丁', type:'整件', spec:'750公克 / 18盒 / 1件', price:4960, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'taro_single', tag:'C.冷凍原物料', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒', price:276, shipGroup:'冷凍', shipFee:200, freeQty:18, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥炸鮮奶（冷凍）
+      {id:'milkfried_case', tag:'C.冷凍原物料', name:'啃酥炸鮮奶', type:'整件', spec:'6條 / 16盒 / 1件', price:1696, shipGroup:'冷凍', shipFee:200, freeQty:2, minOrder:1, soldOut:false, img:'', note:'滿2件免運'},
+      {id:'milkfried_single', tag:'C.冷凍原物料', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒', price:106, shipGroup:'冷凍', shipFee:200, freeQty:32, minOrder:1, soldOut:false, img:'', note:'—'},
+
+      // C.冷凍原物料 — 啃酥特調牛奶（冷凍）
+      {id:'milkmix_case', tag:'C.冷凍原物料', name:'啃酥特調牛奶', type:'整件', spec:'330毫升 / 10瓶 / 1件', price:750, shipGroup:'冷凍', shipFee:200, freeQty:1, minOrder:1, soldOut:false, img:'', note:'滿1件免運'},
+      {id:'milkmix_single', tag:'C.冷凍原物料', name:'啃酥特調牛奶', type:'單品項', spec:'330毫升 / 1瓶', price:75, shipGroup:'冷凍', shipFee:200, freeQty:10, minOrder:1, soldOut:false, img:'', note:'—'}
+    ];
+
+    // 僅保留指定標籤與溫層
+    const TAGS = ['A.粉類', 'B.冷藏原物料', 'C.冷凍原物料', '常溫', '冷藏', '冷凍'];
+    const GROUP_LABELS = { 常溫: '常溫', 冷藏: '冷藏', 冷凍: '冷凍' };
+
+    /* ===========================================================
+     * 2) 狀態與儲存
+     * =========================================================== */
+    const LS_KEY_PRODUCTS = 'kensu_wholesale_products_v2';
+    const LS_KEY_BRAND = 'kensu_wholesale_brand_v2';
+    const LS_KEY_ADMIN = 'kensu_admin_ok_v1';
+
+    const brand = loadBrand();
+    const products = loadProducts();
+    let filterOn = '全部';
+    const cart = new Map(); // id -> { product, qty }
+
+    function loadProducts() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY_PRODUCTS)) || DEFAULT_PRODUCTS; } catch { return DEFAULT_PRODUCTS; }
+    }
+    function loadBrand() {
+      try { return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || { logo:'', title:'啃酥菱角酥批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件與單品項｜先匯款，核帳後出貨' }; } catch { return { logo:'', title:'啃酥菱角酥批發官網', heroTitle:'夜市起家，走進全台的黃金酥脆', heroSub:'整件與單品項｜先匯款，核帳後出貨' }; }
+    }
+
+    /* ===========================================================
+     * 3) 初始化：品牌文案 + 篩選 + 卡片渲染
+     * =========================================================== */
+    function applyBrand(){
+      if (brand.logo) document.getElementById('logoImg').src = brand.logo;
+      document.getElementById('siteTitle').textContent = brand.title || '啃酥菱角酥批發官網';
+      document.getElementById('heroTitle').textContent = brand.heroTitle || '';
+      document.getElementById('heroSub').textContent = brand.heroSub || '';
+      // 管理面板預填
+      document.getElementById('inpLogo').value = brand.logo || '';
+      document.getElementById('inpTitle').value = brand.title || '';
+      document.getElementById('inpHeroTitle').value = brand.heroTitle || '';
+      document.getElementById('inpHeroSub').value = brand.heroSub || '';
+    }
+
+    function uniqueTags(){
+      // 固定為需求指定的標籤（含「全部」在 chips 內第一個）
+      return ['全部', ...TAGS];
+    }
+
+    function renderChips(){
+      const chips = document.getElementById('chips');
+      chips.innerHTML = '';
+      uniqueTags().forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'chip' + (t === filterOn ? ' is-on' : '');
+        btn.textContent = t;
+        btn.onclick = () => { filterOn = t; renderGrid(); };
+        chips.appendChild(btn);
+      });
+    }
+
+    function matchFilter(p){
+      if (filterOn === '全部') return true;
+      if (['常溫','冷藏','冷凍'].includes(filterOn)) return GROUP_LABELS[p.shipGroup] === filterOn;
+      return p.tag === filterOn;
+    }
+
+    function renderGrid(){
+      const grid = document.getElementById('grid');
+      grid.innerHTML = '';
+      products.filter(matchFilter).forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'card';
+        const title = `${p.name}（${p.type}）`;
+        card.innerHTML = `
+          <div class="media">
+            ${p.img ? `<img src="${p.img}" alt="${title}">` : `<span style="color:#9ca3af">(尚未上傳圖片)</span>`}
+            <span class="badge">${p.tag}｜${GROUP_LABELS[p.shipGroup] || p.shipGroup}</span>
+            ${p.soldOut ? `<span class="soldout">已售完</span>` : ''}
+          </div>
+          <div class="body">
+            <h3>${title}</h3>
+            <div class="meta">${p.spec}</div>
+            <div class="price">$${fmt(p.price)}</div>
+            <button class="btn add" ${p.soldOut || p.minOrder===0 ? 'disabled' : ''} onclick="addToCart('${p.id}', ${p.minOrder || 1})">加入購物車</button>
+            <div class="note">運費 $${p.shipFee}${p.freeQty>0?`・滿${p.freeQty}件免運`:''}${p.note?`｜${p.note}`:''}</div>
+          </div>`;
+        grid.appendChild(card);
+      });
+    }
+
+    function fmt(n){ return Number(n).toLocaleString('zh-TW'); }
+    function scrollToStore(){ document.getElementById('store').scrollIntoView({ behavior:'smooth' }); }
+
+    /* ===========================================================
+     * 4) 購物車：加入 / 渲染 / 運費計算
+     *    需求：加入商品時「不跳轉購物車頁」→ 僅顯示提示，數量只允許 +/-
+     * =========================================================== */
+    function toast(msg){
+      const t = document.createElement('div');
+      t.textContent = msg;
+      t.style.cssText = 'position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;opacity:.96;z-index:120';
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.remove(); }, 1500);
+    }
+
+    function addToCart(pid, qty=1){
+      const p = products.find(x => x.id === pid);
+      if(!p) return;
+      const row = cart.get(pid) || { product: p, qty: 0 };
+      row.qty += qty;
+      cart.set(pid, row);
+      updateCartCount();
+      renderCart();
+      toast('已加入購物車'); // 不自動打開購物車
+    }
+
+    function updateCartCount(){
+      let totalQty = 0; cart.forEach(v => totalQty += v.qty);
+      document.getElementById('cartCount').textContent = totalQty;
+    }
+
+    function openCart(){ document.getElementById('drawer').classList.add('on'); }
+    function closeCart(){ document.getElementById('drawer').classList.remove('on'); }
+
+    function renderCart(){
+      const list = document.getElementById('cartList');
+      list.innerHTML = '';
+      let sub = 0; let groups = {};
+      cart.forEach(({product, qty}) => {
+        sub += product.price * qty;
+        const g = product.shipGroup;
+        groups[g] ||= { qty: 0, feeMax: 0, freeCandidates: [], name: GROUP_LABELS[g] || g };
+        groups[g].qty += qty;
+        groups[g].feeMax = Math.max(groups[g].feeMax, Number(product.shipFee) || 0);
+        if(product.freeQty > 0) groups[g].freeCandidates.push(product.freeQty);
+
+        const item = document.createElement('div');
+        item.className = 'item';
+        const subLine = product.price * qty;
+        item.innerHTML = `
+          <div style="width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center">${product.img?`<img src="${product.img}" style="width:100%;height:100%;object-fit:cover">`:'—'}</div>
+          <div>
+            <div style="font-weight:700">${product.name}（${product.type}）</div>
+            <div class="item-sub">${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}</div>
+          </div>
+          <div class="qty">
+            <button onclick="decQty('${product.id}')">−</button>
+            <div>${qty}</div>
+            <button onclick="incQty('${product.id}')">＋</button>
+          </div>`;
+        list.appendChild(item);
+      });
+
+      const sum = document.getElementById('cartSummary');
+      let ship = 0; let shipRows = '';
+      Object.entries(groups).forEach(([key, g]) => {
+        const groupFreeQty = g.freeCandidates.length ? Math.min(...g.freeCandidates) : 0;
+        const free = groupFreeQty>0 && g.qty >= groupFreeQty;
+        const fee = free ? 0 : g.feeMax;
+        ship += fee;
+        const need = Math.max(0, (groupFreeQty||0) - g.qty);
+        const hint = groupFreeQty ? (free ? '<span class="ok">已達免運</span>' : `<span class="warn">尚差 ${need} 件免運</span>`) : '<em>此群組無免運</em>';
+        shipRows += `<div class="row"><div>${g.name} 運費</div><div>$${fmt(fee)}　${hint}</div></div>`;
+      });
+      const total = sub + ship;
+
+      // 明細：總件數、群組件數
+      let totalQty = 0; cart.forEach(v => totalQty += v.qty);
+      let groupDetail = Object.entries(groups).map(([k,g])=>`${g.name}:${g.qty}件`).join('、');
+
+      sum.innerHTML = `
+        <div class="row"><div>商品小計</div><div>$${fmt(sub)}</div></div>
+        <div class="row"><div>件數明細</div><div>${totalQty} 件（${groupDetail||'—'}）</div></div>
+        ${shipRows || '<div class="row"><div>運費</div><div>$0</div></div>'}
+        <div class="row" style="border-top:1px solid var(--border);padding-top:8px;font-weight:900"><div>應付總額</div><div>$${fmt(total)}</div></div>
+        <div class="fine">＊不同溫層分開計算運費與免運門檻；實際出貨以匯款核帳為準。</div>`;
+    }
+
+    function incQty(pid){ const row = cart.get(pid); if(!row) return; row.qty++; cart.set(pid,row); updateCartCount(); renderCart(); }
+    function decQty(pid){ const row = cart.get(pid); if(!row) return; row.qty--; if(row.qty<=0) cart.delete(pid); else cart.set(pid,row); updateCartCount(); renderCart(); }
+
+    /* ===========================================================
+     * 5) 結帳流程（先填資料→送出到 Google Apps Script）
+     * =========================================================== */
+    const GAS_ENDPOINT = '';// 部署後貼上 Web App URL
+
+    function goCheckout(){ if(cart.size===0){ alert('請先加入商品'); return } document.getElementById('sheet').classList.add('on'); }
+    function closeSheet(){ document.getElementById('sheet').classList.remove('on'); }
+
+    async function submitOrder(e){
+      e.preventDefault();
+      const fd = new FormData(e.target);
+      // 整理購物車
+      let items = []; let sub=0; let ship=0; let groups={};
+      cart.forEach(({product,qty})=>{
+        items.push({id:product.id,name:product.name,type:product.type,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
+        sub += product.price*qty;
+        const g=product.shipGroup; groups[g] ||= {qty:0,fee:0,freeCandidates:[]};
+        groups[g].qty += qty; groups[g].fee = Math.max(groups[g].fee, product.shipFee||0); if(product.freeQty>0) groups[g].freeCandidates.push(product.freeQty);
+      });
+      Object.values(groups).forEach(g=>{ const fq=g.freeCandidates.length?Math.min(...g.freeCandidates):0; ship += (fq>0 && g.qty>=fq)?0:g.fee; });
+      const total = sub + ship;
+
+      const payload = {
+        type:'ORDER',
+        buyer: fd.get('buyer'), phone: fd.get('phone'), email: fd.get('email'), line: fd.get('line'),
+        recipient: fd.get('recipient'), address: fd.get('address'), ship_note: fd.get('ship_note'), memo: fd.get('memo'),
+        items, sub, ship, total, ts: new Date().toISOString()
+      };
+
+      if(!GAS_ENDPOINT){
+        console.log('DEV payload →', payload);
+        alert('已模擬送出訂單（尚未串接後端）。請設定 Apps Script 網址後即可正式寫入試算表並寄信。
+總額：$'+fmt(total));
+        closeSheet(); closeCart(); return;
+      }
+
+      try{
+        await fetch(GAS_ENDPOINT, {method:'POST', mode:'no-cors', body: JSON.stringify(payload)});
+        alert('訂單已送出！請依匯款資訊匯款，我們核帳後出貨。');
+        cart.clear(); updateCartCount(); closeSheet(); closeCart();
+      }catch(err){ console.error(err); alert('送出失敗，請稍後再試或聯繫客服。'); }
+    }
+
+    /* ===========================================================
+     * 6) 管理員（本機）：密碼 111111（不顯示在畫面；僅本機存記錄）
+     * =========================================================== */
+    function toggleAdmin(){
+      const pane = document.getElementById('adminPane');
+      pane.classList.toggle('on');
+      document.getElementById('jsonBox').value = JSON.stringify(products, null, 2);
+    }
+    function adminLogin(){
+      const ok = localStorage.getItem(LS_KEY_ADMIN) === 'YES';
+      const pass = document.getElementById('adminPass').value;
+      if(ok || pass === '111111'){
+        localStorage.setItem(LS_KEY_ADMIN,'YES');
+        alert('已登入（本機）');
+      }else{ alert('密碼錯誤'); }
+    }
+    function saveBrand(){
+      if(localStorage.getItem(LS_KEY_ADMIN) !== 'YES'){ alert('請先登入管理員'); return; }
+      const next = {
+        logo: document.getElementById('inpLogo').value,
+        title: document.getElementById('inpTitle').value,
+        heroTitle: document.getElementById('inpHeroTitle').value,
+        heroSub: document.getElementById('inpHeroSub').value,
+      };
+      localStorage.setItem(LS_KEY_BRAND, JSON.stringify(next));
+      applyBrand();
+      alert('品牌文案已儲存（本機）。');
+    }
+    function saveProducts(){
+      if(localStorage.getItem(LS_KEY_ADMIN) !== 'YES'){ alert('請先登入管理員'); return; }
+      try{
+        const obj = JSON.parse(document.getElementById('jsonBox').value||'[]');
+        localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(obj));
+        alert('產品 JSON 已儲存（本機）。重新整理頁面以套用。');
+      }catch{ alert('JSON 格式錯誤，請檢查逗號 / 括號。') }
+    }
+
+    // GitHub ➜ RAW 轉換
+    function githubToRaw(url){
+      try{
+        const u = new URL(url);
+        if(u.hostname === 'github.com'){
+          // /user/repo/blob/branch/path -> raw.githubusercontent.com/user/repo/branch/path
+          const parts = u.pathname.split('/').filter(Boolean);
+          const idx = parts.indexOf('blob');
+          if(idx>0){
+            const user = parts[0], repo = parts[1];
+            const branch = parts[3];
+            const rest = parts.slice(4).join('/');
+            return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${rest}`;
+          }
+        }
+        // fallback: 加 ?raw=1
+        if(!url.includes('?')) return url + '?raw=1';
+        return url + '&raw=1';
+      }catch{ return url }
+    }
+    function convertGh(){ const url = document.getElementById('ghUrl').value.trim(); document.getElementById('ghRawOut').value = githubToRaw(url); }
+    function copyRaw(){ const o=document.getElementById('ghRawOut'); o.select(); document.execCommand('copy'); alert('已複製 RAW 連結'); }
 
     // 啟動
     applyBrand();
