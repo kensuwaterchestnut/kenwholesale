@@ -20,6 +20,7 @@
       background-color: #fff;
       display: inline-block;
       vertical-align: top;
+      position: relative;
     }
     .product-image {
       width: 100%;
@@ -76,25 +77,56 @@
 </head>
 <body>
 
-  <!-- 產品列表 -->
-  <div class="product-card">
-    <img src="product1.jpg" alt="啃酥專用粉" class="product-image">
-    <div class="product-title">啃酥專用粉</div>
-    <div class="product-price">$4900</div>
-    <button class="buy-btn" id="buy1" onclick="addToCart('啃酥專用粉', 4900)">加入購物車</button>
-    <div class="out-of-stock" style="display:none;" id="out-of-stock1">已售完</div>
-  </div>
-
-  <!-- 其他產品卡片 ... -->
+  <!-- 產品展示區 -->
+  <div id="product-list"></div>
 
   <!-- 浮動購物車按鈕 -->
   <div class="floating-cart" onclick="viewCart()">🛒</div>
 
   <script>
     let cart = [];
+    let products = [
+      { id: 'product1', name: '啃酥專用粉', price: 4900, stock: 2, image: 'product1.jpg', status: '正常販售' },
+      { id: 'product2', name: '啃酥菱角仁', price: 2400, stock: 2, image: 'product2.jpg', status: '正常販售' },
+      { id: 'product3', name: '啃酥乳酪丁', price: 3800, stock: 1, image: 'product3.jpg', status: '正常販售' },
+      { id: 'product4', name: '啃酥芋泥丁', price: 4960, stock: 1, image: 'product4.jpg', status: '正常販售' },
+      { id: 'product5', name: '啃酥炸鮮奶', price: 1696, stock: 2, image: 'product5.jpg', status: '正常販售' },
+      { id: 'product6', name: '啃酥特調牛奶', price: 750, stock: 1, image: 'product6.jpg', status: '正常販售' },
+      { id: 'product7', name: '4兩紙袋', price: 1900, stock: 1, image: 'product7.jpg', status: '正常販售' },
+      { id: 'product8', name: '1杯塑膠袋', price: 150, stock: 0, image: 'product8.jpg', status: '已售完' },
+      { id: 'product9', name: '4兩塑膠袋', price: 1000, stock: 1, image: 'product9.jpg', status: '正常販售' },
+      { id: 'product10', name: '4兩竹籤', price: 150, stock: 1, image: 'product10.jpg', status: '正常販售' },
+      { id: 'product11', name: '美食家耐炸油', price: 150, stock: 0, image: 'product11.jpg', status: '已售完' },
+      { id: 'product12', name: '飛燕煉乳', price: 150, stock: 0, image: 'product12.jpg', status: '已售完' },
+      { id: 'product13', name: '香濃奶茶粉', price: 200, stock: 3, image: 'product13.jpg', status: '正常販售' },
+      { id: 'product14', name: '大麥', price: 120, stock: 3, image: 'product14.jpg', status: '正常販售' },
+      { id: 'product15', name: '酸梅湯', price: 135, stock: 3, image: 'product15.jpg', status: '正常販售' },
+      { id: 'product16', name: '玫瑰仙渣茶包', price: 250, stock: 3, image: 'product16.jpg', status: '正常販售' },
+      { id: 'product17', name: '青茶茶葉', price: 280, stock: 3, image: 'product17.jpg', status: '正常販售' },
+      // 其他產品...
+    ];
 
-    // 加入購物車功能
-    function addToCart(product, price) {
+    // 顯示所有產品
+    function displayProducts() {
+      const productList = document.getElementById('product-list');
+      productList.innerHTML = ''; // 清空產品列表
+      products.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.classList.add('product-card');
+        productCard.innerHTML = `
+          <img src="${product.image}" alt="${product.name}" class="product-image">
+          <div class="product-title">${product.name}</div>
+          <div class="product-price">$${product.price}</div>
+          <button class="buy-btn" id="buy${product.id}" onclick="addToCart('${product.id}', ${product.price})" ${product.stock <= 0 ? 'disabled' : ''}>加入購物車</button>
+          <div class="out-of-stock" style="display:${product.stock <= 0 ? 'block' : 'none'}" id="out-of-stock${product.id}">已售完</div>
+        `;
+        productList.appendChild(productCard);
+      });
+    }
+
+    // 加入購物車
+    function addToCart(productId, price) {
+      const product = products.find(p => p.id === productId);
       cart.push({ product, price });
       updateFloatingCart();
     }
@@ -107,12 +139,11 @@
 
     // 查看購物車
     function viewCart() {
-      alert('購物車內容：' + cart.map(item => item.product + ' - $' + item.price).join(', '));
+      alert('購物車內容：' + cart.map(item => item.product.name + ' - $' + item.price).join(', '));
     }
 
-    // 假設某些商品已售完
-    document.getElementById('out-of-stock1').style.display = 'block'; // 顯示已售完
-    document.getElementById('buy1').disabled = true; // 禁用購買按鈕
+    // 初始化頁面
+    displayProducts();
   </script>
 
 </body>
