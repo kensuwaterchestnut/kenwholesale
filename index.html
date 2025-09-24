@@ -1,1 +1,140 @@
-# kenwholesale
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>啃酥菱角酥批發</title>
+  <style>
+    body { font-family: "Noto Sans TC", sans-serif; margin:0; background:#fafafa; color:#111; }
+    header { padding:20px; text-align:center; background:#fff; border-bottom:1px solid #eee; }
+    h1[contenteditable] { outline:2px dashed #f59e0b; }
+    .products { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:20px; padding:20px; }
+    .card { background:#fff; border:1px solid #ddd; border-radius:10px; overflow:hidden; position:relative; }
+    .card img { width:100%; display:block; }
+    .card h3 { margin:10px; font-size:18px; }
+    .card p { margin:10px; color:#666; }
+    .btn { display:block; margin:10px; padding:10px; text-align:center; background:#f59e0b; color:#fff; border-radius:8px; cursor:pointer; user-select:none; }
+    .btn:disabled { background:#ccc; cursor:not-allowed; }
+    .soldout::after {
+      content:"已售完"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
+      background:rgba(0,0,0,.7); color:#fff; padding:8px 16px; border-radius:6px; font-size:18px;
+    }
+    .soldout img { opacity:0.4; }
+
+    /* 浮動購物車 */
+    #cart { position:fixed; bottom:20px; right:20px; background:#f59e0b; border-radius:50%; width:60px; height:60px;
+      display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 4px 12px rgba(0,0,0,.2);}
+    #cart svg { width:32px; height:32px; fill:#fff; }
+    #cart span { position:absolute; top:8px; right:8px; background:#d00; color:#fff; font-size:14px;
+      border-radius:50%; width:22px; height:22px; display:flex; align-items:center; justify-content:center; }
+
+    /* 購買飛行動畫 */
+    .flying { position:fixed; z-index:999; transition: all .8s cubic-bezier(.55,.06,.68,.19); pointer-events:none; }
+
+    /* 管理員面板 */
+    #admin { position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.6); display:none; align-items:center; justify-content:center; }
+    #admin .box { background:#fff; padding:20px; border-radius:10px; width:90%; max-width:400px; }
+    #admin input, #admin textarea { width:100%; margin:6px 0; padding:8px; border:1px solid #ccc; border-radius:6px; }
+    #admin button { margin-top:10px; padding:10px; background:#f59e0b; color:#fff; border:none; border-radius:8px; cursor:pointer; }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1 contenteditable="true">啃酥菱角酥 批發專區</h1>
+  <button onclick="openAdmin()">🔒 管理員登入</button>
+</header>
+
+<section class="products" id="products">
+  <div class="card" data-stock="3">
+    <img src="https://via.placeholder.com/300x200" alt="菱角酥">
+    <h3 contenteditable="true">菱角酥 10斤</h3>
+    <p contenteditable="true">新鮮菱角製作，批發價</p>
+    <button class="btn" onclick="addToCart(this)">購買</button>
+  </div>
+  <div class="card" data-stock="0">
+    <img src="https://via.placeholder.com/300x200" alt="芋泥酥">
+    <h3 contenteditable="true">芋泥酥 10斤</h3>
+    <p contenteditable="true">香濃芋泥，批發價</p>
+    <button class="btn" disabled>補貨中</button>
+  </div>
+</section>
+
+<!-- 浮動購物車 -->
+<div id="cart" onclick="alert('開啟購物車頁面 (Demo)')">
+  <svg viewBox="0 0 512 512"><path d="M256 512c70.7 0 128-57.3 128-128H128c0 70.7 57.3 128 128 128zM480 384H32c-17.7 0-32-14.3-32-32V96c0-17.7 14.3-32 32-32h96l19.2-38.4C152.3 13.1 162.6 0 176 0h160c13.4 0 23.7 13.1 28.8 25.6L384 64h96c17.7 0 32 14.3 32 32v256c0 17.7-14.3 32-32 32z"/></svg>
+  <span id="cart-count">0</span>
+</div>
+
+<!-- 管理員面板 -->
+<div id="admin">
+  <div class="box">
+    <h2>管理員面板</h2>
+    <label>網址轉換工具：</label>
+    <input type="text" id="urlInput" placeholder="貼上 GitHub 圖片/影片網址">
+    <button onclick="convertURL()">轉換網址並複製</button>
+    <hr>
+    <button onclick="saveEdits()">確認修改</button>
+    <button onclick="closeAdmin()">關閉</button>
+  </div>
+</div>
+
+<script>
+  let cartCount = 0;
+
+  // 購物邏輯
+  function addToCart(btn){
+    let card = btn.closest('.card');
+    let stock = parseInt(card.dataset.stock);
+    if(stock <= 0){ return; }
+
+    cartCount++;
+    document.getElementById("cart-count").innerText = cartCount;
+    document.getElementById("cart").classList.add("shake");
+    setTimeout(()=>document.getElementById("cart").classList.remove("shake"),500);
+
+    // 飛行動畫
+    let img = card.querySelector("img");
+    let flying = img.cloneNode();
+    let rect = img.getBoundingClientRect();
+    flying.className="flying";
+    flying.style.left=rect.left+"px"; flying.style.top=rect.top+"px"; flying.style.width=rect.width+"px";
+    document.body.appendChild(flying);
+
+    let cart = document.getElementById("cart").getBoundingClientRect();
+    setTimeout(()=>{
+      flying.style.left=cart.left+"px"; flying.style.top=cart.top+"px"; flying.style.width="20px";
+      flying.style.opacity=0;
+    },50);
+    setTimeout(()=>document.body.removeChild(flying),900);
+  }
+
+  // 管理員面板
+  function openAdmin(){ document.getElementById("admin").style.display="flex"; }
+  function closeAdmin(){ document.getElementById("admin").style.display="none"; }
+
+  // 儲存編輯內容
+  function saveEdits(){
+    alert("已儲存修改 (Demo: 建議連接後端或 localStorage)");
+    closeAdmin();
+  }
+
+  // 網址轉換工具
+  function convertURL(){
+    let url = document.getElementById("urlInput").value.trim();
+    if(!url) return;
+    let raw = url.replace("github.com","raw.githubusercontent.com").replace("/blob/","");
+    navigator.clipboard.writeText(raw).then(()=>{
+      alert("已轉換並複製：\n"+raw);
+    });
+  }
+
+  // 初始化庫存狀態
+  document.querySelectorAll(".card").forEach(card=>{
+    if(parseInt(card.dataset.stock) <= 0){
+      card.classList.add("soldout");
+    }
+  });
+</script>
+</body>
+</html>
