@@ -1,3 +1,6 @@
+已整合：防重複送單（顯示「正在送出，請稍候…」並鎖定按鈕/表單＋逾時保護）、送單成功後自動關閉視窗、導覽列新增「查詢訂單」（可用訂單編號或 Email）。直接整份覆蓋你的前端即可。
+
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -57,15 +60,11 @@
     @media (min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
     .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
 
-    /* 產品圖片容器固定比例 + 置中顯示（不裁切） */
     .card .media{position:relative;overflow:hidden;background:#f3f4f6}
     .card .media::before{content:"";display:block;padding-top:100%}
     @media (min-width:860px){ .card .media::before{padding-top:75%} }
     .card .media img{
-      position:absolute;inset:0;
-      width:100%;height:100%;
-      object-fit:contain;            /* 改為 contain：完整顯示圖片 */
-      object-position:center;
+      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;
     }
 
     .soldout{position:absolute;inset:auto 8px 8px auto;background:rgba(17,24,39,.85);color:#fff;padding:4px 8px;border-radius:10px;font-size:11px;z-index:2}
@@ -138,6 +137,14 @@
     .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
     @media (max-width:560px){.two{grid-template-columns:1fr}}
     footer{margin:20px 0 90px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:#6b7280;text-align:center}
+
+    /* 送單鎖定遮罩 */
+    .mask{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
+    .mask.on{display:flex}
+    .mask .box{background:#111;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+    .hint{font-size:12px;color:var(--muted);margin-top:4px}
+    .result{margin-top:10px}
+    .result .card{border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:8px}
   </style>
 </head>
 <body>
@@ -151,6 +158,7 @@
         <a href="#about">關於我們</a>
         <a href="#store">馬上選購</a>
         <a href="#news">物流須知</a>
+        <a href="javascript:void(0)" onclick="openSearch()">查詢訂單</a>
       </nav>
     </div>
   </header>
@@ -204,7 +212,7 @@
   </button>
 
   <div class="drawer" id="drawer">
-    <div class="backdrop" onclick="closeCart"></div>
+    <div class="backdrop" onclick="closeCart()"></div>
     <div class="panel">
       <header>
         <h4>購物車</h4>
@@ -278,11 +286,35 @@
         <div class="fine">送出後系統會將訂單明細寄送確認信至您的信箱【匯款後出貨】。</div>
         <div style="display:flex;justify-content:center;gap:8px;margin-top:8px">
           <button type="button" class="btn" onclick="closeSheet()">取消</button>
-          <button type="submit" class="btn brand">送出訂單</button>
+          <button id="submitBtn" type="submit" class="btn brand">送出訂單</button>
         </div>
       </form>
     </div>
   </div>
+
+  <!-- 查詢訂單 -->
+  <div class="sheet" id="searchSheet">
+    <div class="backdrop" onclick="closeSearch()"></div>
+    <div class="card">
+      <h3 style="margin:6px 0 10px">查詢訂單</h3>
+      <form id="searchForm" class="form" onsubmit="submitSearch(event)">
+        <div><div class="label">訂單編號（例：K250915-001）</div>
+          <input class="input" name="orderId" placeholder="可輸入 K250915-001 或 #K250915-001">
+        </div>
+        <div><div class="label">Email（下單時填的信箱）</div>
+          <input class="input" name="email" type="email" placeholder="shop@example.com">
+        </div>
+        <div class="hint">至少填一項：訂單編號或 Email 任一即可。</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:8px">
+          <button type="button" class="btn" onclick="closeSearch()">關閉</button>
+          <button id="searchBtn" type="submit" class="btn brand">開始查詢</button>
+        </div>
+      </form>
+      <div id="searchResult" class="result"></div>
+    </div>
+  </div>
+
+  <div id="loadingMask" class="mask" aria-live="polite"><div class="box" id="loadingText">正在送出訂單，請稍候…</div></div>
 
   <button class="admin-gear" title="管理">
     <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
@@ -341,13 +373,13 @@
     const LS_KEY_PRODUCTS='kensu_wholesale_products_v10';
     const LS_KEY_BRAND='kensu_wholesale_brand_v10';
     const LS_KEY_ADMIN='kensu_admin_ok_v3';
+    const LS_KEY_LAST_ORDER='kensu_last_order_hint';
 
-    /* ===== 預設商品（含新增兩品項） ===== */
+    /* ===== 預設商品 ===== */
     const DEFAULT_PRODUCTS = [
       {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
       {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
 
-      /* 新增：啃酥專用粉(克) — 每單位=10g；1公斤=數量100；制式規格=450 */
       {id:'powder_gram',  tag:'', name:'啃酥專用粉(克)', type:'單品項',
        spec:'以克計價｜1單位=10g；1公斤=數量100｜【制式規格】4.5公斤=數量450',
        price:3, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:450, soldOut:false, soldCount:5024,
@@ -356,7 +388,6 @@
       {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:3500, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:95, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
       {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:990,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:210, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
 
-      /* 新增：啃酥菱角仁(斤) — 每斤約600g */
       {id:'waterchest_catty', tag:'', name:'啃酥菱角仁(斤)', type:'單品項',
        spec:'每斤（約600g）', price:240, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:1066,
        shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
@@ -367,7 +398,6 @@
       {id:'fat_case',  tag:'', name:'啃酥專用脂', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:880, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:33, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
       {id:'fat_single',tag:'', name:'啃酥專用脂', type:'單品項', spec:'330毫升 / 1瓶',        price:95,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:402, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
 
-      /* 芋泥丁（示意圖） */
       {id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 10盒 / 1件', price:3550, shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
       {id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
 
@@ -409,6 +439,11 @@
     function uniqueTags(){ return ['全部',...TAGS] }
     function renderChips(){
       const chips=document.getElementById('chips'); chips.innerHTML='';
+      // 額外提供「查訂單」快速入口（可留可拿掉）
+      const searchChip=document.createElement('button');
+      searchChip.className='chip'; searchChip.textContent='🔎 查訂單';
+      searchChip.onclick=openSearch; chips.appendChild(searchChip);
+
       uniqueTags().forEach(t=>{
         const btn=document.createElement('button');
         btn.className='chip'+(t===filterOn?' is-on':''); btn.textContent=t;
@@ -446,13 +481,11 @@
             <div class='meta'>已售出：${fmt(p.soldCount||0)}</div>
             <div class='meta'>效期：${p.shelfLife||'—'}｜保存：${p.storage||'—'}</div>
             <div class='price'>$${fmt(p.price)}</div>
-
             <div class="qtyline">
               <button class="qtybtn" onclick="cardDec('${qtyId}')">−</button>
               <input id="${qtyId}" class="qtyinput" type="number" min="1" value="${p.minOrder||1}" oninput="cardNormalize('${qtyId}')">
               <button class="qtybtn" onclick="cardInc('${qtyId}')">＋</button>
             </div>
-
             <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCartFromCard('${p.id}','${qtyId}')">加入購物車</button>
             <div class='note'>${p.note?`${p.note}`:''}</div>
           </div>`;
@@ -578,10 +611,36 @@
     }
     function closeSheet(){ document.getElementById('sheet').classList.remove('on') }
 
+    /* ===== 送單：防重複 + 請稍候遮罩 + 逾時保護 ===== */
+    let sending=false;
+    function setLoading(on, text){
+      const mask=document.getElementById('loadingMask');
+      const tx=document.getElementById('loadingText');
+      if(text) tx.textContent=text;
+      mask.classList.toggle('on', !!on);
+    }
+    function setFormDisabled(form, disabled){
+      Array.from(form.elements).forEach(el=>{ el.disabled=disabled; });
+    }
+    function withTimeout(promise, ms){
+      return new Promise((resolve, reject)=>{
+        const t=setTimeout(()=>reject(new Error('TIMEOUT')), ms);
+        promise.then(v=>{clearTimeout(t); resolve(v)}).catch(e=>{clearTimeout(t); reject(e)});
+      });
+    }
+
     async function submitOrder(e){
       e.preventDefault();
+      if(sending) return; // 防重複
+      sending=true;
 
-      const fd=new FormData(e.target);
+      const form=e.target;
+      const btn=document.getElementById('submitBtn');
+      setFormDisabled(form,true);
+      btn.textContent='送出中，請稍候…';
+      setLoading(true,'正在送出訂單，請稍候…請勿重複點擊或關閉視窗');
+
+      const fd=new FormData(form);
       let items=[]; let sub=0; let ship=0; let groups={};
       cart.forEach(({product,qty})=>{
         items.push({id:product.id,name:product.name,type:product.type,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
@@ -600,19 +659,114 @@
       };
 
       try{
-        await fetch(GAS_ENDPOINT, {
+        const res = await withTimeout(fetch(GAS_ENDPOINT, {
           method:'POST',
           headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // 簡單請求，不觸發預檢
           body: JSON.stringify(payload)
-        });
-        alert('訂單已送出！完成匯款請至 LINE 傳後五碼，我們核帳後出貨。');
+        }), 35000); // 35 秒逾時保護
+
+        let data={};
+        try{ data = await res.json(); }catch(_){ /* 不是 JSON 也可 */ }
+
+        // 成功：提示 + 關閉 + 清空購物車
+        const oid = (data && data.orderId) ? `（訂單編號：${data.orderId}）` : '';
+        alert(`訂單已送出！${oid}\n完成匯款請至 LINE 傳後五碼，我們核帳後出貨。`);
+        // 存本機提示，供「查訂單」的本機後備
+        try{
+          localStorage.setItem(LS_KEY_LAST_ORDER, JSON.stringify({
+            id: data.orderId || '(等待後台生成)',
+            email: fd.get('email') || '',
+            total, ts: new Date().toISOString(), status:'已送出（待核帳）'
+          }));
+        }catch(_){}
         cart.clear(); updateCartCount(); closeSheet(); closeCart();
       }catch(err){
         console.error('submitOrder failed', err);
-        alert('送出失敗，請稍後再試或聯繫客服。');
+        alert('送出可能逾時或失敗，請稍後再試或聯繫客服。\n若稍後收到確認信，代表已成功，請勿重複送單。');
+      }finally{
+        sending=false;
+        setLoading(false);
+        setFormDisabled(form,false);
+        btn.textContent='送出訂單';
       }
     }
 
+    /* ===== 查詢訂單（訂單編號或 Email 任一即可） ===== */
+    function openSearch(){ document.getElementById('searchSheet').classList.add('on') }
+    function closeSearch(){ document.getElementById('searchSheet').classList.remove('on') }
+
+    async function submitSearch(e){
+      e.preventDefault();
+      const form=e.target;
+      const btn=document.getElementById('searchBtn');
+      if(btn.disabled) return;
+
+      let orderId=(form.orderId.value||'').trim().replace(/^#/,'').toUpperCase();
+      let email=(form.email.value||'').trim();
+      if(!orderId && !email){ alert('請輸入「訂單編號」或「Email」任一項'); return; }
+
+      btn.disabled=true; btn.textContent='查詢中…';
+      const resultBox=document.getElementById('searchResult'); resultBox.innerHTML='';
+
+      let remote=null;
+      try{
+        const payload={ type:'ORDER_QUERY', orderId, email };
+        const res=await withTimeout(fetch(GAS_ENDPOINT,{
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify(payload)
+        }), 20000);
+        remote = await res.json().catch(()=>null);
+      }catch(_){}
+
+      // 本機後備
+      let local=null, localMsg='';
+      try{
+        const raw=localStorage.getItem(LS_KEY_LAST_ORDER);
+        const obj=raw?JSON.parse(raw):null;
+        if(obj){
+          const idMatch = orderId && String(obj.id||'').toUpperCase().replace(/^#/,'')===orderId;
+          const emailMatch = email && obj.email && obj.email.toLowerCase()===email.toLowerCase();
+          if(idMatch || emailMatch){ local={orders:[obj]}; localMsg='（本裝置最近送出的訂單，僅供參考）'; }
+        }
+      }catch(_){}
+
+      const hasRemote = remote && Array.isArray(remote.orders);
+      if(!hasRemote && !local){
+        resultBox.innerHTML = '<div class="fine">找不到符合的訂單。請確認編號/Email 是否正確，或稍後再試。</div>';
+      }else{
+        renderSearchResult(hasRemote?remote:local, (!hasRemote&&local)?localMsg:'');
+      }
+
+      btn.disabled=false; btn.textContent='開始查詢';
+    }
+
+    function renderSearchResult(data, msg){
+      const box=document.getElementById('searchResult');
+      const rows=(data.orders||[]).slice(0,10);
+      if(msg){ box.insertAdjacentHTML('beforeend', `<div class="fine">${msg}</div>`); }
+      if(rows.length===0){ box.insertAdjacentHTML('beforeend','<div class="fine">查無資料</div>'); return; }
+
+      rows.forEach(o=>{
+        const items = Array.isArray(o.items)? o.items.map(it=>`${it.name}×${it.qty}`).join('、') : '';
+        const id = o.id || '(未提供)';
+        const ts = o.ts || '';
+        const status = o.status || '—';
+        const total = (o.total!=null)? `總額 $${fmt(o.total)}` : '';
+        const email = o.email || '';
+        box.insertAdjacentHTML('beforeend', `
+          <div class="card">
+            <div style="font-weight:800">訂單編號：${id}</div>
+            <div class="fine">建立時間：${ts}｜狀態：${status}</div>
+            <div class="fine">Email：${email}</div>
+            <div style="margin-top:6px">${items?`<div class="fine">品項：${items}</div>`:''}</div>
+            <div style="margin-top:6px;font-weight:700">${total}</div>
+          </div>
+        `);
+      });
+    }
+
+    /* ===== Admin Pane ===== */
     const gearBtn = document.querySelector('.admin-gear');
     gearBtn.addEventListener('click', openAdmin);
     function openAdmin(){
@@ -629,6 +783,7 @@
     }
     function logoutAdmin(){ localStorage.removeItem(LS_KEY_ADMIN); openAdmin(); }
 
+    /* ===== 其他工具 ===== */
     function githubToRaw(url){
       try{
         const u=new URL(url);
@@ -655,3 +810,4 @@
   </script>
 </body>
 </html>
+```
