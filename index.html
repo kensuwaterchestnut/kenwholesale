@@ -57,11 +57,16 @@
     @media (min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
     .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
 
-    /* 產品圖片容器固定比例 + 置中裁切 */
+    /* 產品圖片容器固定比例 + 置中顯示（不裁切） */
     .card .media{position:relative;overflow:hidden;background:#f3f4f6}
     .card .media::before{content:"";display:block;padding-top:100%}
     @media (min-width:860px){ .card .media::before{padding-top:75%} }
-    .card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+    .card .media img{
+      position:absolute;inset:0;
+      width:100%;height:100%;
+      object-fit:contain;            /* 改為 contain：完整顯示圖片 */
+      object-position:center;
+    }
 
     .soldout{position:absolute;inset:auto 8px 8px auto;background:rgba(17,24,39,.85);color:#fff;padding:4px 8px;border-radius:10px;font-size:11px;z-index:2}
     .badge{position:absolute;left:8px;top:8px;background:#fff;border:1px solid var(--border);font-size:11px;border-radius:999px;padding:3px 7px}
@@ -323,7 +328,7 @@
 
   <script>
     /* ===== Web App 端點（已填你的 /exec） ===== */
-    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbwPQDGRDXVU34o2jfviQRx3wuYC774UblHaNXCWhMJ_1N2gQD09sK_CCrwuxLacZNQxXQ/exec';
+    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbzjN68dhNheZYKjZ03qAGfViiSXY7w2zpfS_9_hxiPC-W2dg3onPaWZi2XWDVSgtZc05A/exec';
 
     /* ===== 範圍標籤 ===== */
     const TAGS = ['設備','常溫','冷藏','冷凍'];
@@ -337,16 +342,16 @@
     const LS_KEY_BRAND='kensu_wholesale_brand_v10';
     const LS_KEY_ADMIN='kensu_admin_ok_v3';
 
-    /* ===== 預設商品（芋泥丁圖已改用你提供連結） ===== */
+    /* ===== 預設商品（含新增兩品項） ===== */
     const DEFAULT_PRODUCTS = [
-      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'5個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
-      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'5個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
+      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
+      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
 
       /* 新增：啃酥專用粉(克) — 每單位=10g；1公斤=數量100；制式規格=450 */
       {id:'powder_gram',  tag:'', name:'啃酥專用粉(克)', type:'單品項',
        spec:'以克計價｜1單位=10g；1公斤=數量100｜【制式規格】4.5公斤=數量450',
        price:3, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:450, soldOut:false, soldCount:5024,
-       shelfLife:'5月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:'單位換算：1=10g；下單時依需求輸入數量'},
+       shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:'單位換算：1=10g；下單時依需求輸入數量'},
 
       {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:3500, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:95, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
       {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:990,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:210, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
@@ -362,7 +367,7 @@
       {id:'fat_case',  tag:'', name:'啃酥專用脂', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:880, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:33, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
       {id:'fat_single',tag:'', name:'啃酥專用脂', type:'單品項', spec:'330毫升 / 1瓶',        price:95,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:402, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
 
-      /* 芋泥丁（用你提供的圖片） */
+      /* 芋泥丁（示意圖） */
       {id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 10盒 / 1件', price:3550, shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
       {id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
 
