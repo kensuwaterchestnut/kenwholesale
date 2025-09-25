@@ -1,3 +1,11 @@
+沒問題！下面是**可直接整檔覆蓋**的前端完整檔（我只改了兩件事）
+
+1. `submitOrder()` 先取 `FormData` 再鎖表單，避免欄位被排除；
+2. 後端回傳讀取 `order_no`（你的 Apps Script 會回這個欄位）。
+
+把整段存成你的 `index.html`（或原檔名）覆蓋即可。
+
+```html
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
@@ -60,9 +68,7 @@
     .card .media{position:relative;overflow:hidden;background:#f3f4f6}
     .card .media::before{content:"";display:block;padding-top:100%}
     @media (min-width:860px){ .card .media::before{padding-top:75%} }
-    .card .media img{
-      position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;
-    }
+    .card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
 
     .soldout{position:absolute;inset:auto 8px 8px auto;background:rgba(17,24,39,.85);color:#fff;padding:4px 8px;border-radius:10px;font-size:11px;z-index:2}
     .badge{position:absolute;left:8px;top:8px;background:#fff;border:1px solid var(--border);font-size:11px;border-radius:999px;padding:3px 7px}
@@ -121,11 +127,7 @@
     .sheet{position:fixed;inset:0;z-index:95;display:none}
     .sheet.on{display:block}
     .sheet .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.36)}
-    .sheet .card{
-      position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-      width:min(720px,96%);max-height:90svh;overflow:auto;
-      padding:14px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)
-    }
+    .sheet .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,96%);max-height:90svh;overflow:auto;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)}
     .form{display:grid;grid-template-columns:1fr;gap:8px}
     .label{font-size:12px;color:var(--muted)}
     .input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:16px;background:#fff}
@@ -356,7 +358,7 @@
   </footer>
 
   <script>
-    /* ===== Web App 端點（已填你的 /exec） ===== */
+    /* ===== Web App 端點（記得是你最新部署的 /exec） ===== */
     const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbzo6id-MX7GbFKU6DtqePsfctIhQGlskAHskh2k8OH-ZDpWJxHw4YtDRblGJeVSynxMAg/exec';
 
     /* ===== 範圍標籤 ===== */
@@ -436,7 +438,6 @@
     function uniqueTags(){ return ['全部',...TAGS] }
     function renderChips(){
       const chips=document.getElementById('chips'); chips.innerHTML='';
-      // 額外提供「查訂單」快速入口（可留可拿掉）
       const searchChip=document.createElement('button');
       searchChip.className='chip'; searchChip.textContent='🔎 查訂單';
       searchChip.onclick=openSearch; chips.appendChild(searchChip);
@@ -626,18 +627,24 @@
       });
     }
 
+    // ★★★ 修正版 submitOrder：先取 FormData，再鎖表單；並讀取後端的 order_no ★★★
     async function submitOrder(e){
       e.preventDefault();
-      if(sending) return; // 防重複
+      if(sending) return;
       sending=true;
 
       const form=e.target;
       const btn=document.getElementById('submitBtn');
+
+      // 先取值（disabled 的欄位不會進 FormData）
+      const fd=new FormData(form);
+
+      // 再鎖表單＋顯示遮罩
       setFormDisabled(form,true);
       btn.textContent='送出中，請稍候…';
       setLoading(true,'正在送出訂單，請稍候…請勿重複點擊或關閉視窗');
 
-      const fd=new FormData(form);
+      // 準備購物車明細
       let items=[]; let sub=0; let ship=0; let groups={};
       cart.forEach(({product,qty})=>{
         items.push({id:product.id,name:product.name,type:product.type,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
@@ -658,24 +665,24 @@
       try{
         const res = await withTimeout(fetch(GAS_ENDPOINT, {
           method:'POST',
-          headers:{ 'Content-Type':'text/plain;charset=utf-8' }, // 簡單請求，不觸發預檢
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
-        }), 35000); // 35 秒逾時保護
+        }), 35000);
 
-        let data={};
-        try{ data = await res.json(); }catch(_){ /* 不是 JSON 也可 */ }
+        let data={}; try{ data = await res.json(); }catch(_){}
+        const orderNo = data.order_no || data.orderId || '';  // 後端欄位為 order_no
 
-        // 成功：提示 + 關閉 + 清空購物車
-        const oid = (data && data.orderId) ? `（訂單編號：${data.orderId}）` : '';
-        alert(`訂單已送出！${oid}\n完成匯款請至 LINE 傳後五碼，我們核帳後出貨。`);
-        // 存本機提示，供「查訂單」的本機後備
+        alert(`訂單已送出！${orderNo ? `（訂單編號：${orderNo}）` : ''}\n完成匯款請至 LINE 傳後五碼，我們核帳後出貨。`);
+
+        // 本機備查（查詢頁用）
         try{
           localStorage.setItem(LS_KEY_LAST_ORDER, JSON.stringify({
-            id: data.orderId || '(等待後台生成)',
+            id: orderNo || '(等待後台生成)',
             email: fd.get('email') || '',
             total, ts: new Date().toISOString(), status:'已送出（待核帳）'
           }));
         }catch(_){}
+
         cart.clear(); updateCartCount(); closeSheet(); closeCart();
       }catch(err){
         console.error('submitOrder failed', err);
@@ -808,3 +815,5 @@
 </body>
 </html>
 ```
+
+貼上後，重新上傳／部署即可。若還遇到「通知信客戶資訊空白」或試算表沒寫入，八成是連到舊版 `/exec`，請再確認 GAS 端**最新部署的網址**是否和上面 `GAS_ENDPOINT` 一致。
