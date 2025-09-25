@@ -63,11 +63,12 @@
     @media (min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
     .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
 
-    /* ✅ 商品卡圖片：手機穩定顯示、置中裁切（相容舊 Safari） */
+    /* ✅ 商品卡圖片：支援 cover/contain 避免「比例在縮小」 */
     .card .media{position:relative;overflow:hidden;background:#f3f4f6}
     .card .media::before{content:"";display:block;padding-top:100%} /* 手機 1:1 */
     @media (min-width:860px){ .card .media::before{padding-top:75%} } /* 桌機 4:3 */
     .card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+    .card .media img.contain{object-fit:contain;background:#fff}
 
     .soldout{position:absolute;inset:auto 8px 8px auto;background:rgba(17,24,39,.85);color:#fff;padding:4px 8px;border-radius:10px;font-size:11px;z-index:2}
     .badge{position:absolute;left:8px;top:8px;background:#fff;border:1px solid var(--border);font-size:11px;border-radius:999px;padding:3px 7px}
@@ -77,7 +78,7 @@
     .meta{color:var(--muted);font-size:12px;margin:2px 0}
     .shipline{font-weight:700;color:#b45309}
     .price{margin-top:6px;font-weight:800;color:#b45309}
-    .btn.add{margin:8px 0 2px;background:#111;color:#fff;border-radius:12px;padding:9px 12px;border:1px solid #111;width:100%} /* 滿板 */
+    .btn.add{margin:8px 0 2px;background:#111;color:#fff;border-radius:12px;padding:9px 12px;border:1px solid #111;width:100%}
 
     .btn.add[disabled]{background:#cfcfcf;border-color:#cfcfcf;cursor:not-allowed}
     .note{font-size:11px;color:var(--muted)}
@@ -243,7 +244,6 @@
             <li>大量件數或大型貨物（如油炸鍋）可能改走大車或分批配送，配送時段恕無法保證。</li>
             <li>偏遠地區/山區/工地/校園/管制區可能加收附加費或改店對店，請先詢問。</li>
             <li>無電梯搬運需加價或只送至一樓；超材件可能只送到點不搬運。</li>
-            <li>地址變更、收件人不在、二次配送、保管逾期等，物流會加收費用。</li>
             <li>冷鏈規範：若外箱嚴重變形滲液或失溫，請「拒收 + 立即拍照錄影」並聯繫我們。</li>
             <li>到貨驗收以錄影畫面為準；超過 24 小時或無錄影，物流多以「非物流責」處理。</li>
           </ul>
@@ -320,7 +320,7 @@
 
     <!-- 未登入 -->
     <div class="admin-login" id="adminLogin">
-      <div class="label">請先登入（密碼固定 111111，僅儲存在本裝置）</div>
+      <div class="label">請先登入）</div>
       <div class="admin-actions">
         <input class="input" id="adminPass" type="password" placeholder="輸入管理密碼 111111">
         <button class="btn brand" onclick="adminLogin()">登入</button>
@@ -365,43 +365,45 @@
       shelfLife:'—',        // 效期
       storage:'—',          // 保存方式
       img:'',               // 圖片URL（建議 GitHub 加 ?raw=1）
+      imgMode:'cover',      // ✅ 新增：'cover' | 'contain'
       note:''               // 備註（可留空）
     } */
 
     /* ===== 預設產品 ===== */
     const DEFAULT_PRODUCTS = [
-      /* 啃酥專用粉 */
-      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
-      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
+      /* 啃酥專用粉（保留比例） */
+      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', imgMode:'contain', note:''},
+      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', imgMode:'contain', note:''},
 
-      /* 菱角仁 */
-      {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:3500, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:95, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
-      {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:990,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:210, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
+      /* 菱角仁（保留比例） */
+      {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:3500, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:95, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', imgMode:'contain', note:''},
+      {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:990,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:210, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', imgMode:'contain', note:''},
 
       /* 炸鮮奶 */
       {id:'milkfried_case',  tag:'', name:'啃酥炸鮮奶', type:'整件',  spec:'6條 / 16盒 / 1件', price:1900, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:41, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:''},
       {id:'milkfried_single',tag:'', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒',        price:130,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:280, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:''},
 
-      /* 啃酥專用脂（原專用牛奶） */
-      {id:'fat_case',  tag:'', name:'啃酥專用脂', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:880, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:33, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
-      {id:'fat_single',tag:'', name:'啃酥專用脂', type:'單品項', spec:'330毫升 / 1瓶',        price:95,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:402, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
+      /* 啃酥專用脂（保留比例） */
+      {id:'fat_case',  tag:'', name:'啃酥專用脂', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:880, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:33, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', imgMode:'contain', note:''},
+      {id:'fat_single',tag:'', name:'啃酥專用脂', type:'單品項', spec:'330毫升 / 1瓶',        price:95,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:402, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', imgMode:'contain', note:''},
 
       /* 乳酪丁（冷凍保存，使用前一天需冷藏退冰；效期30天依包裝） */
       {id:'cheese_case',  tag:'', name:'啃酥乳酪丁', type:'整件',  spec:'1公斤 / 10包 / 1件', price:4200, shipGroup:'冷凍', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'冷凍保存；使用前一天冷藏退冰', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%B5%B7%E5%8F%B8.jpg?raw=1', note:''},
       {id:'cheese_single',tag:'', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包',        price:450,  shipGroup:'冷凍', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'冷凍保存；使用前一天冷藏退冰', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%B5%B7%E5%8F%B8.jpg?raw=1', note:''},
 
-      /* 芋泥丁（冷藏；效期30天依包裝） */
-      {id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 10盒 / 1件', price:3550, shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:'示意圖'},
-      {id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:'示意圖'},
+      /* 芋泥丁（新圖） */
+      {id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 10盒 / 1件', price:3550, shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
+      {id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
 
-      /* 設備（含新圖片與價格/品名更新） */
+      /* 設備 */
       {id:'equip_fryer15',   tag:'設備', name:'15型油炸鍋',            type:'單台', spec:'1台', price:9200,  shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/15%E5%9E%8B%E6%B2%B9%E9%8D%8B.jpg?raw=1', note:''},
       {id:'equip_fryer25',   tag:'設備', name:'25型油炸鍋',            type:'單台', spec:'1台', price:11200, shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/25%E5%9E%8B%E6%B2%B9%E9%8D%8B.jpg?raw=1', note:''},
       {id:'equip_mixer220',  tag:'設備', name:'220V攪拌機（12公升）', type:'單台', spec:'1台', price:13000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/220V%E6%94%AA%E6%8B%8C%E5%99%A8.jpg?raw=1', note:''},
       {id:'equip_mixer110',  tag:'設備', name:'110V攪拌鍋（10公升）', type:'單台', spec:'1台', price:11500, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/110V%E6%94%AA%E6%8B%8C%E9%8D%8B.jpg?raw=1', note:''},
       {id:'equip_steamer110',tag:'設備', name:'110V電蒸鍋',            type:'單台', spec:'1台', price:2480,  shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/110V%E8%92%B8%E9%8D%8B.jpg?raw=1', note:''},
       {id:'equip_timer3',    tag:'設備', name:'三合一計時器',          type:'單品項', spec:'1台', price:550,   shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%A8%88%E6%99%82%E5%99%A8.jpg?raw=1', note:''},
-      {id:'equip_divider',   tag:'設備', name:'炸鍋分隔板',            type:'單品項', spec:'1個', price:1480,  shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%85%A7%E6%AA%94%E6%9D%BF.jpg?raw=1', note:''}
+      /* 分隔板（保留比例） */
+      {id:'equip_divider',   tag:'設備', name:'炸鍋分隔板',            type:'單品項', spec:'1個', price:1480,  shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%85%A7%E6%AA%94%E6%9D%BF.jpg?raw=1', imgMode:'contain', note:''}
     ];
 
     /* 篩選標籤 */
@@ -464,9 +466,10 @@
         const qtyId = `qty_${p.id}`;
         const isHeavyEquip = (p.tag==='設備' && Number(p.shipFee)===300);
         const shipNote = isHeavyEquip ? '大型貨物' : `運費 $${fmt(p.shipFee)}`;
+        const imgCls = p.imgMode==='contain' ? 'contain' : '';
         card.innerHTML=`
           <div class="media">
-            ${p.img?`<img src="${p.img}" alt="${title}" loading="lazy" decoding="async">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
+            ${p.img?`<img class="${imgCls}" src="${p.img}" alt="${title}" loading="lazy" decoding="async">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
             <span class='badge'>${GROUP_LABELS[p.shipGroup]||p.shipGroup}</span>
             ${p.tag==='設備'?`<span class='badge right'>設備</span>`:''}
             ${p.soldOut?`<span class='soldout'>已售完</span>`:''}
@@ -540,9 +543,10 @@
         const item=document.createElement('div'); item.className='item';
         const inputId = `cart_qty_${product.id}`;
         const isHeavyEquip = (product.tag==='設備' && Number(product.shipFee)===300);
+        const fit = product.imgMode==='contain' ? 'contain' : 'cover';
         item.innerHTML=`
           <div style='width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center'>
-            ${product.img?`<img src='${product.img}' style='width:100%;height:100%;object-fit:cover'>`:'—'}
+            ${product.img?`<img src='${product.img}' style='width:100%;height:100%;object-fit:${fit};object-position:center;background:#fff'>`:'—'}
           </div>
           <div>
             <div style='font-weight:700;display:flex;align-items:center;gap:6px'>
@@ -604,8 +608,8 @@
       if(box.scrollTop + box.clientHeight >= box.scrollHeight - 2){ chk.disabled=false; }
     }
 
-    /* 結帳（可串接 Apps Script） */
-    const GAS_ENDPOINT=''; // ← 貼 Apps Script Web App URL（留空則只模擬）
+    /* 結帳（串接 Apps Script） */
+    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbyvfEu8E1-KOtcGcspvj5CFRLci87pG7cuV8RMPnaPUPaLZj0yaNcK3Kz8UBVPUvVMsFw/exec'; // ✅ 已設定
     function goCheckout(){
       const agree=document.getElementById('agreeChk');
       if(!agree.checked){ alert('請先展開並閱讀「物流與退貨說明」，捲到底後勾選同意，才能結帳。'); return; }
@@ -630,12 +634,8 @@
         recipient:fd.get('recipient'), address:fd.get('address'), ship_note:fd.get('ship_note'), memo:fd.get('memo'),
         items, sub, ship, total, ts:new Date().toISOString()
       };
-      if(!GAS_ENDPOINT){
-        console.log('DEV payload →', payload);
-        alert('已模擬送出訂單。總額：$'+fmt(total)+'（完成匯款請至 LINE 傳後五碼）');
-        closeSheet(); closeCart(); return;
-      }
       try{
+        // 若你的 GAS Web App 已加上 CORS header，可把 mode 改成 'cors' 並讀取回傳
         await fetch(GAS_ENDPOINT,{method:'POST',mode:'no-cors',body:JSON.stringify(payload)});
         alert('訂單已送出！請依匯款資訊匯款，我們核帳後出貨。');
         cart.clear(); updateCartCount(); closeSheet(); closeCart();
