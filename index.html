@@ -332,6 +332,15 @@
     </div>
 
     <div class="admin-body" id="adminBody" style="display:none">
+      <div class="label">🔍 圖片診斷工具</div>
+      <div class="admin-actions">
+        <button class="btn brand" onclick="diagnoseImages()">診斷圖片載入</button>
+        <button class="btn" onclick="forceRefresh()">強制重新載入</button>
+      </div>
+      <small class="fine">診斷結果會顯示在 Console (F12)</small>
+      
+      <hr style="margin:20px 0;border:none;border-top:1px solid #e5e7eb">
+      
       <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
       <input class="input" id="ghUrl" placeholder="貼上 https://github.com/.../blob/.../file.png">
       <div class="admin-actions">
@@ -950,6 +959,69 @@
     }
     function convertGh(){ const url=document.getElementById('ghUrl').value.trim(); document.getElementById('ghRawOut').value=githubToRaw(url) }
     function copyRaw(){ const o=document.getElementById('ghRawOut'); o.select(); document.execCommand('copy'); alert('已複製 RAW 連結') }
+    
+    async function diagnoseImages(){
+      console.log('=== 🔍 開始診斷圖片載入 ===');
+      try {
+        const response = await fetch(GAS_ENDPOINT);
+        const data = await response.json();
+        
+        console.log('1️⃣ GAS API 回應:', data);
+        
+        if(data.images){
+          const total = (data.images.常溫?.length || 0) + (data.images.冷藏?.length || 0) + (data.images.冷凍?.length || 0);
+          console.log(`2️⃣ 圖片總數: ${total} 張`);
+          console.log('   - 常溫:', data.images.常溫?.length || 0, '張');
+          console.log('   - 冷藏:', data.images.冷藏?.length || 0, '張');
+          console.log('   - 冷凍:', data.images.冷凍?.length || 0, '張');
+          
+          if(data.images.常溫?.length > 0){
+            console.log('3️⃣ 常溫圖片範例:', data.images.常溫.slice(0, 3));
+          }
+        }
+        
+        if(data.products){
+          console.log(`4️⃣ 商品總數: ${data.products.length} 個`);
+          const withImg = data.products.filter(p => p.imgFilename);
+          console.log(`5️⃣ 有設定 imgFilename 的商品: ${withImg.length} 個`);
+          
+          if(withImg.length > 0){
+            console.log('6️⃣ 前 3 個商品的 imgFilename:', withImg.slice(0, 3).map(p => ({name: p.name, imgFilename: p.imgFilename})));
+          }
+        }
+        
+        console.log('7️⃣ 測試配對...');
+        if(data.products && data.images){
+          const testProduct = data.products.find(p => p.imgFilename);
+          if(testProduct){
+            const matched = matchProductImage(testProduct, data.images);
+            console.log(`   測試商品: ${testProduct.name}`);
+            console.log(`   imgFilename: ${testProduct.imgFilename}`);
+            console.log(`   配對結果: ${matched || '(無)'}`);
+          }
+        }
+        
+        console.log('8️⃣ 當前載入的商品圖片狀態:');
+        const withImgUrl = products.filter(p => p.img);
+        console.log(`   有圖片 URL 的商品: ${withImgUrl.length} / ${products.length}`);
+        if(withImgUrl.length > 0){
+          console.log('   前 3 個:', withImgUrl.slice(0, 3).map(p => ({name: p.name, img: p.img})));
+        }
+        
+        console.log('=== ✅ 診斷完成 ===');
+        alert('診斷完成！請查看 Console (F12) 的詳細資訊');
+      } catch(error){
+        console.error('❌ 診斷失敗:', error);
+        alert('診斷失敗: ' + error.message);
+      }
+    }
+    
+    async function forceRefresh(){
+      console.log('🔄 強制重新載入...');
+      localStorage.clear();
+      await fetchProductsFromGAS();
+      alert('已重新載入！請查看 Console (F12)');
+    }
 
     applyBrand();
     renderChips();
