@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Drive 圖片載入示例</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft JhengHei', sans-serif;
+            background: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+        }
+        
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.5rem;
+        }
+        
+        .subtitle {
+            color: #666;
+            margin-bottom: 40px;
+            font-size: 1.1rem;
+        }
+        
+        .section {
+            margin-bottom: 60px;
+        }
+        
+        .section-title {
+            color: #ff6b35;
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff6b35;
+            padding-left: 15px;
+        }
+        
+        .section-desc {
+            color: #666;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        /* 容器樣式 */
+        #hero {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            min-height: 200px;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        #about {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            min-height: 150px;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        #products23A {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            min-height: 150px;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        #gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+            min-height: 150px;
+            background: #fafafa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        /* 圖片樣式覆寫 */
+        .drive-image-wrapper {
+            margin: 0 !important;
+        }
+        
+        .drive-image-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .drive-image-wrapper img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* 控制按鈕 */
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            display: flex;
+            gap: 10px;
+            z-index: 1000;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(255,107,53,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #ff5722;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(255,107,53,0.4);
+        }
+        
+        .btn.secondary {
+            background: #666;
+        }
+        
+        .btn.secondary:hover {
+            background: #555;
+        }
+        
+        /* 響應式 */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            #hero,
+            #about,
+            #products23A,
+            #gallery {
+                grid-template-columns: 1fr;
+            }
+            
+            .controls {
+                bottom: 15px;
+                right: 15px;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Google Drive 圖片載入系統</h1>
+        <p class="subtitle">自動從 Google Drive 載入圖片到各區塊</p>
+        
+        <!-- Hero 首頁大圖區 -->
+        <section class="section">
+            <h2 class="section-title">Hero 首頁大圖</h2>
+            <p class="section-desc">
+                對應 Drive 資料夾：<code>hero/</code><br>
+                用途：首頁橫幅、主視覺圖片
+            </p>
+            <div id="hero">
+                <!-- 圖片會自動載入到這裡 -->
+            </div>
+        </section>
+        
+        <!-- About 關於我們區 -->
+        <section class="section">
+            <h2 class="section-title">About 關於我們</h2>
+            <p class="section-desc">
+                對應 Drive 資料夾：<code>about/</code><br>
+                用途：團隊照片、辦公室環境
+            </p>
+            <div id="about">
+                <!-- 圖片會自動載入到這裡 -->
+            </div>
+        </section>
+        
+        <!-- Products 產品區 -->
+        <section class="section">
+            <h2 class="section-title">Products 23A 產品圖</h2>
+            <p class="section-desc">
+                對應 Drive 資料夾：<code>products23A/</code><br>
+                用途：產品展示、商品圖片
+            </p>
+            <div id="products23A">
+                <!-- 圖片會自動載入到這裡 -->
+            </div>
+        </section>
+        
+        <!-- Gallery 圖庫區 -->
+        <section class="section">
+            <h2 class="section-title">Gallery 圖庫</h2>
+            <p class="section-desc">
+                對應 Drive 資料夾：<code>gallery/</code><br>
+                用途：其他圖片、活動照片
+            </p>
+            <div id="gallery">
+                <!-- 圖片會自動載入到這裡 -->
+            </div>
+        </section>
+    </div>
+    
+    <!-- 控制按鈕 -->
+    <div class="controls">
+        <button class="btn" onclick="DriveImageLoader.reload()">🔄 重新載入</button>
+        <button class="btn secondary" onclick="DriveImageLoader.clearCache()">🗑️ 清除快取</button>
+    </div>
+    
+    <!-- 
+        ⭐ 重要：載入圖片載入器 
+        請確保 loader.js 中的 API_URL 已正確設定為您的 GAS Web App URL
+    -->
+    <script src="loader.js"></script>
+    
+    <!-- 
+        如果需要自訂載入行為，可以在這裡添加腳本
+        例如：只載入特定區塊、手動觸發載入等
+    -->
+    <script>
+        // 範例：手動載入特定區塊
+        // document.addEventListener('DOMContentLoaded', async function() {
+        //     const data = await fetch(API_URL).then(r => r.json());
+        //     await DriveImageLoader.renderImages('hero', data.hero);
+        // });
+        
+        // 範例：響應式載入（桌面/手機版分流）
+        // DriveImageLoader.loadResponsive('hero', 'heroMobile', 'hero');
+    </script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+🗑️ 本地資料清理清單
+
+以下檔案已不再需要，可以刪除：
+
+【文件檔案 - 可刪除】
+- ADVANCED_FEATURES.md
+- CHECKLIST.md
+- Code_with_Sheet.gs
+- FOLDER_STRUCTURE_OPTIMIZED.md
+- GAS修改方案_完整版.md
+- GAS修改步驟_分段版.md
+- INTEGRATION_GUIDE.md
+- PRODUCT_MAPPING.md
+- SETUP_GUIDE.md
+- SHEET_INTEGRATION.md
+- TROUBLESHOOTING.md
+- 使用說明_直接複製貼上.md
+- 前端自動更新方案.md
+- 整合指南_現有GAS.md
+- 複製貼上說明.txt
+
+【GAS 檔案 - 可刪除】
+- Code.gs（已用 Part1、Part2、Part3 替代）
+- Part1_常數和基礎函數.gs（已複製到 GAS 編輯器）
+- Part2_訂單查詢和編輯.gs（已複製到 GAS 編輯器）
+- Part3_最後工具函數.gs（已複製到 GAS 編輯器）
+
+【保留的重要檔案】
+✅ index.html - 前端主檔案（已更新 GAS_ENDPOINT）
+✅ loader.js - 前端 JS 邏輯
+✅ demo.html - 示意檔案
+✅ README.md - 說明文件
+✅ 商品資料模板.csv - 商品導入範本
+✅ 圖片封存/ - 本地圖片備份
+
+---
+
+🚀 刪除步驟：
+1. 打開 C:\Users\張-1\CascadeProjects\kenwholesale
+2. 選取上述「可刪除」的檔案
+3. 刪除（或移到資源回收桶）
+4. 完成！
+
+刪除後資料夾會更整潔，只保留實際使用的檔案。

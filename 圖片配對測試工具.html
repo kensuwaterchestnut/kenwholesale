@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>圖片配對測試工具</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 20px;
+      background: #f9fafb;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h1 { margin-top: 0; color: #111; }
+    h2 { color: #374151; font-size: 18px; margin-top: 0; }
+    input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+    button {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+    }
+    button:hover { background: #d97706; }
+    .result {
+      margin-top: 20px;
+      padding: 15px;
+      border-radius: 8px;
+      background: #f3f4f6;
+    }
+    .success { background: #d1fae5; color: #065f46; }
+    .error { background: #fee2e2; color: #991b1b; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+    .product-card {
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      padding: 10px;
+      background: white;
+    }
+    .product-card img {
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      background: #f9fafb;
+      border-radius: 6px;
+      margin-bottom: 8px;
+    }
+    .product-card .name {
+      font-weight: 600;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+    .product-card .info {
+      font-size: 12px;
+      color: #6b7280;
+    }
+    .no-image {
+      background: #fee2e2;
+      color: #991b1b;
+      padding: 60px 10px;
+      text-align: center;
+      font-size: 12px;
+    }
+    pre {
+      background: #1f2937;
+      color: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-size: 12px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 15px;
+    }
+    .stat {
+      background: #f3f4f6;
+      padding: 15px;
+      border-radius: 8px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 800;
+      color: #111;
+    }
+    .stat-label {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>🖼️ 圖片配對測試工具</h1>
+    <p style="color: #6b7280;">輸入您的 GAS API 網址，檢查商品圖片配對狀態</p>
+    
+    <input 
+      type="text" 
+      id="gasUrl" 
+      placeholder="https://script.google.com/macros/s/YOUR_DEPLOYMENT_ID/exec"
+      value="https://script.google.com/macros/s/AKfycbzA_0hpsrNwymW5EO4KTXQ3Uxzlo-paqChxLoD2vWSffxfinrx6DGFPa0WBZ_DxtD0fkQ/exec"
+    >
+    
+    <button onclick="testImageMatching()">🔍 開始測試</button>
+    
+    <div id="result"></div>
+  </div>
+
+  <div id="statsContainer"></div>
+  <div id="productsContainer"></div>
+  <div id="debugContainer"></div>
+
+  <script>
+    async function testImageMatching() {
+      const url = document.getElementById('gasUrl').value.trim();
+      const resultDiv = document.getElementById('result');
+      
+      if (!url) {
+        resultDiv.innerHTML = '<div class="result error">❌ 請輸入 GAS API 網址</div>';
+        return;
+      }
+
+      resultDiv.innerHTML = '<div class="result">⏳ 正在載入資料...</div>';
+
+      try {
+        const response = await fetch(url);
+        const data = await response.json();
+
+        if (!data.products || !data.images) {
+          resultDiv.innerHTML = '<div class="result error">❌ API 回傳格式錯誤</div>';
+          return;
+        }
+
+        // 統計資料
+        const totalProducts = data.products.length;
+        let withImage = 0;
+        let withoutImage = 0;
+        let withFilename = 0;
+
+        // 配對圖片
+        const productsWithImages = data.products.map(p => {
+          const img = matchProductImage(p, data.images);
+          if (img) withImage++;
+          else withoutImage++;
+          if (p.imgFilename) withFilename++;
+          
+          return {
+            ...p,
+            matchedImage: img
+          };
+        });
+
+        // 顯示統計
+        document.getElementById('statsContainer').innerHTML = `
+          <div class="card">
+            <h2>📊 配對統計</h2>
+            <div class="stats">
+              <div class="stat">
+                <div class="stat-value">${totalProducts}</div>
+                <div class="stat-label">總商品數</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" style="color: #16a34a">${withImage}</div>
+                <div class="stat-label">有圖片</div>
+              </div>
+              <div class="stat">
+                <div class="stat-value" style="color: #ef4444">${withoutImage}</div>
+                <div class="stat-label">無圖片</div>
+              </div>
+            </div>
+            <div style="margin-top: 15px; padding: 10px; background: #f3f4f6; border-radius: 6px; font-size: 13px;">
+              <div>✅ 填寫 imgFilename 的商品：<b>${withFilename}</b> 個</div>
+              <div>📁 常溫圖片：<b>${(data.images.常溫 || []).length}</b> 張</div>
+              <div>📁 冷藏圖片：<b>${(data.images.冷藏 || []).length}</b> 張</div>
+              <div>📁 冷凍圖片：<b>${(data.images.冷凍 || []).length}</b> 張</div>
+            </div>
+          </div>
+        `;
+
+        // 顯示商品
+        const noImageProducts = productsWithImages.filter(p => !p.matchedImage);
+        
+        if (noImageProducts.length > 0) {
+          document.getElementById('productsContainer').innerHTML = `
+            <div class="card">
+              <h2>⚠️ 無法配對圖片的商品（${noImageProducts.length} 個）</h2>
+              <div class="product-grid">
+                ${noImageProducts.map(p => `
+                  <div class="product-card">
+                    <div class="no-image">❌ 無圖片</div>
+                    <div class="name">${p.name}</div>
+                    <div class="info">
+                      <div>ID: ${p.id}</div>
+                      <div>檔名: ${p.imgFilename || '（未填寫）'}</div>
+                      <div>溫層: ${p.shipGroup}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        // 顯示成功配對的商品
+        const withImageProducts = productsWithImages.filter(p => p.matchedImage);
+        if (withImageProducts.length > 0) {
+          document.getElementById('productsContainer').innerHTML += `
+            <div class="card">
+              <h2>✅ 成功配對的商品（${withImageProducts.length} 個）</h2>
+              <div class="product-grid">
+                ${withImageProducts.map(p => `
+                  <div class="product-card">
+                    <img src="${p.matchedImage}" alt="${p.name}" onerror="this.parentElement.querySelector('.name').style.color='#ef4444'">
+                    <div class="name">${p.name}</div>
+                    <div class="info">
+                      <div>ID: ${p.id}</div>
+                      <div>檔名: ${p.imgFilename || '（用 ID 配對）'}</div>
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }
+
+        // 顯示原始資料
+        document.getElementById('debugContainer').innerHTML = `
+          <div class="card">
+            <h2>🔧 原始 API 回傳資料</h2>
+            <pre>${JSON.stringify(data, null, 2)}</pre>
+          </div>
+        `;
+
+        resultDiv.innerHTML = `<div class="result success">✅ 測試完成！共 ${totalProducts} 個商品，${withImage} 個有圖片，${withoutImage} 個無圖片</div>`;
+
+      } catch (error) {
+        resultDiv.innerHTML = `<div class="result error">❌ 錯誤：${error.message}</div>`;
+        console.error(error);
+      }
+    }
+
+    // 配對邏輯（與前端相同）
+    function matchProductImage(product, images) {
+      if (!images) return '';
+      
+      const filename = product.imgFilename || '';
+      
+      const allImages = [
+        ...(images.常溫 || []),
+        ...(images.冷藏 || []),
+        ...(images.冷凍 || [])
+      ];
+      
+      // 精確配對檔名
+      for (const img of allImages) {
+        if (img.name.includes(filename.replace('.jpg', '').replace('.png', ''))) {
+          return img.url;
+        }
+        if (img.name.includes(product.id)) {
+          return img.url;
+        }
+      }
+      
+      return '';
+    }
+  </script>
+</body>
+</html>
