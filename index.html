@@ -351,7 +351,7 @@
 
   <script>
     /* ===== Web App 端點（記得是你最新部署的 /exec） ===== */
-    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbx0gEN3TdKb5PI36hpav9YKe0HFDGehEPUJmK7IwEJNdRwn4WV5fHvnmDQBFrN_V-ivQQ/exec';
+    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbyAhcDuzKrmBVSlGXE6rhXw_IPzo8rlP_g9uLPFFjkPSjglDBnyA6Fac6Vo9ZFO9RLPBw/exec';
 
     /* ===== 範圍標籤 ===== */
     const TAGS = ['設備','常溫','冷藏','冷凍'];
@@ -917,8 +917,16 @@
 
     /* ===== 其他工具 ===== */
     function githubToRaw(url){
+      if (!url) return '';
       try{
         const u=new URL(url);
+        
+        // Google Drive 圖片直接返回，不需要轉換
+        if(u.hostname==='drive.google.com'){
+          return url;
+        }
+        
+        // GitHub 轉換為 raw
         if(u.hostname==='github.com'){
           const parts=u.pathname.split('/').filter(Boolean);
           const idx=parts.indexOf('blob');
@@ -929,6 +937,8 @@
             return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${rest}`;
           }
         }
+        
+        // 其他情況
         if(!url.includes('?')) return url+'?raw=1';
         return url+'&raw=1';
       }catch{ return url }
