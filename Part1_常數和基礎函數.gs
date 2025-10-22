@@ -131,16 +131,62 @@ function getProductsFromSheet_() {
     const sheet = ss.getSheetByName(SHEET_PRODUCTS);
     if (!sheet) { Logger.log('⚠️ 找不到工作表: ' + SHEET_PRODUCTS); return []; }
     const data = sheet.getDataRange().getValues();
+    if (data.length < 2) return [];
+    const head = data[0].map(h => String(h||'').trim());
+    const col = (nameArr) => {
+      for (const n of nameArr) {
+        const i = head.indexOf(n);
+        if (i >= 0) return i;
+      }
+      return -1;
+    };
+    const ix = {
+      id: col(['產品ID','商品編號','id','ID']),
+      tag: col(['標籤','tag','分類']),
+      name: col(['產品名稱','商品名稱','name','品名']),
+      type: col(['類型','type']),
+      spec: col(['規格說明','規格','spec']),
+      price: col(['單價','價格','price']),
+      shipGroup: col(['溫層','shipGroup']),
+      shipFee: col(['運費','shipFee']),
+      freeQty: col(['免運數量','滿免數量','freeQty']),
+      minOrder: col(['最低訂購量','最小購買','minOrder']),
+      soldOut: col(['是否售完','是否停售','售完','soldOut']),
+      soldCount: col(['已售出數量','已售出','soldCount']),
+      shelfLife: col(['保存期限','效期','shelfLife']),
+      storage: col(['保存方式','storage']),
+      imgFilename: col(['圖片檔名','imgFilename']),
+      note: col(['備註說明','備註','note']),
+      imgUrl: col(['圖片網址','圖片連結','imageUrl','imgUrl'])
+    };
+
     const products = [];
-    for (let i = 1; i < data.length; i++) {
-      const row = data[i];
-      if (!row[0]) continue;
+    for (let r = 1; r < data.length; r++) {
+      const row = data[r];
+      const idVal = ix.id>=0 ? row[ix.id] : row[0];
+      if (!idVal) continue;
+      const get = (i, def='') => (i>=0 ? row[i] : def);
+      const num = (i) => Number(get(i, 0)) || 0;
+      const str = (i) => String(get(i, '') || '');
+      const soldOutRaw = get(ix.soldOut, '');
       products.push({
-        id: String(row[0]), tag: String(row[1] || ''), name: String(row[2]), type: String(row[3]), spec: String(row[4]),
-        price: Number(row[5]) || 0, shipGroup: String(row[6]), shipFee: Number(row[7]) || 0, freeQty: Number(row[8]) || 0,
-        minOrder: Number(row[9]) || 1, soldOut: row[10] === '是', soldCount: Number(row[11]) || 0,
-        shelfLife: String(row[12]), storage: String(row[13]), imgFilename: String(row[14]), note: String(row[15] || ''),
-        imgUrl: String(row[16] || '')  // 新增：直接從試算表讀取圖片網址
+        id: String(idVal),
+        tag: str(ix.tag),
+        name: str(ix.name),
+        type: str(ix.type),
+        spec: str(ix.spec),
+        price: num(ix.price),
+        shipGroup: str(ix.shipGroup),
+        shipFee: num(ix.shipFee),
+        freeQty: num(ix.freeQty),
+        minOrder: (num(ix.minOrder) || 1),
+        soldOut: (String(soldOutRaw).trim()==='是' || String(soldOutRaw).toLowerCase()==='true'),
+        soldCount: num(ix.soldCount),
+        shelfLife: str(ix.shelfLife),
+        storage: str(ix.storage),
+        imgFilename: str(ix.imgFilename),
+        note: str(ix.note),
+        imgUrl: str(ix.imgUrl)
       });
     }
     Logger.log('✅ 讀取 ' + products.length + ' 個商品');
