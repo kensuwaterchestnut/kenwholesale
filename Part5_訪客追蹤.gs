@@ -149,15 +149,38 @@ function generateVisitorId_() {
 // 統計今日數據
 function updateDailyStats() {
   try {
+    Logger.log('🔄 開始更新每日統計...');
+    
+    // 檢查工具函數是否存在
+    if (typeof $ === 'undefined' || typeof $.today !== 'function') {
+      const error = '❌ 錯誤：找不到 $ 工具函數！請確認 Part3 已正確載入';
+      Logger.log(error);
+      SpreadsheetApp.getUi().alert(error);
+      return { ok: false, error: error };
+    }
+    
     ensureTrackingSheets_();
     const today = $.today();
+    Logger.log('📅 統計日期: ' + today);
     
     // 讀取今日訪客記錄
     const visitorSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_VISITOR_LOG);
+    if (!visitorSheet) {
+      Logger.log('❌ 找不到「訪客記錄」工作表');
+      return { ok: false, error: '找不到「訪客記錄」工作表' };
+    }
+    
     const visitorData = visitorSheet.getDataRange().getValues();
+    Logger.log('📊 訪客記錄總列數: ' + visitorData.length);
+    
     const visitorHeaders = visitorData[0];
     const timeIdx = visitorHeaders.indexOf('時間');
     const idIdx = visitorHeaders.indexOf('訪客ID');
+    
+    if (timeIdx < 0 || idIdx < 0) {
+      Logger.log('❌ 訪客記錄表頭不正確');
+      return { ok: false, error: '訪客記錄表頭不正確' };
+    }
     
     // 讀取今日事件記錄
     const eventSheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_EVENT_LOG);
@@ -236,9 +259,26 @@ function updateDailyStats() {
     }
     
     Logger.log('✅ 每日統計更新完成: ' + today);
+    Logger.log('📊 統計結果: 瀏覽' + totalViews + '次, 訪客' + uniqueVisitors + '人, 下單' + checkoutCount + '筆');
+    
+    SpreadsheetApp.getUi().alert(
+      '✅ 每日統計更新成功！\n\n' +
+      '日期: ' + today + '\n' +
+      '總瀏覽: ' + totalViews + ' 次\n' +
+      '獨立訪客: ' + uniqueVisitors + ' 人\n' +
+      '新訪客: ' + newVisitors + ' 人\n' +
+      '回訪客: ' + returningVisitors + ' 人\n' +
+      '查看商品: ' + viewProductCount + ' 次\n' +
+      '加入購物車: ' + addToCartCount + ' 次\n' +
+      '送出訂單: ' + checkoutCount + ' 筆\n' +
+      '轉換率: ' + conversionRate + '%'
+    );
+    
     return { ok: true, date: today, stats: { totalViews, uniqueVisitors, checkoutCount } };
   } catch (error) {
     Logger.log('❌ 更新每日統計失敗: ' + error);
+    Logger.log('錯誤堆疊: ' + error.stack);
+    SpreadsheetApp.getUi().alert('❌ 更新每日統計失敗！\n\n錯誤訊息:\n' + error.toString());
     return { ok: false, error: error.toString() };
   }
 }
