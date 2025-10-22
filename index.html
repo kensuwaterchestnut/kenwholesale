@@ -600,6 +600,7 @@
 
     function renderGrid(){
       const grid=document.getElementById('grid'); grid.innerHTML='';
+      let imgCount = 0, noImgCount = 0;
       products.filter(matchFilter).forEach(p=>{
         const title=`${p.name}（${p.type}）`;
         const card=document.createElement('article'); card.className='card';
@@ -607,6 +608,17 @@
         const isHeavyEquip = (p.tag==='設備' && Number(p.shipFee)===300);
         const shipNote = isHeavyEquip ? '大型貨物' : `運費 $${fmt(p.shipFee)}`;
         const imgUrl = p.img ? githubToRaw(p.img) : '';
+        
+        // 除錯：記錄圖片狀態
+        if (imgUrl) {
+          imgCount++;
+          if (imgCount <= 3) {
+            console.log(`渲染商品 ${p.name}: img="${p.img}" → imgUrl="${imgUrl}"`);
+          }
+        } else {
+          noImgCount++;
+        }
+        
         card.innerHTML=`
           <div class="media">
             ${imgUrl?`<img src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
@@ -630,7 +642,9 @@
             <div class='note'>${p.note?`${p.note}`:''}</div>
           </div>`;
         grid.appendChild(card);
-      })
+      });
+      
+      console.log(`📊 渲染完成: ${imgCount} 個有圖片, ${noImgCount} 個無圖片`);
     }
 
     function cardNormalize(qid){
@@ -1022,6 +1036,33 @@
       await fetchProductsFromGAS();
       alert('已重新載入！請查看 Console (F12)');
     }
+    
+    // 測試圖片 URL 是否可以載入
+    window.testImageUrl = function(url) {
+      if (!url && products.length > 0) {
+        // 如果沒有提供 URL，測試第一個有圖片的商品
+        const productWithImg = products.find(p => p.img);
+        if (productWithImg) {
+          url = productWithImg.img;
+          console.log('測試商品:', productWithImg.name);
+        } else {
+          console.error('沒有找到有圖片的商品');
+          return;
+        }
+      }
+      
+      console.log('測試圖片 URL:', url);
+      const img = new Image();
+      img.onload = function() {
+        console.log('✅ 圖片載入成功！尺寸:', this.width, 'x', this.height);
+        alert('圖片載入成功！\n尺寸: ' + this.width + 'x' + this.height);
+      };
+      img.onerror = function() {
+        console.error('❌ 圖片載入失敗');
+        alert('圖片載入失敗！\n請檢查:\n1. 圖片權限是否正確\n2. URL 是否有效\n\nURL: ' + url);
+      };
+      img.src = url;
+    };
 
     applyBrand();
     renderChips();
