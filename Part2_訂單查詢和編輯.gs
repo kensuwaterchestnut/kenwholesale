@@ -114,6 +114,7 @@ function onEdit(e){
     const c = {
       orderNo: col('訂單編號'),
       name: col('姓名'),
+      recipient: col('收件人'),
       email: col('Email'),
       total: col('應付金額'),
       pay: col('款項狀態'),
@@ -150,9 +151,10 @@ function onEdit(e){
         if (c.shipState>0 && e.range.getColumn()!==c.shipState) sh.getRange(r,c.shipState).setValue('已出貨');
         const orderNo = gv(c.orderNo);
         const name = gv(c.name);
+        const recipient = gv(c.recipient);
         const email = gv(c.email);
         const total = Number(gv(c.total))||0;
-        updateDetailByOrder_(orderNo, {'出貨狀態':'已出貨','出貨日期':$.today()});
+        updateDetailByOrder_(orderNo, {'出貨狀態':'已出貨','出貨日期':$.today(),'收件人':recipient});
         if (SEND_MAIL && orderNo && email){
           const ok = sendShippedMail_({ orderNo, name, email, total, shipDate: $.today() });
           if (c.mail>0) sh.getRange(r,c.mail).setValue(stampNote_(ok,'已寄信(出貨)','寄信失敗(出貨)'));
@@ -171,7 +173,7 @@ function batchMail_(type){
   if(!range){ ui.alert('請先選取要處理的列'); return; }
   const head=getHeader_(sh); const col=n=>head.indexOf(n)+1;
   const c = {
-    orderNo: col('訂單編號'), name: col('姓名'), email: col('Email'),
+    orderNo: col('訂單編號'), name: col('姓名'), recipient: col('收件人'), email: col('Email'),
     total: col('應付金額'), shipDate: col('出貨日期'), shipState: col('出貨狀態'),
     shippedFlag: col('已出貨'), mail: col('寄信狀態')
   };
@@ -179,18 +181,18 @@ function batchMail_(type){
   values.forEach((row,i)=>{
     const r = range.getRow()+i;
     const get = C => String(sh.getRange(r,C).getValue()||'').trim();
-    const orderNo = get(c.orderNo), name=get(c.name), email=get(c.email);
+    const orderNo = get(c.orderNo), name=get(c.name), recipient=get(c.recipient), email=get(c.email);
     const total = Number(get(c.total))||0; if(!orderNo||!email) return;
     let note='';
     if(type==='remind'){
       const ok = sendPaymentReminderMail_({ orderNo, name, email, total });
-      updateDetailByOrder_(orderNo, {'付款狀態':'待匯款'});
+      updateDetailByOrder_(orderNo, {'付款狀態':'待匯款','收件人':recipient});
       note = stampNote_(ok,'已寄信(催款)','寄信失敗(催款)');
     }else{
       if (c.shipDate>0) sh.getRange(r,c.shipDate).setValue($.today());
       if (c.shipState>0) sh.getRange(r,c.shipState).setValue('已出貨');
       if (c.shippedFlag>0) sh.getRange(r,c.shippedFlag).setValue('是');
-      updateDetailByOrder_(orderNo, {'出貨狀態':'已出貨','出貨日期':$.today()});
+      updateDetailByOrder_(orderNo, {'出貨狀態':'已出貨','出貨日期':$.today(),'收件人':recipient});
       const ok = sendShippedMail_({ orderNo, name, email, total, shipDate: $.today() });
       note = stampNote_(ok,'已寄信(出貨)','寄信失敗(出貨)');
     }
