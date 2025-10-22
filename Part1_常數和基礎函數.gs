@@ -24,8 +24,8 @@ const NOTIFY_TO = 'kensu.water.chestnut@gmail.com';
 const SEND_MAIL = true;
 const BRAND = { name: '啃酥批發', address: '台中市石岡區石岡街61號', phone: '0933-721-978' };
 const COMPANY_TAX_ID = '93428964';
-const LINE_URL = 'https://line.me/R/ti/p/@174vwkhs?ts=09250145&oat_content=url';
-const LOGO_URL = 'https://raw.githubusercontent.com/kensuwaterchestnut/kenwholesale/main/%E5%95%83%E9%85%A5%20Ken-01.png';
+const LINE_URL = 'https://lin.ee/l8o7NXF';
+const LOGO_URL = 'https://raw.githubusercontent.com/kensuwaterchestnut/kenwholesale/main/img/%E5%95%83%E9%85%A5%20Ken-01.png';
 const BANK  = { bank:'連線銀行(824)', holder:'酥味香企業社', no:'111013782313' };
 
 const FOLDER_MAP = {
