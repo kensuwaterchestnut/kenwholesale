@@ -447,7 +447,19 @@
         if (data.products && data.products.length > 0) {
           products = data.products.map(p => {
             const imgUrl = matchProductImage(p, data.images);
-            console.log(`商品: ${p.name}, 圖片URL: ${imgUrl || '(無)'}`);
+            
+            // 如果後端沒有圖片，嘗試從 DEFAULT_PRODUCTS 取得
+            let finalImgUrl = imgUrl;
+            if (!finalImgUrl) {
+              const defaultProduct = DEFAULT_PRODUCTS.find(dp => dp.id === p.id);
+              if (defaultProduct && defaultProduct.img) {
+                finalImgUrl = defaultProduct.img;
+                console.log(`使用預設圖片: ${p.name} → ${finalImgUrl}`);
+              }
+            } else {
+              console.log(`使用 GAS 圖片: ${p.name} → ${finalImgUrl}`);
+            }
+            
             return {
               id: p.id,
               tag: p.tag || '',
@@ -463,7 +475,7 @@
               soldCount: p.soldCount || 0,
               shelfLife: p.shelfLife || '',
               storage: p.storage || '',
-              img: imgUrl,
+              img: finalImgUrl,
               note: p.note || ''
             };
           });
