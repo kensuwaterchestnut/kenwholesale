@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>啃酥菱角酥批發官網</title>
+  <meta name="description" content="啃酥菱角酥批發官網：整件與單品項。下單先填資料、先匯款，核帳後出貨。" />
+  <style>
+    :root{
+      --bg:#faf7f2; --surface:#ffffff; --ink:#111827; --muted:#6b7280;
+      --brand:#f59e0b; --brand-dark:#d97706; --ok:#16a34a; --bad:#ef4444;
+      --border:#e5e7eb; --shadow:0 12px 28px rgba(0,0,0,.06);
+      --hero:url('https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%81%E9%9D%A2%E5%A4%A7%E5%9C%96.jpg?raw=1');
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Noto Sans TC",Arial,sans-serif;touch-action:manipulation}
+    a{color:inherit;text-decoration:underline}
+    .wrap{max-width:1100px;margin:0 auto;padding:0 12px}
+
+    header{
+      position:sticky;top:0;z-index:60;
+      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.86)),
+                 repeating-linear-gradient(90deg, rgba(0,0,0,.04) 0 14px, rgba(0,0,0,0) 14px 28px);
+      backdrop-filter:saturate(1.2) blur(10px); border-bottom:1px solid var(--border)
+    }
+    .topbar{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 0}
+    .brand{display:flex;align-items:center;gap:8px}
+    .brand img{width:36px;height:36px;object-fit:contain;border-radius:10px;border:1px solid var(--border);background:#fff}
+    .brand h1{font-size:15px;margin:0;font-weight:900;letter-spacing:.2px}
+    nav{display:flex;gap:6px;font-size:13px;overflow-x:auto;white-space:nowrap}
+    nav a{padding:6px 10px;border-radius:999px;border:1px solid var(--border);background:#fff;text-decoration:none}
+    nav a:hover{box-shadow:0 2px 10px rgba(0,0,0,.08)}
+
+    .hero{position:relative;margin:0 0 12px;background:linear-gradient(180deg,#fff,rgba(255,255,255,0)),var(--hero);background-size:cover;background-position:center;min-height:42svh;border-bottom:1px solid var(--border)}
+    .hero::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.35),rgba(0,0,0,0) 55%)}
+    .hero .hero-inner{position:relative;z-index:1;display:grid;align-items:end;min-height:42svh}
+    .hero .copy{padding:22px 0 26px;color:#fff;position:relative}
+    .brand-inline{position:absolute;left:0;top:-40px}
+    .brand-inline img{width:min(120px,28vw);height:auto;border-radius:10px;border:1px solid rgba(255,255,255,.6);box-shadow:0 8px 24px rgba(0,0,0,.25);background:#fff}
+    .hero .kicker{display:inline-block;background:rgba(0,0,0,.35);padding:4px 8px;border:1px solid rgba(255,255,255,.25);border-radius:999px;font-size:11px;margin-bottom:8px}
+    .hero h2{font-size:clamp(24px,4.2vw,42px);line-height:1.15;margin:0 0 6px;font-weight:900;text-shadow:0 2px 12px rgba(0,0,0,.22)}
+    .hero p{margin:0;font-size:clamp(13px,2.3vw,15px);opacity:.95}
+    .cta{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .btn{appearance:none;border:none;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer}
+    .btn.brand{background:var(--brand);color:#111;border:1px solid var(--brand-dark)}
+    .btn.ghost{background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.35)}
+
+    .section-card{background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:var(--shadow);padding:14px;margin:18px 0}
+    .section-card h3{margin:0 0 8px}
+
+    .chips{display:flex;flex-wrap:wrap;gap:8px;padding:12px 0 6px}
+    .chip{padding:8px 10px;border:1px solid var(--border);border-radius:999px;background:#fff;font-size:13px;cursor:pointer}
+    .chip.is-on{border-color:var(--brand);box-shadow:0 2px 10px rgba(245,158,11,.25)}
+
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+    @media (max-width:360px){.grid{grid-template-columns:1fr}}
+    @media (min-width:860px){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}}
+    .card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}
+
+    .card .media{position:relative;overflow:hidden;background:#f3f4f6}
+    .card .media::before{content:"";display:block;padding-top:100%}
+    @media (min-width:860px){ .card .media::before{padding-top:75%} }
+    .card .media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center}
+
+    .soldout{position:absolute;inset:auto 8px 8px auto;background:rgba(17,24,39,.85);color:#fff;padding:4px 8px;border-radius:10px;font-size:11px;z-index:2}
+    .badge{position:absolute;left:8px;top:8px;background:#fff;border:1px solid var(--border);font-size:11px;border-radius:999px;padding:3px 7px}
+    .badge.right{left:auto;right:8px}
+    .body{padding:10px}
+    .body h3{margin:6px 0 6px;font-size:15px}
+    .meta{color:var(--muted);font-size:12px;margin:2px 0}
+    .shipline{font-weight:700;color:#b45309}
+    .price{margin-top:6px;font-weight:800;color:#b45309}
+    .btn.add{margin:8px 0 2px;background:#111;color:#fff;border-radius:12px;padding:9px 12px;border:1px solid #111;width:100%}
+    .btn.add[disabled]{background:#cfcfcf;border-color:#cfcfcf;cursor:not-allowed}
+    .note{font-size:11px;color:var(--muted)}
+
+    .qtyline{display:flex;align-items:center;gap:6px;margin-top:6px}
+    .qtybtn{width:32px;height:32px;border:1px solid var(--border);background:#fff;border-radius:10px;cursor:pointer}
+    .qtyinput{width:64px;padding:8px 10px;border:1px solid var(--border);border-radius:10px;font:inherit;text-align:center}
+
+    .cart-fab{position:fixed;right:14px;bottom:14px;z-index:80;display:grid;place-items:center;width:60px;height:60px;border-radius:50%;background:#ffedd5;border:2px solid var(--brand-dark);box-shadow:0 10px 24px rgba(0,0,0,.18);cursor:pointer}
+    .cart-fab svg{width:34px;height:34px}
+    .cart-count{position:absolute;right:-6px;top:-6px;background:#111;color:#fff;border-radius:999px;min-width:22px;height:22px;display:grid;place-items:center;font-size:12px;border:2px solid #fff}
+
+    .drawer{position:fixed;inset:0;z-index:90;display:none}
+    .drawer.on{display:block}
+    .drawer .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.36)}
+    .panel{position:absolute;right:0;top:0;bottom:0;width:min(520px,100%);background:#fff;box-shadow:-12px 0 28px rgba(0,0,0,.25);display:flex;flex-direction:column}
+    .panel header{padding:12px;border-bottom:1px solid var(--border);background:#fff;display:flex;align-items:center;justify-content:space-between}
+    .panel header h4{margin:0;font-size:17px}
+    .list{flex:1;overflow:auto;padding:10px}
+    .item{display:grid;grid-template-columns:56px 1fr auto;gap:10px;align-items:center;border:1px solid var(--border);border-radius:12px;padding:8px;margin-bottom:8px}
+    .item-sub{font-size:12px;color:var(--muted)}
+    .qty{display:flex;align-items:center;gap:6px}
+    .qty button{width:28px;height:28px;border:1px solid var(--border);background:#fff;border-radius:8px;cursor:pointer}
+    .summary{border-top:1px dashed var(--border);padding:10px}
+    .row{display:flex;justify-content:space-between;font-size:14px;margin:6px 0}
+    .row em{color:var(--muted);font-style:normal}
+    .row .ok{color:var(--ok)} .row .warn{color:#b45309}
+    .checkout{padding:10px;border-top:1px solid var(--border)}
+    .btn.full{width:100%;background:var(--brand);border:1px solid var(--brand-dark);color:#111;font-weight:900}
+
+    .notice{border-top:1px solid var(--border);padding:10px}
+    .notice button.toggler{border:1px solid var(--border);background:#fff;border-radius:10px;padding:8px 10px;cursor:pointer}
+    .notice .box{margin-top:8px;border:1px solid var(--border);border-radius:10px;padding:10px;max-height:160px;overflow:auto;background:#fffef8}
+    .notice .agree{display:flex;align-items:center;gap:8px;margin-top:8px}
+
+    .admin-gear{position:fixed;left:10px;bottom:10px;z-index:85;width:36px;height:36px;border-radius:50%;display:grid;place-items:center;background:#fff;border:1px solid var(--border);box-shadow:0 8px 20px rgba(0,0,0,.12);cursor:pointer}
+    .admin-gear svg{width:18px;height:18px}
+    .admin-pane{position:fixed;left:50%;top:50%;transform:translate(-50%,-50%);z-index:95;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 20px 40px rgba(0,0,0,.25);padding:0;display:none;width:min(820px,96vw);max-height:92svh;overflow:auto}
+    .admin-pane.on{display:block}
+    .admin-head{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);padding:10px 12px;position:sticky;top:0;background:#fff}
+    .admin-head h5{margin:0;font-size:15px}
+    .admin-body{padding:12px}
+    .admin-actions{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+    .admin-login{padding:14px}
+    .admin-login .input{max-width:220px}
+
+    .sheet{position:fixed;inset:0;z-index:95;display:none}
+    .sheet.on{display:block}
+    .sheet .backdrop{position:absolute;inset:0;background:rgba(0,0,0,.36)}
+    .sheet .card{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(720px,96%);max-height:90svh;overflow:auto;padding:14px;border-radius:16px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .form{display:grid;grid-template-columns:1fr;gap:8px}
+    .label{font-size:12px;color:var(--muted)}
+    .input,select,textarea{width:100%;padding:10px;border:1px solid var(--border);border-radius:10px;font:inherit;font-size:16px;background:#fff}
+    .bank{margin:4px 0 0;font-size:13px;border:1px dashed var(--border);border-radius:12px;padding:10px;background:#fffced}
+    .fine{font-size:12px;color:var(--muted)}
+    .two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+    @media (max-width:560px){.two{grid-template-columns:1fr}}
+    footer{margin:20px 0 90px;padding-top:12px;border-top:1px solid var(--border);font-size:12px;color:#6b7280;text-align:center}
+
+    /* 送單鎖定遮罩 */
+    .mask{position:fixed;inset:0;z-index:120;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.45)}
+    .mask.on{display:flex}
+    .mask .box{background:#111;color:#fff;padding:14px 16px;border-radius:12px;font-size:14px;box-shadow:0 10px 24px rgba(0,0,0,.3)}
+    .hint{font-size:12px;color:var(--muted);margin-top:4px}
+    .result{margin-top:10px}
+    .result .card{border:1px solid var(--border);border-radius:12px;padding:10px;margin-bottom:8px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap topbar">
+      <div class="brand">
+        <img id="logoImg" src="https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%20Ken-01.png?raw=1" alt="KenSu Logo" />
+        <h1 id="siteTitle">啃酥菱角酥批發官網</h1>
+      </div>
+      <nav>
+        <a href="#about">關於我們</a>
+        <a href="#store">馬上選購</a>
+        <a href="#news">物流須知</a>
+        <a href="javascript:void(0)" onclick="openSearch()">查詢訂單</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-inner">
+      <div class="copy">
+        <div class="brand-inline"><img src="https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%20Ken-01.png?raw=1" alt="KenSu Brand" /></div>
+        <span class="kicker" id="heroKicker">KEN SU Wholesale</span>
+        <h2 id="heroTitle">夜市起家，走進全台的黃金酥脆</h2>
+        <p id="heroSub">整件與單品項批發｜常溫・冷藏・冷凍 — 先匯款，核帳後出貨</p>
+        <div class="cta">
+          <button class="btn brand" onclick="scrollToStore()">🛒 馬上選購</button>
+          <button class="btn ghost" onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">品牌故事</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="about">
+    <div class="section-card">
+      <h3>關於我們</h3>
+      <p>啃酥從夜市小攤發跡，主打菱角酥、炸鮮奶、飲品原料與設備。為了讓非加盟夥伴也能穩定取得原物料，我們開放<strong>整件與單品項</strong>批發。完成下單後，請依畫面匯款資訊完成匯款；我們核帳後安排出貨。</p>
+    </div>
+  </section>
+
+  <section class="wrap" id="store">
+    <div class="chips" id="chips"></div>
+    <div class="grid" id="grid"></div>
+  </section>
+
+  <section class="wrap" id="news" style="padding:0 0 8px">
+    <div class="section-card">
+      <h3>物流須知</h3>
+      <ul>
+        <li>🧊 低溫商品需全程冷藏/冷凍配送；不同溫層原則上分開配送。</li>
+        <li>🚚 <b>全館滿 $5,000 免運</b>；未達門檻時，依<strong>各溫層</strong>分別計一次最高運費。</li>
+        <li>📦 出貨時程：核帳後約 1–3 個工作天（週末與節慶量大時順延）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <button class="cart-fab" id="cartFab" title="開啟購物車" onclick="openCart()">
+    <span class="cart-count" id="cartCount">0</span>
+    <svg viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <circle cx="64" cy="64" r="36" fill="#f59e0b" stroke="#d97706" stroke-width="6" />
+      <path d="M20 36h16l10 46h42l6-28H54" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="52" cy="96" r="6" fill="#111"/><circle cx="88" cy="96" r="6" fill="#111"/>
+      <path d="M64 22c-10 0-18 8-18 18 10-6 20-6 36 0-2-10-10-18-18-18z" fill="#fed7aa" stroke="#d97706" stroke-width="4"/>
+    </svg>
+  </button>
+
+  <div class="drawer" id="drawer">
+    <div class="backdrop" onclick="closeCart()"></div>
+    <div class="panel">
+      <header>
+        <h4>購物車</h4>
+        <div style="display:flex;gap:8px">
+          <button class="btn" onclick="clearCart()">清空</button>
+          <button class="btn" onclick="closeCart()">關閉</button>
+        </div>
+      </header>
+      <div class="list" id="cartList"></div>
+      <div class="summary" id="cartSummary"></div>
+
+      <div class="notice">
+        <button class="toggler" onclick="toggleNotice()">📜 物流與退貨說明（請展開閱讀，需捲到最底才可勾選）</button>
+        <div id="noticeBox" class="box" style="display:none" onscroll="noticeScrolled()">
+          <p><b>出貨時程：</b>入帳後 1–3 個工作天內出貨（週末與節慶量大時順延）。</p>
+          <p><b>配送方式：</b>宅配使用新竹貨運（常溫 / 冷藏 / 冷凍 / 大型貨運）。收貨請<span style="text-decoration:underline">全程開箱錄影</span>；若有運損，請於 24 小時內提供影片與照片，我們協助向物流理賠。</p>
+          <p><b>批發常見情況與限制：</b></p>
+          <ul>
+            <li>不同溫層需拆單出貨；若未達全館免運門檻，各溫層各計一次最高運費。</li>
+            <li>大量件數或大型貨物（如油炸鍋）可能改走大車或分批配送，配送時段恕無法保證。</li>
+            <li>偏遠地區/山區/工地/校園/管制區可能加收附加費或改店對店，請先詢問。</li>
+            <li>無電梯搬運需加價或只送至一樓；超材件可能只送到點不搬運。</li>
+            <li>地址變更、收件人不在、二次配送、保管逾期等，物流會加收費用。</li>
+            <li>冷鏈規範：若外箱嚴重變形滲液或失溫，請「拒收 + 立即拍照錄影」並聯繫我們。</li>
+            <li>到貨驗收以錄影畫面為準；超過 24 小時或無錄影，物流多以「非物流責」處理。</li>
+          </ul>
+          <div id="noticeBottom" style="height:1px"></div>
+        </div>
+        <label class="agree"><input id="agreeChk" type="checkbox" disabled> 我已閱讀並同意物流與退貨說明</label>
+      </div>
+
+      <div class="checkout">
+        <button class="btn full" onclick="goCheckout()">前往結帳（先填資料後匯款）</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sheet" id="sheet">
+    <div class="backdrop" onclick="closeSheet()"></div>
+    <div class="card">
+      <h3 style="margin:6px 0 10px">填寫出貨資料</h3>
+      <form id="orderForm" class="form" onsubmit="submitOrder(event)">
+        <div class="two">
+          <div><div class="label">公司/店名（或姓名）</div><input class="input" name="buyer" placeholder="啃酥台中據點 / 王小明" required></div>
+          <div><div class="label">聯絡電話</div><input class="input" name="phone" placeholder="0912-345-678" required></div>
+        </div>
+        <div class="two">
+          <div><div class="label">Email（收通知）</div><input class="input" name="email" type="email" placeholder="shop@example.com" required></div>
+          <div><div class="label">LINE ID（選填）</div><input class="input" name="line" placeholder="kensu_line"></div>
+        </div>
+        <div class="two">
+          <div><div class="label">收件人</div><input class="input" name="recipient" placeholder="王小明" required></div>
+          <div><div class="label">出貨方式</div>
+            <select name="ship_note" class="input" required>
+              <option value="宅配">宅配</option>
+              <option value="超商取貨">超商取貨</option>
+            </select>
+          </div>
+        </div>
+        <div><div class="label">收件地址 / 超商門市</div><input class="input" name="address" placeholder="例：台中市北屯區太順路112號1樓 / 7-11 鐵馬門市" required></div>
+        <div><div class="label">備註</div><textarea class="input" name="memo" rows="3" placeholder="例：指定到貨日、開箱錄影等"></textarea></div>
+
+        <div class="bank">
+          <strong>匯款資訊：</strong>
+          <div class="fine"><b>戶名：</b>酥味香企業社</div>
+          <div class="fine"><b>銀行 / 帳號：</b>連線銀行（代碼 824）｜111013782313</div>
+          <div class="fine"><b>匯款通知：</b>完成送出後請匯款，並傳送至官方 LINE 帳號
+            <a href="https://lin.ee/eE1XNc7" target="_blank" rel="noopener">https://lin.ee/eE1XNc7</a> 提供<b>匯款後五碼</b>。</div>
+          <div class="fine"><b>出貨時程：</b>我們核帳後出貨（約 1–3 個工作天）。</div>
+        </div>
+        <div class="fine">送出後系統會將訂單明細寄送確認信至您的信箱【匯款後出貨】。</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:8px">
+          <button type="button" class="btn" onclick="closeSheet()">取消</button>
+          <button id="submitBtn" type="submit" class="btn brand">送出訂單</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 查詢訂單 -->
+  <div class="sheet" id="searchSheet">
+    <div class="backdrop" onclick="closeSearch()"></div>
+    <div class="card">
+      <h3 style="margin:6px 0 10px">查詢訂單</h3>
+      <form id="searchForm" class="form" onsubmit="submitSearch(event)">
+        <div><div class="label">訂單編號（例：K250915-001）</div>
+          <input class="input" name="orderId" placeholder="可輸入 K250915-001 或 #K250915-001">
+        </div>
+        <div><div class="label">Email（下單時填的信箱）</div>
+          <input class="input" name="email" type="email" placeholder="shop@example.com">
+        </div>
+        <div class="hint">至少填一項：訂單編號或 Email 任一即可。</div>
+        <div style="display:flex;justify-content:center;gap:8px;margin-top:8px">
+          <button type="button" class="btn" onclick="closeSearch()">關閉</button>
+          <button id="searchBtn" type="submit" class="btn brand">開始查詢</button>
+        </div>
+      </form>
+      <div id="searchResult" class="result"></div>
+    </div>
+  </div>
+
+  <div id="loadingMask" class="mask" aria-live="polite"><div class="box" id="loadingText">正在送出訂單，請稍候…</div></div>
+
+  <button class="admin-gear" title="管理">
+    <svg width="24" height="24" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9.4 4a7.4 7.4 0 01-.1 1l2 1.6-2 3.5-2.4-1a7.9 7.9 0 01-1.7 1l-.4 2.6H9.2l-.4-2.6a7.9 7.9 0 01-1.7-1l-2.4 1-2-3.5 2-1.6a7.4 7.4 0 010-2L.7 9.8l2-3.5 2.4 1c.5-.4 1.1-.7 1.7-1L7.2 3h5.6l.4 2.6c.6.3 1.2.6 1.7 1l2.4-1 2 3.5-2 1.2c.1.3.1.7.1 1z" fill="#111"/>
+    </svg>
+  </button>
+
+  <div class="admin-pane" id="adminPane">
+    <div class="admin-head">
+      <h5>RAW 轉換工具</h5>
+      <div style="display:flex;gap:8px">
+        <button class="btn" onclick="logoutAdmin()">登出</button>
+        <button class="btn" onclick="closeAdmin()">關閉 ✕</button>
+      </div>
+    </div>
+
+    <div class="admin-login" id="adminLogin">
+      <div class="label">請先登入）</div>
+      <div class="admin-actions">
+        <input class="input" id="adminPass" type="password" placeholder="輸入管理密碼 111111">
+        <button class="btn brand" onclick="adminLogin()">登入</button>
+      </div>
+      <div class="fine">登入狀態會記錄在本裝置（localStorage），重新整理或重開也仍為已登入。</div>
+    </div>
+
+    <div class="admin-body" id="adminBody" style="display:none">
+      <div class="label">GitHub 連結 ➜ RAW 轉換器（影片/圖片）</div>
+      <input class="input" id="ghUrl" placeholder="貼上 https://github.com/.../blob/.../file.png">
+      <div class="admin-actions">
+        <button class="btn" onclick="convertGh()">轉換 RAW</button>
+        <button class="btn" onclick="copyRaw()">複製 RAW 連結</button>
+      </div>
+      <input class="input" id="ghRawOut" placeholder="轉換結果會顯示在這裡" readonly>
+      <small class="fine">規則：把 <code>github.com/帳號/Repo/blob/分支/path/file</code> 變成 <code>raw.githubusercontent.com/帳號/Repo/分支/path/file</code>；或原網址尾加 <code>?raw=1</code>。</small>
+    </div>
+  </div>
+
+  <footer class="wrap">
+    <div>酥味香企業社｜統編 93428964</div>
+    <div>地址：台中市石岡區石岡街61號</div>
+    <div>連絡電話：0933-721-978</div>
+  </footer>
+
+  <script>
+    /* ===== Web App 端點（記得是你最新部署的 /exec） ===== */
+    const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbyAhcDuzKrmBVSlGXE6rhXw_IPzo8rlP_g9uLPFFjkPSjglDBnyA6Fac6Vo9ZFO9RLPBw/exec';
+
+    /* ===== 範圍標籤 ===== */
+    const TAGS = ['設備','常溫','冷藏','冷凍'];
+    const GROUP_LABELS = { '常溫':'常溫', '冷藏':'冷藏', '冷凍':'冷凍' };
+
+    /* ===== 全館免運門檻 ===== */
+    const FREE_SHIP_ALL = 5000;
+
+    /* ===== 本機儲存 key ===== */
+    const LS_KEY_PRODUCTS='kensu_wholesale_products_v10';
+    const LS_KEY_BRAND='kensu_wholesale_brand_v10';
+    const LS_KEY_ADMIN='kensu_admin_ok_v3';
+    const LS_KEY_LAST_ORDER='kensu_last_order_hint';
+
+    /* ===== 預設商品 ===== */
+    const DEFAULT_PRODUCTS = [
+      {id:'powder_case',  tag:'', name:'啃酥專用粉', type:'整件',  spec:'4.5公斤 / 5包 / 1件', price:6000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:128, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
+      {id:'powder_single',tag:'', name:'啃酥專用粉', type:'單品項', spec:'4.5公斤 / 1包',        price:1250, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:356, shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:''},
+
+      {id:'powder_gram',  tag:'', name:'啃酥專用粉(克)', type:'單品項',
+       spec:'以克計價｜1單位=10g；1公斤=數量100｜【制式規格】4.5公斤=數量450',
+       price:3, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:450, soldOut:false, soldCount:5024,
+       shelfLife:'12個月', storage:'常溫陰涼乾燥', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%95%83%E9%85%A5%E5%B0%88%E7%94%A8%E7%B2%89.jpg?raw=1', note:'單位換算：1=10g；下單時依需求輸入數量'},
+
+      {id:'waterchest_case',  tag:'', name:'啃酥菱角仁', type:'整件',  spec:'3公斤 / 4包 / 1件', price:3500, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:95, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
+      {id:'waterchest_single',tag:'', name:'啃酥菱角仁', type:'單品項', spec:'3公斤 / 1包',        price:990,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:210, shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
+
+      {id:'waterchest_catty', tag:'', name:'啃酥菱角仁(斤)', type:'單品項',
+       spec:'每斤（約600g）', price:240, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:1066,
+       shelfLife:'冷凍12個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8F%B1%E8%A7%92.jpg?raw=1', note:''},
+
+      {id:'milkfried_case',  tag:'', name:'啃酥炸鮮奶', type:'整件',  spec:'6條 / 16盒 / 1件', price:1900, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:41, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:''},
+      {id:'milkfried_single',tag:'', name:'啃酥炸鮮奶', type:'單品項', spec:'6條 / 1盒',        price:130,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:280, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E7%82%B8%E9%AE%AE%E5%A5%B6.jpg?raw=1', note:''},
+
+      {id:'fat_case',  tag:'', name:'啃酥專用脂', type:'整件',  spec:'330毫升 / 10瓶 / 1件', price:880, shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:33, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
+      {id:'fat_single',tag:'', name:'啃酥專用脂', type:'單品項', spec:'330毫升 / 1瓶',        price:95,  shipGroup:'冷凍', shipFee:200, freeQty:0, minOrder:1, soldOut:false, soldCount:402, shelfLife:'冷凍6個月', storage:'-18°C 冷凍', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%B0%88%E7%94%A8%E8%84%82.jpg?raw=1', note:''},
+
+      {id:'taro_case',   tag:'', name:'啃酥芋泥丁', type:'整件',  spec:'750公克 / 10盒 / 1件', price:3550, shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
+      {id:'taro_single', tag:'', name:'啃酥芋泥丁', type:'單品項', spec:'750公克 / 1盒',        price:380,  shipGroup:'冷藏', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'0–7°C 冷藏', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%8A%8B%E6%B3%A5.jpg?raw=1', note:'示意圖'},
+
+      {id:'cheese_case',  tag:'', name:'啃酥乳酪丁', type:'整件',  spec:'1公斤 / 10包 / 1件', price:4200, shipGroup:'冷凍', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'冷凍保存；使用前一天冷藏退冰', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%B5%B7%E5%8F%B8.jpg?raw=1', note:''},
+      {id:'cheese_single',tag:'', name:'啃酥乳酪丁', type:'單品項', spec:'1公斤 / 1包',        price:450,  shipGroup:'冷凍', shipFee:180, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'30天（依包裝）', storage:'冷凍保存；使用前一天冷藏退冰', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%B5%B7%E5%8F%B8.jpg?raw=1', note:''},
+
+      {id:'equip_fryer15',   tag:'設備', name:'15型油炸鍋',            type:'單台', spec:'1台', price:9200,  shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/15%E5%9E%8B%E6%B2%B9%E9%8D%8B.jpg?raw=1', note:''},
+      {id:'equip_fryer25',   tag:'設備', name:'25型油炸鍋',            type:'單台', spec:'1台', price:11200, shipGroup:'常溫', shipFee:300, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/25%E5%9E%8B%E6%B2%B9%E9%8D%8B.jpg?raw=1', note:''},
+      {id:'equip_mixer220',  tag:'設備', name:'220V攪拌機（12公升）', type:'單台', spec:'1台', price:13000, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/220V%E6%94%AA%E6%8B%8C%E5%99%A8.jpg?raw=1', note:''},
+      {id:'equip_mixer110',  tag:'設備', name:'110V攪拌鍋（10公升）', type:'單台', spec:'1台', price:11500, shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/110V%E6%94%AA%E6%8B%8C%E9%8D%8B.jpg?raw=1', note:''},
+      {id:'equip_steamer110',tag:'設備', name:'110V電蒸鍋',            type:'單台', spec:'1台', price:2480,  shipGroup:'常溫', shipFee:150, freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/110V%E8%92%B8%E9%8D%8B.jpg?raw=1', note:''},
+      {id:'equip_timer3',    tag:'設備', name:'三合一計時器',          type:'單品項', spec:'1台', price:550,   shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E8%A8%88%E6%99%82%E5%99%A8.jpg?raw=1', note:''},
+      {id:'equip_divider',   tag:'設備', name:'炸鍋分隔板',            type:'單品項', spec:'1個', price:1480,  shipGroup:'常溫', shipFee:60,  freeQty:0, minOrder:1, soldOut:false, soldCount:0, shelfLife:'—', storage:'常溫', img:'https://github.com/kensuwaterchestnut/kenwholesale/blob/main/%E5%85%A7%E6%AA%94%E6%9D%BF.jpg?raw=1', note:''}
+    ];
+
+    function loadProducts(){
+      try{
+        const saved = JSON.parse(localStorage.getItem(LS_KEY_PRODUCTS));
+        if(Array.isArray(saved) && saved.length>0) return saved;
+        return DEFAULT_PRODUCTS;
+      }catch{ return DEFAULT_PRODUCTS }
+    }
+    function loadBrand(){
+      try{ return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || {logo:'',title:'啃酥菱角酥批發官網',heroTitle:'夜市起家，走進全台的黃金酥脆',heroSub:'整件與單品項｜先匯款，核帳後出貨'} }
+      catch{ return {logo:'',title:'啃酥菱角酥批發官網',heroTitle:'夜市起家，走進全台的黃金酥脆',heroSub:'整件與單品項｜先匯款，核帳後出貨'} }
+    }
+
+    let brand = loadBrand();
+    let products = loadProducts();
+    let filterOn='全部';
+    const cart=new Map();
+    let currentVersion = null;
+
+    /* ===== 從 GAS 載入商品資料 ===== */
+    async function fetchProductsFromGAS() {
+      try {
+        console.log('🌐 從 GAS 載入商品資料...');
+        const response = await fetch(GAS_ENDPOINT);
+        const data = await response.json();
+        
+        if (data.error) {
+          console.error('❌ GAS 錯誤:', data.error);
+          return;
+        }
+        
+        // 更新商品資料
+        if (data.products && data.products.length > 0) {
+          products = data.products.map(p => ({
+            id: p.id,
+            tag: p.tag || '',
+            name: p.name,
+            type: p.type,
+            spec: p.spec,
+            price: p.price,
+            shipGroup: p.shipGroup,
+            shipFee: p.shipFee,
+            freeQty: p.freeQty || 0,
+            minOrder: p.minOrder || 1,
+            soldOut: p.soldOut || false,
+            soldCount: p.soldCount || 0,
+            shelfLife: p.shelfLife || '',
+            storage: p.storage || '',
+            img: matchProductImage(p, data.images),
+            note: p.note || ''
+          }));
+          
+          // 儲存到 localStorage
+          localStorage.setItem(LS_KEY_PRODUCTS, JSON.stringify(products));
+          
+          // 更新版本號
+          currentVersion = data.version;
+          
+          // 重新渲染
+          renderGrid();
+          
+          console.log(`✅ 載入 ${products.length} 個商品，版本: ${currentVersion}`);
+        }
+      } catch (error) {
+        console.error('❌ 載入失敗:', error);
+      }
+    }
+
+    /* ===== 配對商品圖片 ===== */
+    function matchProductImage(product, images) {
+      if (!images) {
+        console.warn('⚠️ 沒有圖片資料');
+        return '';
+      }
+      
+      // 優先使用 imgFilename（移除所有可能的副檔名）
+      let filename = (product.imgFilename || '').trim();
+      if (!filename) filename = product.id || '';
+      
+      // 移除副檔名
+      filename = filename.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '');
+      
+      if (!filename) {
+        console.warn('⚠️ 商品沒有 imgFilename 或 id:', product.name);
+        return '';
+      }
+      
+      // 搜尋所有溫層的圖片
+      const allImages = [
+        ...(images.常溫 || []),
+        ...(images.冷藏 || []),
+        ...(images.冷凍 || [])
+      ];
+      
+      console.log(`🔍 配對商品: ${product.name} (${filename}), 可用圖片: ${allImages.length} 張`);
+      
+      // 精確配對檔名（不區分大小寫）
+      for (const img of allImages) {
+        const imgNameWithoutExt = img.name.replace(/\.(jpg|jpeg|png|gif|webp)$/i, '');
+        
+        // 完全匹配
+        if (imgNameWithoutExt === filename) {
+          console.log(`✅ 完全匹配: ${product.name} → ${img.name}`);
+          return img.url;
+        }
+        
+        // 包含匹配（檔名包含 imgFilename）
+        if (imgNameWithoutExt.includes(filename)) {
+          console.log(`✅ 包含匹配: ${product.name} → ${img.name}`);
+          return img.url;
+        }
+        
+        // 反向包含（imgFilename 包含檔名）
+        if (filename.includes(imgNameWithoutExt)) {
+          console.log(`✅ 反向匹配: ${product.name} → ${img.name}`);
+          return img.url;
+        }
+      }
+      
+      // 最後嘗試用 product.id 配對
+      if (product.id) {
+        for (const img of allImages) {
+          if (img.name.includes(product.id)) {
+            console.log(`✅ ID 匹配: ${product.name} → ${img.name}`);
+            return img.url;
+          }
+        }
+      }
+      
+      console.warn(`❌ 無法配對: ${product.name} (${filename})`);
+      return '';
+    }
+
+    /* ===== 定時檢查版本更新 ===== */
+    async function checkForUpdates() {
+      try {
+        const response = await fetch(GAS_ENDPOINT);
+        const data = await response.json();
+        
+        if (data.version && currentVersion && data.version !== currentVersion) {
+          console.log('🔄 偵測到新版本，重新載入商品資料...');
+          await fetchProductsFromGAS();
+        }
+      } catch (error) {
+        console.error('檢查更新失敗:', error);
+      }
+    }
+
+    // 頁面載入時立即從 GAS 載入
+    fetchProductsFromGAS();
+
+    // 每 30 秒檢查一次更新
+    setInterval(checkForUpdates, 30000);
+
+    function applyBrand(){
+      if(brand.logo) document.getElementById('logoImg').src=githubToRaw(brand.logo);
+      document.getElementById('siteTitle').textContent=brand.title||'啃酥菱角酥批發官網';
+      document.getElementById('heroTitle').textContent=brand.heroTitle||'';
+      document.getElementById('heroSub').textContent=brand.heroSub||'';
+    }
+    function uniqueTags(){ return ['全部',...TAGS] }
+    function renderChips(){
+      const chips=document.getElementById('chips'); chips.innerHTML='';
+      const searchChip=document.createElement('button');
+      searchChip.className='chip'; searchChip.textContent='🔎 查訂單';
+      searchChip.onclick=openSearch; chips.appendChild(searchChip);
+
+      uniqueTags().forEach(t=>{
+        const btn=document.createElement('button');
+        btn.className='chip'+(t===filterOn?' is-on':''); btn.textContent=t;
+        btn.onclick=()=>{filterOn=t; renderGrid()};
+        chips.appendChild(btn);
+      })
+    }
+    function matchFilter(p){
+      if(filterOn==='全部') return true;
+      if(filterOn==='設備') return p.tag==='設備';
+      if(['常溫','冷藏','冷凍'].includes(filterOn)) return (GROUP_LABELS[p.shipGroup]===filterOn);
+      return true;
+    }
+
+    function renderGrid(){
+      const grid=document.getElementById('grid'); grid.innerHTML='';
+      products.filter(matchFilter).forEach(p=>{
+        const title=`${p.name}（${p.type}）`;
+        const card=document.createElement('article'); card.className='card';
+        const qtyId = `qty_${p.id}`;
+        const isHeavyEquip = (p.tag==='設備' && Number(p.shipFee)===300);
+        const shipNote = isHeavyEquip ? '大型貨物' : `運費 $${fmt(p.shipFee)}`;
+        const imgUrl = p.img ? githubToRaw(p.img) : '';
+        card.innerHTML=`
+          <div class="media">
+            ${imgUrl?`<img src="${imgUrl}" alt="${title}" loading="lazy" decoding="async">`:`<span style='color:#9ca3af'>(尚未上傳圖片)</span>`}
+            <span class='badge'>${GROUP_LABELS[p.shipGroup]||p.shipGroup}</span>
+            ${p.tag==='設備'?`<span class='badge right'>設備</span>`:''}
+            ${p.soldOut?`<span class='soldout'>已售完</span>`:''}
+          </div>
+          <div class='body'>
+            <div class='meta shipline'>${shipNote}</div>
+            <h3>${title}</h3>
+            <div class='meta'>${p.spec}</div>
+            <div class='meta'>已售出：${fmt(p.soldCount||0)}</div>
+            <div class='meta'>效期：${p.shelfLife||'—'}｜保存：${p.storage||'—'}</div>
+            <div class='price'>$${fmt(p.price)}</div>
+            <div class="qtyline">
+              <button class="qtybtn" onclick="cardDec('${qtyId}')">−</button>
+              <input id="${qtyId}" class="qtyinput" type="number" min="1" value="${p.minOrder||1}" oninput="cardNormalize('${qtyId}')">
+              <button class="qtybtn" onclick="cardInc('${qtyId}')">＋</button>
+            </div>
+            <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCartFromCard('${p.id}','${qtyId}')">加入購物車</button>
+            <div class='note'>${p.note?`${p.note}`:''}</div>
+          </div>`;
+        grid.appendChild(card);
+      })
+    }
+
+    function cardNormalize(qid){
+      const inp=document.getElementById(qid);
+      let v=parseInt(inp.value||'1',10);
+      if(isNaN(v)||v<1) v=1;
+      inp.value=v;
+    }
+    function cardInc(qid){const inp=document.getElementById(qid);cardNormalize(qid);inp.value=parseInt(inp.value,10)+1;}
+    function cardDec(qid){const inp=document.getElementById(qid);cardNormalize(qid);inp.value=Math.max(1,parseInt(inp.value,10)-1);}
+    function addToCartFromCard(pid,qid){
+      const inp=document.getElementById(qid); cardNormalize(qid);
+      addToCart(pid, parseInt(inp.value,10));
+    }
+
+    function fmt(n){ return Number(n).toLocaleString('zh-TW') }
+    function scrollToStore(){ document.getElementById('store').scrollIntoView({behavior:'smooth'}) }
+
+    function toast(msg){
+      const t=document.createElement('div'); t.textContent=msg;
+      t.style.cssText='position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:#111;color:#fff;padding:8px 12px;border-radius:10px;font-size:13px;opacity:.96;z-index:120';
+      document.body.appendChild(t); setTimeout(()=>t.remove(),1200);
+    }
+    function addToCart(pid,qty=1){
+      const p=products.find(x=>x.id===pid); if(!p) return;
+      const row=cart.get(pid)||{product:p,qty:0}; row.qty+=qty; cart.set(pid,row);
+      updateCartCount(); renderCart(); toast('已加入購物車');
+    }
+    function updateCartCount(){ let totalQty=0; cart.forEach(v=>totalQty+=v.qty); document.getElementById('cartCount').textContent=totalQty }
+    function openCart(){ document.getElementById('drawer').classList.add('on'); renderCart() }
+    function closeCart(){ document.getElementById('drawer').classList.remove('on') }
+    function clearCart(){ if(confirm('確定要清空購物車嗎？')){ cart.clear(); updateCartCount(); renderCart(); } }
+    function removeItem(pid){ if(cart.has(pid)){ cart.delete(pid); updateCartCount(); renderCart(); } }
+
+    function renderCart(){
+      const list=document.getElementById('cartList'); list.innerHTML='';
+      let sub=0; let groups={};
+      cart.forEach(({product,qty})=>{
+        sub += product.price*qty;
+        const g=product.shipGroup;
+        groups[g] ||= {qty:0,feeMax:0,name:GROUP_LABELS[g]||g};
+        groups[g].qty += qty;
+        groups[g].feeMax=Math.max(groups[g].feeMax,Number(product.shipFee)||0);
+
+        const subLine=product.price*qty;
+        const item=document.createElement('div'); item.className='item';
+        const inputId = `cart_qty_${product.id}`;
+        const isHeavyEquip = (product.tag==='設備' && Number(product.shipFee)===300);
+        const imgUrl = product.img ? githubToRaw(product.img) : '';
+        item.innerHTML=`
+          <div style='width:56px;height:56px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#f3f4f6;display:grid;place-items:center'>
+            ${imgUrl?`<img src='${imgUrl}' style='width:100%;height:100%;object-fit:cover'>`:'—'}
+          </div>
+          <div>
+            <div style='font-weight:700;display:flex;align-items:center;gap:6px'>
+              <span>${product.name}（${product.type}）</span>
+              <button title="刪除" onclick="removeItem('${product.id}')" style="border:1px solid var(--border);background:#fff;border-radius:8px;padding:2px 8px;cursor:pointer">刪除</button>
+            </div>
+            <div class='item-sub'>${product.spec}｜單價 $${fmt(product.price)}｜小計 $${fmt(subLine)}｜${GROUP_LABELS[product.shipGroup]||product.shipGroup}${isHeavyEquip?'｜大型貨物':''}</div>
+            <div class='item-sub'>已售出：${fmt(product.soldCount||0)}｜效期：${product.shelfLife||'—'}｜保存：${product.storage||'—'}</div>
+          </div>
+          <div class='qty'>
+            <button onclick="decQty('${product.id}')">−</button>
+            <input id="${inputId}" class="qtyinput" type="number" min="1" value="${qty}" oninput="setQty('${product.id}', this.value)">
+            <button onclick="incQty('${product.id}')">＋</button>
+          </div>`;
+        list.appendChild(item);
+      });
+
+      const sum=document.getElementById('cartSummary'); let ship=0; let shipRows='';
+      const reachAllFree = sub >= FREE_SHIP_ALL;
+
+      if(reachAllFree){
+        ship = 0;
+        shipRows += `<div class='row'><div>全館免運</div><div class="ok">已達 $${fmt(FREE_SHIP_ALL)}</div></div>`;
+      }else{
+        const needAll = Math.max(0, FREE_SHIP_ALL - sub);
+        shipRows += `<div class='row'><div>全館免運</div><div class="warn">尚差 $${fmt(needAll)}</div></div>`;
+        Object.entries(groups).forEach(([key,g])=>{
+          const fee=g.feeMax; ship+=fee;
+          shipRows += `<div class='row'><div>${g.name} 運費</div><div>$${fmt(fee)}</div></div>`;
+        });
+      }
+
+      const total=sub+ship; let totalQty=0; cart.forEach(v=>totalQty+=v.qty);
+      let groupDetail=Object.entries(groups).map(([k,g])=>`${g.name}:${g.qty}件`).join('、');
+
+      sum.innerHTML=`
+        <div class='row'><div>商品小計</div><div>$${fmt(sub)}</div></div>
+        <div class='row'><div>件數明細</div><div>${totalQty} 件（${groupDetail||'—'}）</div></div>
+        ${shipRows||"<div class='row'><div>運費</div><div>$0</div></div>"}
+        <div class='row' style='border-top:1px solid var(--border);padding-top:8px;font-weight:900'><div>應付總額</div><div>$${fmt(total)}</div></div>
+        <div class='fine'>＊全館滿 $${fmt(FREE_SHIP_ALL)} 免運；未達時，不同溫層分開計算運費。</div>`;
+    }
+    function incQty(pid){ const row=cart.get(pid); if(!row) return; row.qty++; cart.set(pid,row); updateCartCount(); renderCart(); }
+    function decQty(pid){ const row=cart.get(pid); if(!row) return; row.qty--; if(row.qty<=0) cart.delete(pid); else cart.set(pid,row); updateCartCount(); renderCart(); }
+    function setQty(pid,val){
+      let v = parseInt(val||'1',10); if(isNaN(v)||v<1) v=1;
+      const row=cart.get(pid); if(!row) return;
+      row.qty=v; cart.set(pid,row); updateCartCount(); renderCart();
+    }
+
+    function toggleNotice(){
+      const box=document.getElementById('noticeBox');
+      box.style.display = (box.style.display==='none')?'block':'none';
+    }
+    function noticeScrolled(){
+      const box=document.getElementById('noticeBox');
+      const chk=document.getElementById('agreeChk');
+      if(box.scrollTop + box.clientHeight >= box.scrollHeight - 2){ chk.disabled=false; }
+    }
+
+    function goCheckout(){
+      const agree=document.getElementById('agreeChk');
+      if(!agree.checked){ alert('請先展開並閱讀「物流與退貨說明」，捲到底後勾選同意，才能結帳。'); return; }
+      if(cart.size===0){ alert('請先加入商品'); return }
+      document.getElementById('sheet').classList.add('on')
+    }
+    function closeSheet(){ document.getElementById('sheet').classList.remove('on') }
+
+    /* ===== 送單：防重複 + 請稍候遮罩 + 逾時保護 ===== */
+    let sending=false;
+    function setLoading(on, text){
+      const mask=document.getElementById('loadingMask');
+      const tx=document.getElementById('loadingText');
+      if(text) tx.textContent=text;
+      mask.classList.toggle('on', !!on);
+    }
+    function setFormDisabled(form, disabled){
+      Array.from(form.elements).forEach(el=>{ el.disabled=disabled; });
+    }
+    function withTimeout(promise, ms){
+      return new Promise((resolve, reject)=>{
+        const t=setTimeout(()=>reject(new Error('TIMEOUT')), ms);
+        promise.then(v=>{clearTimeout(t); resolve(v)}).catch(e=>{clearTimeout(t); reject(e)});
+      });
+    }
+
+    // ★★★ 修正版 submitOrder：先取 FormData，再鎖表單；並讀取後端的 order_no ★★★
+    async function submitOrder(e){
+      e.preventDefault();
+      if(sending) return;
+      sending=true;
+
+      const form=e.target;
+      const btn=document.getElementById('submitBtn');
+
+      // 先取值（disabled 的欄位不會進 FormData）
+      const fd=new FormData(form);
+
+      // 再鎖表單＋顯示遮罩
+      setFormDisabled(form,true);
+      btn.textContent='送出中，請稍候…';
+      setLoading(true,'正在送出訂單，請稍候…請勿重複點擊或關閉視窗');
+
+      // 準備購物車明細
+      let items=[]; let sub=0; let ship=0; let groups={};
+      cart.forEach(({product,qty})=>{
+        items.push({id:product.id,name:product.name,type:product.type,spec:product.spec,price:product.price,qty,shipGroup:product.shipGroup});
+        sub+=product.price*qty;
+        const g=product.shipGroup; groups[g] ||= {qty:0,fee:0};
+        groups[g].qty += qty; groups[g].fee = Math.max(groups[g].fee, product.shipFee||0);
+      });
+      if(sub < FREE_SHIP_ALL){ Object.values(groups).forEach(g=> ship += g.fee ); }
+      const total=sub+ship;
+
+      const payload={
+        type:'ORDER',
+        buyer:fd.get('buyer'), phone:fd.get('phone'), email:fd.get('email'), line:fd.get('line'),
+        recipient:fd.get('recipient'), address:fd.get('address'), ship_note:fd.get('ship_note'), memo:fd.get('memo'),
+        items, sub, ship, total, ts:new Date().toISOString()
+      };
+
+      try{
+        const res = await withTimeout(fetch(GAS_ENDPOINT, {
+          method:'POST',
+          headers:{ 'Content-Type':'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        }), 35000);
+
+        let data={}; try{ data = await res.json(); }catch(_){}
+        const orderNo = data.order_no || data.orderId || '';  // 後端欄位為 order_no
+
+        alert(`訂單已送出！${orderNo ? `（訂單編號：${orderNo}）` : ''}\n完成匯款請至 LINE 傳後五碼，我們核帳後出貨。`);
+
+        // 本機備查（查詢頁用）
+        try{
+          localStorage.setItem(LS_KEY_LAST_ORDER, JSON.stringify({
+            id: orderNo || '(等待後台生成)',
+            email: fd.get('email') || '',
+            total, ts: new Date().toISOString(), status:'已送出（待核帳）'
+          }));
+        }catch(_){}
+
+        cart.clear(); updateCartCount(); closeSheet(); closeCart();
+      }catch(err){
+        console.error('submitOrder failed', err);
+        alert('送出可能逾時或失敗，請稍後再試或聯繫客服。\n若稍後收到確認信，代表已成功，請勿重複送單。');
+      }finally{
+        sending=false;
+        setLoading(false);
+        setFormDisabled(form,false);
+        btn.textContent='送出訂單';
+      }
+    }
+
+    /* ===== 查詢訂單（訂單編號或 Email 任一即可） ===== */
+    function openSearch(){ document.getElementById('searchSheet').classList.add('on') }
+    function closeSearch(){ document.getElementById('searchSheet').classList.remove('on') }
+
+    async function submitSearch(e){
+      e.preventDefault();
+      const form=e.target;
+      const btn=document.getElementById('searchBtn');
+      if(btn.disabled) return;
+
+      let orderId=(form.orderId.value||'').trim().replace(/^#/,'').toUpperCase();
+      let email=(form.email.value||'').trim();
+      if(!orderId && !email){ alert('請輸入「訂單編號」或「Email」任一項'); return; }
+
+      btn.disabled=true; btn.textContent='查詢中…';
+      const resultBox=document.getElementById('searchResult'); resultBox.innerHTML='';
+
+      let remote=null;
+      try{
+        const payload={ type:'ORDER_QUERY', orderId, email };
+        const res=await withTimeout(fetch(GAS_ENDPOINT,{
+          method:'POST',
+          headers:{'Content-Type':'text/plain;charset=utf-8'},
+          body: JSON.stringify(payload)
+        }), 20000);
+        remote = await res.json().catch(()=>null);
+      }catch(_){}
+
+      // 本機後備
+      let local=null, localMsg='';
+      try{
+        const raw=localStorage.getItem(LS_KEY_LAST_ORDER);
+        const obj=raw?JSON.parse(raw):null;
+        if(obj){
+          const idMatch = orderId && String(obj.id||'').toUpperCase().replace(/^#/,'')===orderId;
+          const emailMatch = email && obj.email && obj.email.toLowerCase()===email.toLowerCase();
+          if(idMatch || emailMatch){ local={orders:[obj]}; localMsg='（本裝置最近送出的訂單，僅供參考）'; }
+        }
+      }catch(_){}
+
+      const hasRemote = remote && Array.isArray(remote.orders);
+      if(!hasRemote && !local){
+        resultBox.innerHTML = '<div class="fine">找不到符合的訂單。請確認編號/Email 是否正確，或稍後再試。</div>';
+      }else{
+        renderSearchResult(hasRemote?remote:local, (!hasRemote&&local)?localMsg:'');
+      }
+
+      btn.disabled=false; btn.textContent='開始查詢';
+    }
+
+    function renderSearchResult(data, msg){
+      const box=document.getElementById('searchResult');
+      const rows=(data.orders||[]).slice(0,10);
+      if(msg){ box.insertAdjacentHTML('beforeend', `<div class="fine">${msg}</div>`); }
+      if(rows.length===0){ box.insertAdjacentHTML('beforeend','<div class="fine">查無資料</div>'); return; }
+
+      rows.forEach(o=>{
+        const items = Array.isArray(o.items)? o.items.map(it=>`${it.name}×${it.qty}`).join('、') : '';
+        const id = o.id || '(未提供)';
+        const ts = o.ts || '';
+        const status = o.status || '—';
+        const total = (o.total!=null)? `總額 $${fmt(o.total)}` : '';
+        const email = o.email || '';
+        box.insertAdjacentHTML('beforeend', `
+          <div class="card">
+            <div style="font-weight:800">訂單編號：${id}</div>
+            <div class="fine">建立時間：${ts}｜狀態：${status}</div>
+            <div class="fine">Email：${email}</div>
+            <div style="margin-top:6px">${items?`<div class="fine">品項：${items}</div>`:''}</div>
+            <div style="margin-top:6px;font-weight:700">${total}</div>
+          </div>
+        `);
+      });
+    }
+
+    /* ===== Admin Pane ===== */
+    const gearBtn = document.querySelector('.admin-gear');
+    gearBtn.addEventListener('click', openAdmin);
+    function openAdmin(){
+      document.getElementById('adminPane').classList.add('on');
+      const authed = localStorage.getItem(LS_KEY_ADMIN)==='YES';
+      document.getElementById('adminLogin').style.display = authed ? 'none' : 'block';
+      document.getElementById('adminBody').style.display  = authed ? 'block' : 'none';
+    }
+    function closeAdmin(){ document.getElementById('adminPane').classList.remove('on') }
+    function adminLogin(){
+      const pass=document.getElementById('adminPass').value;
+      if(pass==='111111'){ localStorage.setItem(LS_KEY_ADMIN,'YES'); openAdmin(); }
+      else{ alert('密碼錯誤'); }
+    }
+    function logoutAdmin(){ localStorage.removeItem(LS_KEY_ADMIN); openAdmin(); }
+
+    /* ===== 其他工具 ===== */
+    function githubToRaw(url){
+      if (!url) return '';
+      try{
+        const u=new URL(url);
+        
+        // Google Drive 圖片直接返回，不需要轉換
+        if(u.hostname==='drive.google.com'){
+          return url;
+        }
+        
+        // GitHub 轉換為 raw
+        if(u.hostname==='github.com'){
+          const parts=u.pathname.split('/').filter(Boolean);
+          const idx=parts.indexOf('blob');
+          if(idx>0){
+            const user=parts[0], repo=parts[1];
+            const branch=parts[3];
+            const rest=parts.slice(4).join('/');
+            return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/${rest}`;
+          }
+        }
+        
+        // 其他情況
+        if(!url.includes('?')) return url+'?raw=1';
+        return url+'&raw=1';
+      }catch{ return url }
+    }
+    function convertGh(){ const url=document.getElementById('ghUrl').value.trim(); document.getElementById('ghRawOut').value=githubToRaw(url) }
+    function copyRaw(){ const o=document.getElementById('ghRawOut'); o.select(); document.execCommand('copy'); alert('已複製 RAW 連結') }
+
+    applyBrand();
+    renderChips();
+    renderGrid();
+
+    /* ===== 防右鍵點擊 ===== */
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    /* ===== 防止選取文字 ===== */
+    document.addEventListener('selectstart', function(e) {
+      e.preventDefault();
+      return false;
+    });
+
+    /* ===== 防止拖曳圖片 ===== */
+    document.addEventListener('dragstart', function(e) {
+      if (e.target.tagName === 'IMG') {
+        e.preventDefault();
+        return false;
+      }
+    });
+
+    /* ===== 防止 F12 開發者工具（可選） ===== */
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'F12' || (e.ctrlKey && e.shiftKey && e.key === 'I')) {
+        e.preventDefault();
+        return false;
+      }
+    });
+  </script>
+</body>
+</html>
