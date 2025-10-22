@@ -446,18 +446,29 @@
         // 更新商品資料
         if (data.products && data.products.length > 0) {
           products = data.products.map(p => {
-            const imgUrl = matchProductImage(p, data.images);
+            // 優先順序：1. 試算表的圖片網址 2. 配對 Drive 圖片 3. 預設圖片
+            let finalImgUrl = '';
             
-            // 如果後端沒有圖片，嘗試從 DEFAULT_PRODUCTS 取得
-            let finalImgUrl = imgUrl;
-            if (!finalImgUrl) {
-              const defaultProduct = DEFAULT_PRODUCTS.find(dp => dp.id === p.id);
-              if (defaultProduct && defaultProduct.img) {
-                finalImgUrl = defaultProduct.img;
-                console.log(`使用預設圖片: ${p.name} → ${finalImgUrl}`);
+            // 1. 優先使用試算表直接提供的圖片網址
+            if (p.imgUrl && p.imgUrl.trim()) {
+              finalImgUrl = p.imgUrl.trim();
+              console.log(`✅ 使用試算表網址: ${p.name} → ${finalImgUrl}`);
+            }
+            // 2. 如果沒有，嘗試配對 Drive 圖片
+            else {
+              const imgUrl = matchProductImage(p, data.images);
+              if (imgUrl) {
+                finalImgUrl = imgUrl;
+                console.log(`✅ 使用配對圖片: ${p.name} → ${finalImgUrl}`);
               }
-            } else {
-              console.log(`使用 GAS 圖片: ${p.name} → ${finalImgUrl}`);
+              // 3. 最後使用預設圖片
+              else {
+                const defaultProduct = DEFAULT_PRODUCTS.find(dp => dp.id === p.id);
+                if (defaultProduct && defaultProduct.img) {
+                  finalImgUrl = defaultProduct.img;
+                  console.log(`✅ 使用預設圖片: ${p.name} → ${finalImgUrl}`);
+                }
+              }
             }
             
             return {

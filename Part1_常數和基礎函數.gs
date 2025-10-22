@@ -139,7 +139,8 @@ function getProductsFromSheet_() {
         id: String(row[0]), tag: String(row[1] || ''), name: String(row[2]), type: String(row[3]), spec: String(row[4]),
         price: Number(row[5]) || 0, shipGroup: String(row[6]), shipFee: Number(row[7]) || 0, freeQty: Number(row[8]) || 0,
         minOrder: Number(row[9]) || 1, soldOut: row[10] === '是', soldCount: Number(row[11]) || 0,
-        shelfLife: String(row[12]), storage: String(row[13]), imgFilename: String(row[14]), note: String(row[15] || '')
+        shelfLife: String(row[12]), storage: String(row[13]), imgFilename: String(row[14]), note: String(row[15] || ''),
+        imgUrl: String(row[16] || '')  // 新增：直接從試算表讀取圖片網址
       });
     }
     Logger.log('✅ 讀取 ' + products.length + ' 個商品');
