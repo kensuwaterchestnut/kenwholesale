@@ -64,6 +64,12 @@ function onOpen() {
       .addSubMenu(SpreadsheetApp.getUi().createMenu('週出貨統計')
         .addItem('本週（依出貨日｜僅已出貨）', 'generateThisWeekSummaryShipped')
         .addItem('本週（依建立時間）', 'generateThisWeekSummaryCreated'))
+      .addSeparator()
+      .addSubMenu(SpreadsheetApp.getUi().createMenu('📊 訪客統計')
+        .addItem('更新今日統計', 'updateDailyStats')
+        .addItem('更新本年統計', 'updateThisYearStats')
+        .addItem('查看訪客記錄', 'openVisitorLog')
+        .addItem('查看事件記錄', 'openEventLog'))
     .addToUi();
 }
 

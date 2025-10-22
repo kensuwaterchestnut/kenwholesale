@@ -361,10 +361,50 @@ function handleTracking_(data) {
   return { ok: false, msg: '未知的追蹤類型' };
 }
 
-// 修改 doPost 函數以支援追蹤（這段要加到原本的 doPost 裡）
-// 在原本的 doPost 函數中加入這段：
+// 在 Part1 的 onOpen 函數中加入以下選單項目：
 /*
-if (typ === 'TRACKING') {
-  return json_(handleTracking_(data));
-}
+在 Part1 的 onOpen() 函數的選單中加入：
+
+.addSeparator()
+.addSubMenu(SpreadsheetApp.getUi().createMenu('📊 訪客統計')
+  .addItem('更新今日統計', 'updateDailyStats')
+  .addItem('更新本年統計', 'updateThisYearStats')
+  .addItem('查看訪客記錄', 'openVisitorLog')
+  .addItem('查看事件記錄', 'openEventLog'))
+
 */
+
+// 輔助函數：更新當年統計
+function updateThisYearStats() {
+  const year = new Date().getFullYear();
+  const result = updateYearlyStats(year);
+  if (result.ok) {
+    SpreadsheetApp.getUi().alert('✅ ' + year + ' 年度統計已更新！');
+  } else {
+    SpreadsheetApp.getUi().alert('❌ 更新失敗：' + (result.msg || result.error || '未知錯誤'));
+  }
+}
+
+// 輔助函數：開啟訪客記錄
+function openVisitorLog() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_VISITOR_LOG);
+  if (sheet) {
+    ss.setActiveSheet(sheet);
+    SpreadsheetApp.getUi().alert('已切換到「訪客記錄」工作表');
+  } else {
+    SpreadsheetApp.getUi().alert('找不到「訪客記錄」工作表');
+  }
+}
+
+// 輔助函數：開啟事件記錄
+function openEventLog() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const sheet = ss.getSheetByName(SHEET_EVENT_LOG);
+  if (sheet) {
+    ss.setActiveSheet(sheet);
+    SpreadsheetApp.getUi().alert('已切換到「事件記錄」工作表');
+  } else {
+    SpreadsheetApp.getUi().alert('找不到「事件記錄」工作表');
+  }
+}
