@@ -48,6 +48,7 @@ function onOpen() {
       .addItem('授權並安裝', 'installAll_')
       .addSeparator()
       .addItem('🔄 手動更新商品到前端', 'manualRefreshProducts')
+      .addItem('🖼️ 批次設定圖片權限', 'setAllImagesPublic')
       .addSeparator()
       .addItem('寄【出貨信】(選取列)', 'sendShippedForSelection')
       .addItem('寄【催款信】(選取列)', 'sendPayRemindForSelection')

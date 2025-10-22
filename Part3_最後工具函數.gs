@@ -118,3 +118,73 @@ function buildWeeklySummary_({useShipDate}){
   sh.getRange(header.length+1,4,Math.max(1,rows.length+1),2).setNumberFormat('#,##0');
   sh.autoResizeColumns(1,5);
 }
+
+/**
+ * 批次設定所有商品圖片為公開
+ * 解決圖片無法顯示的權限問題
+ */
+function setAllImagesPublic() {
+  const ui = SpreadsheetApp.getUi();
+  const result = ui.alert(
+    '批次設定圖片權限',
+    '這會將常溫、冷藏、冷凍資料夾中的所有圖片設為「知道連結的任何人」可檢視。\n\n確定要繼續嗎？',
+    ui.ButtonSet.YES_NO
+  );
+  
+  if (result !== ui.Button.YES) {
+    ui.alert('已取消');
+    return;
+  }
+  
+  let totalCount = 0;
+  let successCount = 0;
+  
+  try {
+    for (const [folderName, folderId] of Object.entries(FOLDER_MAP)) {
+      // 只處理商品圖片資料夾
+      if (!['常溫', '冷藏', '冷凍'].includes(folderName)) continue;
+      
+      Logger.log(`處理資料夾: ${folderName} (${folderId})`);
+      
+      try {
+        const folder = DriveApp.getFolderById(folderId);
+        const files = folder.getFiles();
+        
+        while (files.hasNext()) {
+          const file = files.next();
+          const fileName = file.getName();
+          const ext = fileName.split('.').pop().toLowerCase();
+          
+          // 只處理圖片檔案
+          if (SUPPORTED_FORMATS.includes(ext)) {
+            totalCount++;
+            try {
+              // 設定為「知道連結的任何人」可檢視
+              file.setSharing(DriveApp.Access.ANYONE_WITH_LINK, DriveApp.Permission.VIEW);
+              successCount++;
+              Logger.log(`✅ ${fileName}`);
+            } catch (e) {
+              Logger.log(`❌ ${fileName}: ${e.message}`);
+            }
+          }
+        }
+      } catch (e) {
+        Logger.log(`❌ 資料夾 ${folderName} 處理失敗: ${e.message}`);
+      }
+    }
+    
+    ui.alert(
+      '完成！',
+      `已處理 ${successCount} / ${totalCount} 張圖片\n\n請重新整理前端網頁查看效果。`,
+      ui.ButtonSet.OK
+    );
+    
+    // 更新版本號，觸發前端重新載入
+    const cache = CacheService.getScriptCache();
+    cache.put(CACHE_KEY_VERSION, new Date().getTime().toString(), 21600);
+    
+  } catch (error) {
+    Logger.log('❌ 批次設定失敗: ' + error);
+    ui.alert('錯誤', '批次設定失敗: ' + error.message, ui.ButtonSet.OK);
+  }
+}
