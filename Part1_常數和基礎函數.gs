@@ -232,6 +232,10 @@ function doPost(e){
     const raw = (e && e.postData && e.postData.contents) || '{}';
     const data = JSON.parse(raw || '{}');
     const typ = String(data.type || '').toUpperCase();
+    
+    // 訪客追蹤
+    if (typ === 'TRACKING'){ return json_(handleTracking_(data)); }
+    
     if (typ === 'ORDER_QUERY'){ return json_(handleOrderQuery_(data)); }
     if (!data || !Array.isArray(data.items) || data.items.length===0){ return json_({ok:false,msg:'空的訂單內容'}); }
     const now = $.now();

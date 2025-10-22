@@ -939,6 +939,19 @@
             <button class='btn add' ${p.soldOut||p.minOrder===0?'disabled':''} onclick="addToCartFromCard('${p.id}','${qtyId}')">加入購物車</button>
             <div class='note'>${p.note?`${p.note}`:''}</div>
           </div>`;
+        
+        // 追蹤查看商品（點擊卡片時）
+        card.addEventListener('click', function(e) {
+          // 避免按鈕點擊重複追蹤
+          if (!e.target.classList.contains('btn') && !e.target.classList.contains('qtybtn')) {
+            trackEvent('查看商品', {
+              productName: p.name,
+              productId: p.id,
+              details: `${p.type} - ${p.spec}`
+            });
+          }
+        }, { once: true }); // 每個商品只追蹤一次查看
+        
         grid.appendChild(card);
       });
       
@@ -970,6 +983,14 @@
       const p=products.find(x=>x.id===pid); if(!p) return;
       const row=cart.get(pid)||{product:p,qty:0}; row.qty+=qty; cart.set(pid,row);
       updateCartCount(); renderCart(); toast('已加入購物車');
+      
+      // 追蹤加入購物車事件
+      trackEvent('加入購物車', {
+        productName: p.name,
+        productId: p.id,
+        quantity: qty,
+        amount: p.price * qty
+      });
     }
     function updateCartCount(){ let totalQty=0; cart.forEach(v=>totalQty+=v.qty); document.getElementById('cartCount').textContent=totalQty }
     function openCart(){ document.getElementById('drawer').classList.add('on'); renderCart() }
@@ -1157,6 +1178,14 @@
         const orderNo = data.order_no || data.orderId || '';  // 後端欄位為 order_no
 
         alert(`訂單已送出！${orderNo ? `（訂單編號：${orderNo}）` : ''}\n完成匯款請至 LINE 傳後五碼，我們核帳後出貨。`);
+
+        // 追蹤送出訂單事件
+        const orderItems = items.map(it => `${it.name}x${it.qty}`).join(', ');
+        trackEvent('送出訂單', {
+          orderId: orderNo,
+          amount: total,
+          details: orderItems
+        });
 
         // 本機備查（查詢頁用）
         try{
@@ -1412,6 +1441,89 @@
         location.reload(true);
       }
     }
+    
+    /* ===== 訪客追蹤系統 ===== */
+    const VISITOR_ID_KEY = 'kensu_visitor_id';
+    
+    // 取得或生成訪客ID
+    function getVisitorId() {
+      let visitorId = localStorage.getItem(VISITOR_ID_KEY);
+      if (!visitorId) {
+        visitorId = 'V' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+        localStorage.setItem(VISITOR_ID_KEY, visitorId);
+      }
+      return visitorId;
+    }
+    
+    // 取得裝置資訊
+    function getDeviceInfo() {
+      const ua = navigator.userAgent;
+      let device = 'Desktop';
+      if (/Mobile|Android|iPhone|iPad|iPod/.test(ua)) device = 'Mobile';
+      else if (/Tablet|iPad/.test(ua)) device = 'Tablet';
+      
+      let browser = 'Unknown';
+      if (ua.indexOf('Chrome') > -1) browser = 'Chrome';
+      else if (ua.indexOf('Safari') > -1) browser = 'Safari';
+      else if (ua.indexOf('Firefox') > -1) browser = 'Firefox';
+      else if (ua.indexOf('Edge') > -1) browser = 'Edge';
+      
+      let os = 'Unknown';
+      if (ua.indexOf('Windows') > -1) os = 'Windows';
+      else if (ua.indexOf('Mac') > -1) os = 'MacOS';
+      else if (ua.indexOf('Linux') > -1) os = 'Linux';
+      else if (ua.indexOf('Android') > -1) os = 'Android';
+      else if (ua.indexOf('iOS') > -1 || ua.indexOf('iPhone') > -1) os = 'iOS';
+      
+      return { device, browser, os };
+    }
+    
+    // 發送追蹤資料
+    async function sendTracking(type, data) {
+      try {
+        const payload = { type: 'TRACKING', ...data };
+        await fetch(GAS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+      } catch (error) {
+        console.log('追蹤失敗:', error);
+      }
+    }
+    
+    // 記錄訪客進入
+    function trackVisit() {
+      const visitorId = getVisitorId();
+      const deviceInfo = getDeviceInfo();
+      const referrer = document.referrer || 'direct';
+      const screen = `${window.screen.width}x${window.screen.height}`;
+      
+      sendTracking('VISIT', {
+        type: 'VISIT',
+        visitorId,
+        ...deviceInfo,
+        referrer,
+        screen
+      });
+      
+      console.log('📊 訪客追蹤:', visitorId);
+    }
+    
+    // 記錄事件
+    function trackEvent(eventType, details = {}) {
+      const visitorId = getVisitorId();
+      sendTracking('EVENT', {
+        type: 'EVENT',
+        visitorId,
+        eventType,
+        ...details
+      });
+      console.log('📊 事件追蹤:', eventType, details);
+    }
+    
+    // 頁面載入時記錄訪客
+    trackVisit();
     
     checkVersion();
     applyBrand();
