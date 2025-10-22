@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>測試訪客追蹤</title>
+  <style>
+    body { font-family: system-ui; padding: 20px; max-width: 800px; margin: 0 auto; }
+    .result { background: #f0f0f0; padding: 15px; margin: 10px 0; border-radius: 8px; }
+    .success { background: #d4edda; color: #155724; }
+    .error { background: #f8d7da; color: #721c24; }
+    button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+  </style>
+</head>
+<body>
+  <h1>🧪 訪客追蹤功能測試</h1>
+  
+  <div>
+    <button onclick="testVisitTracking()">測試訪客追蹤</button>
+    <button onclick="testEventTracking()">測試事件追蹤</button>
+    <button onclick="checkGASEndpoint()">檢查 GAS 連線</button>
+  </div>
+  
+  <div id="results"></div>
+
+  <script>
+    // 使用你的 GAS endpoint
+    const GAS_ENDPOINT = 'https://script.google.com/macros/s/AKfycbxN5u0HIKNO2bcftQI44eYEWbZ7GUd0flZEyAjTmkNhdTzz4Ac4vnZC3iNW8i5CMBGwiA/exec';
+    
+    function showResult(message, isSuccess = true) {
+      const results = document.getElementById('results');
+      const div = document.createElement('div');
+      div.className = 'result ' + (isSuccess ? 'success' : 'error');
+      div.innerHTML = `<strong>${new Date().toLocaleTimeString()}</strong><br>${message}`;
+      results.insertBefore(div, results.firstChild);
+    }
+    
+    // 生成訪客ID
+    function getVisitorId() {
+      return 'TEST_V' + Date.now() + '_' + Math.floor(Math.random() * 10000);
+    }
+    
+    // 測試訪客追蹤
+    async function testVisitTracking() {
+      showResult('⏳ 正在測試訪客追蹤...', true);
+      
+      try {
+        const payload = {
+          type: 'TRACKING',
+          visitorId: getVisitorId(),
+          device: 'Desktop',
+          browser: 'Chrome',
+          os: 'Windows',
+          referrer: 'test',
+          screen: '1920x1080'
+        };
+        
+        console.log('📤 發送訪客追蹤:', payload);
+        
+        const response = await fetch(GAS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        
+        const result = await response.json();
+        console.log('📥 後端回應:', result);
+        
+        if (result.ok) {
+          showResult('✅ 訪客追蹤成功！<br>訪客ID: ' + result.visitorId + '<br>請到 Google Sheet 的「訪客記錄」工作表查看', true);
+        } else {
+          showResult('❌ 後端處理失敗：' + (result.error || result.msg || '未知錯誤'), false);
+        }
+      } catch (error) {
+        showResult('❌ 追蹤失敗：' + error.message + '<br>可能原因：GAS 未部署或網路問題', false);
+        console.error('追蹤錯誤:', error);
+      }
+    }
+    
+    // 測試事件追蹤
+    async function testEventTracking() {
+      showResult('⏳ 正在測試事件追蹤...', true);
+      
+      try {
+        const payload = {
+          type: 'TRACKING',
+          visitorId: getVisitorId(),
+          eventType: '測試事件',
+          productName: '測試商品',
+          productId: 'test_001',
+          quantity: 1,
+          amount: 100
+        };
+        
+        console.log('📤 發送事件追蹤:', payload);
+        
+        const response = await fetch(GAS_ENDPOINT, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        
+        const result = await response.json();
+        console.log('📥 後端回應:', result);
+        
+        if (result.ok) {
+          showResult('✅ 事件追蹤成功！<br>請到 Google Sheet 的「事件記錄」工作表查看', true);
+        } else {
+          showResult('❌ 後端處理失敗：' + (result.error || result.msg || '未知錯誤'), false);
+        }
+      } catch (error) {
+        showResult('❌ 追蹤失敗：' + error.message, false);
+        console.error('追蹤錯誤:', error);
+      }
+    }
+    
+    // 檢查 GAS 連線
+    async function checkGASEndpoint() {
+      showResult('⏳ 正在檢查 GAS 連線...', true);
+      
+      try {
+        const response = await fetch(GAS_ENDPOINT);
+        const result = await response.json();
+        
+        console.log('GAS 回應:', result);
+        
+        if (result.products) {
+          showResult('✅ GAS 連線正常！<br>商品數量: ' + result.products.length + '<br>版本: ' + result.version, true);
+        } else {
+          showResult('⚠️ GAS 有回應但格式異常', false);
+        }
+      } catch (error) {
+        showResult('❌ GAS 連線失敗：' + error.message + '<br>請確認 GAS 已正確部署', false);
+        console.error('連線錯誤:', error);
+      }
+    }
+  </script>
+</body>
+</html>

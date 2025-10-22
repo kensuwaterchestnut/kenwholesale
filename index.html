@@ -1479,16 +1479,30 @@
     }
     
     // 發送追蹤資料
-    async function sendTracking(type, data) {
+    async function sendTracking(subType, data) {
       try {
-        const payload = { type: 'TRACKING', ...data };
-        await fetch(GAS_ENDPOINT, {
+        const payload = { 
+          type: 'TRACKING',
+          subType: subType,
+          ...data 
+        };
+        
+        console.log('📤 發送追蹤:', payload);
+        
+        const response = await fetch(GAS_ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'text/plain;charset=utf-8' },
           body: JSON.stringify(payload)
         });
+        
+        const result = await response.json();
+        console.log('📥 追蹤回應:', result);
+        
+        if (!result.ok) {
+          console.error('❌ 追蹤失敗:', result);
+        }
       } catch (error) {
-        console.log('追蹤失敗:', error);
+        console.error('❌ 追蹤錯誤:', error);
       }
     }
     
@@ -1500,7 +1514,6 @@
       const screen = `${window.screen.width}x${window.screen.height}`;
       
       sendTracking('VISIT', {
-        type: 'VISIT',
         visitorId,
         ...deviceInfo,
         referrer,
@@ -1514,7 +1527,6 @@
     function trackEvent(eventType, details = {}) {
       const visitorId = getVisitorId();
       sendTracking('EVENT', {
-        type: 'EVENT',
         visitorId,
         eventType,
         ...details

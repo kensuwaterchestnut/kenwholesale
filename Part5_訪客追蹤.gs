@@ -350,15 +350,20 @@ function updateYearlyStats(year) {
 
 // 處理追蹤請求（從前端呼叫）
 function handleTracking_(data) {
-  const type = String(data.type || '').toUpperCase();
+  Logger.log('📥 收到追蹤請求: ' + JSON.stringify(data));
   
-  if (type === 'VISIT') {
+  const subType = String(data.subType || '').toUpperCase();
+  
+  if (subType === 'VISIT') {
+    Logger.log('✅ 處理訪客記錄');
     return logVisitor_(data);
-  } else if (type === 'EVENT') {
+  } else if (subType === 'EVENT') {
+    Logger.log('✅ 處理事件記錄');
     return logEvent_(data);
   }
   
-  return { ok: false, msg: '未知的追蹤類型' };
+  Logger.log('❌ 未知的追蹤類型: ' + subType);
+  return { ok: false, msg: '未知的追蹤類型: ' + subType };
 }
 
 // 在 Part1 的 onOpen 函數中加入以下選單項目：
