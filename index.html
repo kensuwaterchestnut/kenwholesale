@@ -721,6 +721,236 @@
       .hero .copy{padding-top:104px!important;}
     }
 
+
+
+    /* ===== 2.7 頂部透明、滑動黑色導覽＋按鈕修正版 ===== */
+    body > header{
+      position:fixed!important;
+      left:0!important;
+      right:0!important;
+      top:0!important;
+      z-index:60!important;
+      background:transparent!important;
+      border-bottom:1px solid transparent!important;
+      box-shadow:none!important;
+      backdrop-filter:none!important;
+      transition:background .24s ease, border-color .24s ease, box-shadow .24s ease, backdrop-filter .24s ease;
+    }
+    body > header .topbar{
+      background:transparent!important;
+      transition:background .24s ease;
+    }
+    body > header.is-scrolled,
+    body > header.menu-open{
+      background:rgba(5,5,5,.96)!important;
+      border-bottom:1px solid rgba(245,158,11,.28)!important;
+      box-shadow:0 8px 24px rgba(0,0,0,.22)!important;
+      backdrop-filter:saturate(1.15) blur(8px)!important;
+    }
+    body > header.is-scrolled .topbar,
+    body > header.menu-open .topbar{
+      background:transparent!important;
+    }
+
+    /* 只鎖定頁首品牌區，避免影響 .btn.brand 橘色按鈕 */
+    body > header .brand{
+      display:inline-flex!important;
+      align-items:center!important;
+      gap:10px!important;
+      min-width:0!important;
+      flex:1 1 auto!important;
+      max-width:calc(100% - 360px)!important;
+      background:transparent!important;
+      border:none!important;
+      border-radius:0!important;
+      padding:0!important;
+      box-shadow:none!important;
+    }
+    body > header .brand img{
+      width:40px!important;
+      height:40px!important;
+      object-fit:contain!important;
+      border:none!important;
+      background:transparent!important;
+      border-radius:0!important;
+      box-shadow:0 4px 14px rgba(0,0,0,.22)!important;
+      padding:0!important;
+      display:block!important;
+      flex:0 0 auto!important;
+    }
+    body > header .brand h1{
+      margin:0!important;
+      max-width:100%!important;
+      color:#fff!important;
+      background:transparent!important;
+      border:none!important;
+      box-shadow:none!important;
+      padding:0!important;
+      border-radius:0!important;
+      white-space:nowrap!important;
+      overflow:hidden!important;
+      text-overflow:ellipsis!important;
+      line-height:1.1!important;
+      font-size:clamp(13px,1.45vw,15px)!important;
+      font-weight:950!important;
+      letter-spacing:.01em!important;
+      text-shadow:0 1px 10px rgba(0,0,0,.75);
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+    }
+
+    /* 修正：立即選購、送出訂單、查詢訂單等橘色按鈕 */
+    .btn.brand,
+    button.btn.brand,
+    a.btn.brand,
+    input.btn.brand{
+      appearance:none!important;
+      display:inline-flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:.35em!important;
+      flex:0 0 auto!important;
+      max-width:none!important;
+      min-width:auto!important;
+      background:linear-gradient(135deg,#f59e0b,#fbbf24)!important;
+      color:#111827!important;
+      border:1px solid #d97706!important;
+      border-radius:12px!important;
+      padding:10px 14px!important;
+      font-weight:900!important;
+      line-height:1.2!important;
+      text-shadow:none!important;
+      box-shadow:0 7px 18px rgba(245,158,11,.30)!important;
+      cursor:pointer!important;
+    }
+    .hero .btn.brand{padding:12px 18px!important;}
+    .btn.brand:hover{
+      filter:brightness(1.03);
+      transform:translateY(-1px);
+    }
+
+    /* 修正：購物車抽屜內 header 不吃網站主 header 黑底 */
+    .drawer .panel > header{
+      position:static!important;
+      top:auto!important;
+      left:auto!important;
+      right:auto!important;
+      z-index:auto!important;
+      padding:12px!important;
+      border-bottom:1px solid var(--border)!important;
+      background:#fff!important;
+      color:var(--ink)!important;
+      box-shadow:none!important;
+      backdrop-filter:none!important;
+      display:flex!important;
+      align-items:center!important;
+      justify-content:space-between!important;
+    }
+    .drawer .panel > header h4{
+      margin:0!important;
+      color:var(--ink)!important;
+      font-size:17px!important;
+      font-weight:900!important;
+    }
+    .drawer .panel > header .btn{
+      background:#fff!important;
+      color:#111827!important;
+      border:1px solid var(--border)!important;
+      box-shadow:none!important;
+      padding:8px 10px!important;
+      border-radius:10px!important;
+      font-weight:800!important;
+    }
+
+    @media (max-width:720px){
+      body > header{
+        position:fixed!important;
+        left:0!important;
+        right:0!important;
+        top:0!important;
+        background:transparent!important;
+        border-bottom:1px solid transparent!important;
+        box-shadow:none!important;
+        backdrop-filter:none!important;
+      }
+      body > header.is-scrolled,
+      body > header.menu-open{
+        background:rgba(5,5,5,.96)!important;
+        border-bottom:1px solid rgba(245,158,11,.28)!important;
+        box-shadow:0 8px 22px rgba(0,0,0,.22)!important;
+        backdrop-filter:saturate(1.15) blur(8px)!important;
+      }
+      body > header .topbar{
+        min-height:58px!important;
+        padding:8px 12px!important;
+        gap:8px!important;
+        background:transparent!important;
+      }
+      body > header .brand{
+        max-width:calc(100vw - 74px)!important;
+        gap:8px!important;
+        background:transparent!important;
+        border:none!important;
+        box-shadow:none!important;
+        padding:0!important;
+      }
+      body > header .brand img{
+        width:34px!important;
+        height:34px!important;
+        filter:none!important;
+        box-shadow:0 4px 12px rgba(0,0,0,.22)!important;
+      }
+      body > header .brand h1{
+        max-width:calc(100vw - 126px)!important;
+        font-size:clamp(9.5px,2.55vw,11.3px)!important;
+        color:#fff!important;
+        background:transparent!important;
+        border:none!important;
+        box-shadow:none!important;
+        padding:0!important;
+        letter-spacing:0!important;
+        line-height:1.05!important;
+        text-shadow:0 1px 10px rgba(0,0,0,.78)!important;
+      }
+      body > header .menu-toggle,
+      body > header.is-scrolled .menu-toggle,
+      body > header.menu-open .menu-toggle{
+        flex:0 0 42px!important;
+        width:42px!important;
+        height:42px!important;
+        background:rgba(17,24,39,.62)!important;
+        border-color:rgba(255,255,255,.22)!important;
+        box-shadow:0 6px 16px rgba(0,0,0,.18)!important;
+        backdrop-filter:blur(8px)!important;
+      }
+      body > header.is-scrolled .menu-toggle,
+      body > header.menu-open .menu-toggle{
+        background:rgba(255,255,255,.08)!important;
+        box-shadow:none!important;
+        backdrop-filter:none!important;
+      }
+      body > header .menu-toggle span,
+      body > header.is-scrolled .menu-toggle span,
+      body > header.menu-open .menu-toggle span{
+        background:#fff!important;
+      }
+      nav.site-nav{
+        background:rgba(5,5,5,.98)!important;
+        border-bottom:1px solid rgba(245,158,11,.24)!important;
+        box-shadow:0 16px 24px rgba(0,0,0,.22)!important;
+      }
+      nav.site-nav a{
+        color:#fff!important;
+        border-color:rgba(255,255,255,.16)!important;
+        background:rgba(255,255,255,.08)!important;
+      }
+      nav.site-nav .line-link{
+        color:#bbf7d0!important;
+        border-color:rgba(34,197,94,.40)!important;
+        background:rgba(22,163,74,.18)!important;
+      }
+      .hero .copy{padding-top:104px!important;}
+    }
+
   </style>
 </head>
 <body>
@@ -1054,7 +1284,7 @@
     const LS_KEY_ADMIN='kensu_admin_ok_v4';
     const LS_KEY_LAST_ORDER='kensu_last_order_hint';
     const LS_KEY_VERSION='kensu_version';
-    const CURRENT_VERSION='2.4.0';
+    const CURRENT_VERSION='2.5.0';
 
     /* ===== 預設商品 ===== */
     const DEFAULT_PRODUCTS = [
@@ -1976,7 +2206,8 @@
     const mainHeader = document.querySelector('body > header');
     function updateMobileHeader(){
       if(!mainHeader) return;
-      if(window.innerWidth <= 720 && window.pageYOffset > 18){
+      const isMenuOpen = mainHeader.classList.contains('menu-open');
+      if(window.pageYOffset > 18 || isMenuOpen){
         mainHeader.classList.add('is-scrolled');
       }else{
         mainHeader.classList.remove('is-scrolled');
