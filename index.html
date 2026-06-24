@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
-  <title>啃酥菱角酥 Superstar Fried Food 批發網站｜原料預拌粉・風味灑粉・三溫層原物料・設備供應</title>
-  <meta name="description" content="啃酥菱角酥批發網站提供原料預拌粉、風味灑粉、常溫／冷藏／冷凍原物料、冷凍半成品與營業設備供應。線上選購，完成匯款後安排出貨。" />
+  <title>啃酥批發網站｜原料・半成品・設備供應</title>
+  <meta name="description" content="啃酥批發網站提供原料、風味灑粉、冷藏冷凍半成品與營業設備供應。線上選購，匯款核帳後安排出貨。" />
   <style>
     :root{
       --bg:#faf7f2; --surface:#ffffff; --ink:#111827; --muted:#6b7280;
@@ -951,6 +951,559 @@
       .hero .copy{padding-top:104px!important;}
     }
 
+
+    /* ===== 3.0 手機選單、封面與字體乾淨版｜2026-06 ===== */
+    html,body{
+      font-family:"Noto Sans TC","PingFang TC","Microsoft JhengHei",-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif!important;
+      font-weight:400!important;
+      letter-spacing:.01em!important;
+      text-rendering:optimizeLegibility;
+      -webkit-font-smoothing:antialiased;
+    }
+    body.nav-lock{overflow:hidden!important;touch-action:none!important}
+
+    body > header{
+      background:linear-gradient(180deg,rgba(17,24,39,.46),rgba(17,24,39,0))!important;
+      border-bottom:none!important;
+      box-shadow:none!important;
+    }
+    body > header.is-scrolled,
+    body > header.menu-open{
+      background:rgba(255,255,255,.96)!important;
+      border-bottom:1px solid rgba(231,224,214,.9)!important;
+      box-shadow:0 10px 28px rgba(31,22,12,.08)!important;
+      backdrop-filter:saturate(1.1) blur(12px)!important;
+    }
+    body > header .topbar{min-height:66px!important;padding:10px 14px!important;background:transparent!important}
+    body > header .brand{max-width:360px!important;gap:10px!important}
+    body > header .brand img{width:42px!important;height:42px!important;filter:drop-shadow(0 4px 12px rgba(0,0,0,.16))!important}
+    body > header .brand h1{
+      font-size:16px!important;
+      font-weight:700!important;
+      letter-spacing:.04em!important;
+      color:#fff!important;
+      text-shadow:0 2px 10px rgba(0,0,0,.38)!important;
+    }
+    body > header.is-scrolled .brand h1,
+    body > header.menu-open .brand h1{
+      color:#2f261f!important;
+      text-shadow:none!important;
+    }
+
+    nav.site-nav{gap:7px!important;font-size:13px!important}
+    nav.site-nav a{
+      color:rgba(255,255,255,.96)!important;
+      background:rgba(255,255,255,.12)!important;
+      border:1px solid rgba(255,255,255,.24)!important;
+      border-radius:999px!important;
+      padding:9px 13px!important;
+      font-weight:600!important;
+      text-decoration:none!important;
+      box-shadow:none!important;
+    }
+    body > header.is-scrolled nav.site-nav a,
+    body > header.menu-open nav.site-nav a{
+      color:#3b2f26!important;
+      background:rgba(255,255,255,.74)!important;
+      border-color:#eadfd1!important;
+    }
+
+    nav.site-nav a::before{display:none!important;content:none!important}
+    nav.site-nav .line-link,
+    body > header.is-scrolled nav.site-nav .line-link,
+    body > header.menu-open nav.site-nav .line-link{
+      color:#067a3f!important;
+      background:#ecfdf3!important;
+      border-color:#bdeccd!important;
+      font-weight:700!important;
+    }
+
+    .hero{
+      min-height:54svh!important;
+      background-position:center center!important;
+      background-size:cover!important;
+    }
+    .hero::after{
+      background:linear-gradient(0deg,rgba(33,24,17,.64),rgba(33,24,17,.12) 62%,rgba(33,24,17,.18))!important;
+    }
+    .hero .hero-inner{min-height:54svh!important}
+    .hero .copy{padding:96px 0 42px!important;max-width:620px!important}
+    .hero .kicker{
+      background:rgba(255,255,255,.16)!important;
+      border:1px solid rgba(255,255,255,.26)!important;
+      border-radius:999px!important;
+      padding:6px 11px!important;
+      font-size:11px!important;
+      font-weight:600!important;
+      letter-spacing:.14em!important;
+    }
+    .hero h2{
+      font-size:clamp(32px,5.2vw,52px)!important;
+      font-weight:700!important;
+      line-height:1.12!important;
+      letter-spacing:.03em!important;
+      margin:12px 0 10px!important;
+      text-shadow:0 5px 20px rgba(0,0,0,.30)!important;
+    }
+    .hero p{
+      max-width:520px!important;
+      font-size:clamp(15px,2vw,17px)!important;
+      font-weight:400!important;
+      line-height:1.75!important;
+      opacity:.96!important;
+    }
+    .hero-points{gap:8px!important;margin:17px 0 18px!important}
+    .hero-points span{
+      background:rgba(255,255,255,.16)!important;
+      border:1px solid rgba(255,255,255,.24)!important;
+      font-size:12px!important;
+      font-weight:500!important;
+      padding:6px 10px!important;
+    }
+    .btn,.service-btn,.chip,nav.site-nav a{font-weight:600!important}
+    .store-head h2,.flow-card h3,.section-card h3,.trust-intro h3,.service-banner h2{
+      font-weight:700!important;
+      letter-spacing:.02em!important;
+    }
+    .store-head p,.section-card li,.trust-intro p,.service-banner p,.meta,.note,.fine{
+      font-weight:400!important;
+      line-height:1.75!important;
+    }
+    .store-head h2{font-size:clamp(24px,3.4vw,34px)!important}
+    .section-kicker{font-weight:600!important;letter-spacing:.1em!important}
+
+    .menu-toggle em{display:none;font-style:normal;line-height:1;font-family:inherit}
+
+    @media (max-width:720px){
+      body > header{
+        background:linear-gradient(180deg,rgba(17,24,39,.28),rgba(17,24,39,0))!important;
+        position:fixed!important;
+      }
+      body > header.is-scrolled,
+      body > header.menu-open{
+        background:rgba(255,255,255,.97)!important;
+        border-bottom:1px solid rgba(231,224,214,.88)!important;
+        box-shadow:0 8px 24px rgba(31,22,12,.08)!important;
+      }
+      body > header .topbar{
+        min-height:60px!important;
+        padding:8px 12px!important;
+      }
+      body > header .brand{max-width:calc(100vw - 86px)!important;gap:8px!important}
+      body > header .brand img{width:34px!important;height:34px!important}
+      body > header .brand h1{
+        max-width:calc(100vw - 142px)!important;
+        font-size:14px!important;
+        line-height:1.1!important;
+        color:#fff!important;
+        font-weight:700!important;
+        letter-spacing:.04em!important;
+        text-shadow:0 2px 10px rgba(0,0,0,.38)!important;
+      }
+      body > header.is-scrolled .brand h1,
+      body > header.menu-open .brand h1{
+        color:#2f261f!important;
+        text-shadow:none!important;
+      }
+      body > header .menu-toggle,
+      body > header.is-scrolled .menu-toggle,
+      body > header.menu-open .menu-toggle{
+        display:inline-flex!important;
+        position:relative!important;
+        flex:0 0 58px!important;
+        width:58px!important;
+        height:38px!important;
+        border-radius:999px!important;
+        border:1px solid rgba(255,255,255,.32)!important;
+        background:rgba(17,24,39,.42)!important;
+        box-shadow:0 6px 16px rgba(0,0,0,.10)!important;
+        backdrop-filter:blur(8px)!important;
+        align-items:center!important;
+        justify-content:center!important;
+        flex-direction:row!important;
+        gap:0!important;
+      }
+      body > header.is-scrolled .menu-toggle,
+      body > header.menu-open .menu-toggle{
+        background:#2f261f!important;
+        border-color:#2f261f!important;
+        box-shadow:0 8px 18px rgba(47,38,31,.14)!important;
+      }
+      .menu-toggle span{
+        position:absolute!important;
+        left:12px!important;
+        width:17px!important;
+        height:2px!important;
+        border-radius:999px!important;
+        background:#fff!important;
+        transition:transform .2s ease,top .2s ease,opacity .2s ease!important;
+      }
+      .menu-toggle span:nth-child(1){top:12px!important}
+      .menu-toggle span:nth-child(2){top:18px!important}
+      .menu-toggle span:nth-child(3){top:24px!important}
+      .menu-toggle em{
+        display:block!important;
+        margin-left:22px!important;
+        color:#fff!important;
+        font-size:11px!important;
+        font-weight:700!important;
+        letter-spacing:.04em!important;
+      }
+      .menu-toggle[aria-expanded="true"] span:nth-child(1){top:18px!important;transform:rotate(45deg)!important}
+      .menu-toggle[aria-expanded="true"] span:nth-child(2){opacity:0!important}
+      .menu-toggle[aria-expanded="true"] span:nth-child(3){top:18px!important;transform:rotate(-45deg)!important}
+      .menu-toggle[aria-expanded="true"] em{opacity:.9!important}
+
+      nav.site-nav{
+        display:flex!important;
+        position:fixed!important;
+        top:0!important;
+        right:0!important;
+        left:auto!important;
+        bottom:0!important;
+        width:min(82vw,330px)!important;
+        height:100dvh!important;
+        padding:88px 18px 24px!important;
+        flex-direction:column!important;
+        align-items:stretch!important;
+        gap:10px!important;
+        overflow-y:auto!important;
+        background:rgba(255,253,249,.98)!important;
+        border-left:1px solid #eadfd1!important;
+        border-bottom:none!important;
+        box-shadow:-18px 0 44px rgba(31,22,12,.18)!important;
+        transform:translateX(106%)!important;
+        opacity:1!important;
+        pointer-events:none!important;
+        transition:transform .28s cubic-bezier(.2,.8,.2,1)!important;
+        -webkit-overflow-scrolling:touch!important;
+      }
+      nav.site-nav.on{
+        transform:translateX(0)!important;
+        pointer-events:auto!important;
+      }
+      nav.site-nav::before{
+        content:"選單";
+        position:absolute;
+        top:24px;
+        left:18px;
+        font-size:18px;
+        font-weight:700;
+        letter-spacing:.04em;
+        color:#2f261f;
+      }
+      nav.site-nav a,
+      body > header.is-scrolled nav.site-nav a,
+      body > header.menu-open nav.site-nav a{
+        display:flex!important;
+        align-items:center!important;
+        justify-content:space-between!important;
+        min-height:50px!important;
+        padding:0 15px!important;
+        border-radius:14px!important;
+        background:#fff!important;
+        border:1px solid #eadfd1!important;
+        color:#3b2f26!important;
+        font-size:15px!important;
+        font-weight:600!important;
+        text-decoration:none!important;
+        box-shadow:0 8px 18px rgba(60,40,20,.05)!important;
+      }
+      nav.site-nav a::after{content:"›";font-size:22px;color:#b45309;font-weight:300;line-height:1}
+      nav.site-nav .line-link,
+      body > header.is-scrolled nav.site-nav .line-link,
+      body > header.menu-open nav.site-nav .line-link{
+        background:#06c755!important;
+        color:#fff!important;
+        border-color:#06b64e!important;
+        box-shadow:0 10px 20px rgba(6,199,85,.16)!important;
+      }
+      nav.site-nav .line-link::after{color:#fff!important}
+
+      .hero{min-height:56svh!important;background-position:center center!important}
+      .hero .hero-inner{min-height:56svh!important}
+      .hero .copy{
+        padding:104px 0 30px!important;
+        max-width:100%!important;
+      }
+      .hero .kicker{font-size:10px!important;padding:5px 10px!important;margin-bottom:10px!important}
+      .hero h2{
+        font-size:clamp(30px,9vw,38px)!important;
+        margin:10px 0 8px!important;
+        line-height:1.14!important;
+      }
+      .hero p{font-size:15px!important;line-height:1.65!important;max-width:290px!important}
+      .hero-points{
+        display:flex!important;
+        flex-wrap:wrap!important;
+        gap:7px!important;
+        margin:14px 0 16px!important;
+        max-width:310px!important;
+      }
+      .hero-points span{font-size:11px!important;padding:5px 9px!important}
+      .hero .btn{padding:10px 14px!important;border-radius:999px!important;font-size:14px!important}
+      .hero .btn.ghost{background:rgba(255,255,255,.12)!important;color:#fff!important;border-color:rgba(255,255,255,.28)!important}
+      .store-area{padding-top:26px!important}
+      .store-head{text-align:left!important;margin-bottom:8px!important}
+      .store-head h2{font-size:26px!important;margin:8px 0 6px!important}
+      .store-head p{font-size:13px!important;line-height:1.7!important}
+      .chips{padding-top:10px!important}
+    }
+
+  
+
+
+
+    /* ===== 3.2 商品分類｜置頂工具列版：不做卡片，手機更好操作 ===== */
+    .category-filter{
+      position:sticky!important;
+      top:72px!important;
+      z-index:52!important;
+      margin:10px calc(50% - 50vw) 16px!important;
+      padding:0 calc(50vw - 50%)!important;
+      background:rgba(250,247,242,.94)!important;
+      border-top:1px solid rgba(226,213,196,.78)!important;
+      border-bottom:1px solid rgba(226,213,196,.78)!important;
+      box-shadow:none!important;
+      backdrop-filter:saturate(1.08) blur(12px)!important;
+    }
+    .category-toolbar{
+      display:none;
+    }
+    .category-filter .chips{
+      display:flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:0!important;
+      max-width:1100px!important;
+      margin:0 auto!important;
+      padding:0 12px!important;
+      overflow-x:auto!important;
+      overflow-y:hidden!important;
+      white-space:nowrap!important;
+      scrollbar-width:none!important;
+      -webkit-overflow-scrolling:touch!important;
+      scroll-snap-type:x proximity!important;
+      background:transparent!important;
+      border:0!important;
+      border-radius:0!important;
+      box-shadow:none!important;
+      max-height:none!important;
+    }
+    .category-filter .chips::-webkit-scrollbar{display:none!important;}
+    .category-filter .chip{
+      appearance:none!important;
+      position:relative!important;
+      flex:0 0 auto!important;
+      display:inline-flex!important;
+      align-items:center!important;
+      justify-content:center!important;
+      gap:0!important;
+      min-height:48px!important;
+      padding:0 14px!important;
+      margin:0!important;
+      border:0!important;
+      border-radius:0!important;
+      background:transparent!important;
+      color:#6f5a45!important;
+      box-shadow:none!important;
+      font-size:14px!important;
+      font-weight:600!important;
+      letter-spacing:.02em!important;
+      cursor:pointer!important;
+      scroll-snap-align:start!important;
+      transition:color .18s ease, background .18s ease!important;
+    }
+    .category-filter .chip::after{
+      content:"";
+      position:absolute;
+      left:14px;
+      right:14px;
+      bottom:0;
+      height:2px;
+      border-radius:999px;
+      background:#d97706;
+      transform:scaleX(0);
+      transform-origin:center;
+      transition:transform .18s ease;
+    }
+    .category-filter .chip:hover{
+      transform:none!important;
+      color:#2f2418!important;
+      background:rgba(255,255,255,.42)!important;
+    }
+    .category-filter .chip.is-on{
+      background:transparent!important;
+      color:#b45309!important;
+      border:0!important;
+      box-shadow:none!important;
+      font-weight:750!important;
+    }
+    .category-filter .chip.is-on::after{transform:scaleX(1);}
+    .category-filter .chip-icon{display:none!important;}
+    .category-filter .chip-search{
+      color:#111827!important;
+      background:transparent!important;
+      border:0!important;
+      box-shadow:none!important;
+    }
+    .category-filter .chip-search::before{
+      content:"";
+      width:1px;
+      height:18px;
+      background:#ded0bf;
+      margin-right:14px;
+    }
+    .category-filter .chip-search::after{background:#111827;}
+
+    @media (max-width:720px){
+      .category-filter{
+        top:58px!important;
+        margin:10px -12px 14px!important;
+        padding:0!important;
+        background:rgba(250,247,242,.96)!important;
+        border-top:1px solid rgba(226,213,196,.86)!important;
+        border-bottom:1px solid rgba(226,213,196,.86)!important;
+        box-shadow:0 8px 20px rgba(60,40,20,.045)!important;
+      }
+      .category-toolbar{
+        display:flex!important;
+        align-items:center!important;
+        justify-content:space-between!important;
+        gap:10px!important;
+        min-height:54px!important;
+        padding:7px 12px!important;
+      }
+      .category-current{
+        min-width:0!important;
+        display:flex!important;
+        flex-direction:column!important;
+        gap:1px!important;
+      }
+      .category-current small{
+        display:block!important;
+        color:#9a6b2d!important;
+        font-size:11px!important;
+        font-weight:600!important;
+        letter-spacing:.08em!important;
+        line-height:1.2!important;
+      }
+      .category-current strong{
+        display:block!important;
+        max-width:52vw!important;
+        overflow:hidden!important;
+        text-overflow:ellipsis!important;
+        white-space:nowrap!important;
+        color:#2f2418!important;
+        font-size:16px!important;
+        font-weight:750!important;
+        line-height:1.25!important;
+      }
+      .category-toggle{
+        display:inline-flex!important;
+        align-items:center!important;
+        justify-content:center!important;
+        gap:7px!important;
+        width:auto!important;
+        min-height:38px!important;
+        padding:8px 12px!important;
+        border:1px solid #d8c4aa!important;
+        border-radius:999px!important;
+        background:#fff!important;
+        color:#3b2f26!important;
+        box-shadow:none!important;
+        font-size:13px!important;
+        font-weight:700!important;
+        white-space:nowrap!important;
+        cursor:pointer!important;
+        -webkit-tap-highlight-color:transparent!important;
+      }
+      .category-toggle-arrow{
+        display:inline-grid!important;
+        place-items:center!important;
+        width:auto!important;
+        height:auto!important;
+        border-radius:0!important;
+        background:transparent!important;
+        color:#b45309!important;
+        font-size:17px!important;
+        line-height:1!important;
+        transition:transform .18s ease!important;
+      }
+      .category-filter.is-open .category-toggle-arrow{transform:rotate(180deg)!important;}
+      .category-filter .chips{
+        display:none!important;
+        position:absolute!important;
+        left:0!important;
+        right:0!important;
+        top:100%!important;
+        z-index:54!important;
+        grid-template-columns:1fr!important;
+        gap:0!important;
+        margin:0!important;
+        padding:0 12px 8px!important;
+        max-height:min(62svh,430px)!important;
+        overflow:auto!important;
+        background:rgba(250,247,242,.98)!important;
+        border-top:1px solid rgba(226,213,196,.7)!important;
+        border-bottom:1px solid rgba(226,213,196,.86)!important;
+        box-shadow:0 16px 26px rgba(60,40,20,.10)!important;
+        backdrop-filter:saturate(1.08) blur(12px)!important;
+        white-space:normal!important;
+      }
+      .category-filter.is-open .chips{display:grid!important;}
+      .category-filter .chip{
+        width:100%!important;
+        justify-content:space-between!important;
+        min-height:46px!important;
+        padding:0 2px!important;
+        border-bottom:1px solid rgba(226,213,196,.72)!important;
+        color:#4f3f30!important;
+        font-size:14px!important;
+        font-weight:600!important;
+        text-align:left!important;
+        white-space:nowrap!important;
+        background:transparent!important;
+      }
+      .category-filter .chip::after{
+        left:auto!important;
+        right:2px!important;
+        bottom:50%!important;
+        width:8px!important;
+        height:8px!important;
+        border-radius:50%!important;
+        background:#d97706!important;
+        transform:translateY(50%) scale(0)!important;
+      }
+      .category-filter .chip.is-on{
+        color:#b45309!important;
+        background:transparent!important;
+        font-weight:750!important;
+      }
+      .category-filter .chip.is-on::after{transform:translateY(50%) scale(1)!important;}
+      .category-filter .chip-search{
+        margin-top:4px!important;
+        border-bottom:0!important;
+        color:#111827!important;
+      }
+      .category-filter .chip-search::before{display:none!important;}
+      .category-filter .chip-search::after{
+        background:#111827!important;
+      }
+      .category-filter.is-open::after{
+        content:"";
+        position:fixed;
+        left:0;
+        right:0;
+        top:112px;
+        bottom:0;
+        z-index:53;
+        background:rgba(17,24,39,.18);
+        pointer-events:none;
+      }
+      .category-filter.is-open .chips{z-index:55!important;}
+    }
+
   </style>
 </head>
 <body>
@@ -958,17 +1511,17 @@
     <div class="wrap topbar">
       <div class="brand">
         <img id="logoImg" src="https://raw.githubusercontent.com/kensuwaterchestnut/kenwholesale/main/img/%E5%95%83%E9%85%A5%20Ken-01.png" alt="KenSu Logo" loading="eager" onerror="this.style.display='none'" />
-        <h1 id="siteTitle">啃酥菱角酥 Superstar Fried Food 批發網站</h1>
+        <h1 id="siteTitle">啃酥批發</h1>
       </div>
       <button class="menu-toggle" id="menuToggle" type="button" aria-label="開啟選單" aria-expanded="false" onclick="toggleMenu()">
-        <span></span><span></span><span></span>
+        <span></span><span></span><span></span><em>選單</em>
       </button>
       <nav class="site-nav" id="siteNav">
-        <a href="#store" onclick="closeMenu()">批發商品</a>
+        <a href="#store" onclick="closeMenu()">商品</a>
         <a href="training.html" onclick="closeMenu()">技術轉移</a>
-        <a href="#news" onclick="closeMenu()">物流須知</a>
-        <a href="javascript:void(0)" onclick="closeMenu();openSearch()">查詢訂單</a>
-        <a class="line-link" href="https://lin.ee/l8o7NXF" target="_blank" rel="noopener" onclick="closeMenu()">LINE 洽詢</a>
+        <a href="#news" onclick="closeMenu()">物流</a>
+        <a href="javascript:void(0)" onclick="closeMenu();openSearch()">查訂單</a>
+        <a class="line-link" href="https://lin.ee/l8o7NXF" target="_blank" rel="noopener" onclick="closeMenu()">LINE</a>
       </nav>
     </div>
   </header>
@@ -976,16 +1529,16 @@
   <section class="hero">
     <div class="wrap hero-inner">
       <div class="copy">
-        <span class="kicker" id="heroKicker">KEN SU WHOLESALE｜批發供應</span>
-        <h2 id="heroTitle">原料預拌粉・風味灑粉・三溫層批發供應</h2>
-        <p id="heroSub">從夜市實戰出發，提供穩定出餐所需商品，協助攤販與店家更安心備貨。</p>
+        <span class="kicker" id="heroKicker">KEN SU WHOLESALE</span>
+        <h2 id="heroTitle">啃酥批發供應</h2>
+        <p id="heroSub">原料、半成品、灑粉與設備，一次備齊。</p>
         <div class="hero-points" aria-label="服務特色">
           <span>滿 $5,000 免運</span>
           <span>核帳後出貨</span>
-          <span>三溫層配送</span>
+          <span>常溫／冷藏／冷凍</span>
         </div>
         <div class="cta">
-          <button class="btn brand" onclick="scrollToStore()">🛒 立即選購</button>
+          <button class="btn brand" onclick="scrollToStore()">立即選購</button>
           <a class="btn ghost" href="training.html">技術轉移方案</a>
         </div>
       </div>
@@ -996,9 +1549,21 @@
     <div class="store-head">
       <span class="section-kicker">KEN SU WHOLESALE</span>
       <h2>批發商品</h2>
-      <p>原料預拌粉、風味灑粉、常溫／冷藏／冷凍原物料、冷凍半成品與營業設備，一次選購。分類標籤更清楚，配送溫層仍依商品資料分開計算。</p>
+      <p>原料、灑粉、冷藏／冷凍半成品與營業設備，一次選購。分類標籤更清楚，配送溫層依商品分開計算。</p>
     </div>
-    <div class="chips" id="chips"></div>
+    <div class="category-filter" id="categoryFilter">
+      <div class="category-toolbar" aria-label="商品分類工具列">
+        <div class="category-current">
+          <small>目前分類</small>
+          <strong id="currentCategoryLabel">全部商品</strong>
+        </div>
+        <button class="category-toggle" id="categoryToggle" type="button" aria-expanded="false" aria-controls="chips" onclick="toggleCategoryMenu()">
+          <span>切換分類</span>
+          <span class="category-toggle-arrow" aria-hidden="true">⌄</span>
+        </button>
+      </div>
+      <div class="chips" id="chips"></div>
+    </div>
     <div class="grid" id="grid"></div>
   </section>
 
@@ -1246,7 +1811,7 @@
   <script>
     /* ===== Web App 端點（記得是你最新部署的 /exec） ===== */
     const GAS_ENDPOINT='https://script.google.com/macros/s/AKfycbyc0r3zjKvxS7s-dpVsd87fLAJbmCT2sNtTP5yXVm-WX2rh_5CYL5DrUMAmPkM7UYzVSA/exec';
-    const SITE_TITLE='啃酥菱角酥 Superstar Fried Food 批發網站';
+    const SITE_TITLE='啃酥批發';
 
     /* ===== 商品分類標籤 ===== */
     // 商品分類供客人快速尋找品項；配送溫層仍獨立保留給運費與出貨計算
@@ -1336,7 +1901,7 @@
       }catch{ return DEFAULT_PRODUCTS }
     }
     function loadBrand(){
-      const defaultBrand = {logo:'',title:SITE_TITLE,heroTitle:'原料預拌粉・風味灑粉・三溫層批發供應',heroSub:'從夜市實戰出發，提供穩定出餐所需商品，協助攤販與店家更安心備貨。'};
+      const defaultBrand = {logo:'',title:SITE_TITLE,heroTitle:'啃酥批發供應',heroSub:'原料、半成品、灑粉與設備，一次備齊。'};
       try{ return JSON.parse(localStorage.getItem(LS_KEY_BRAND)) || defaultBrand }
       catch{ return defaultBrand }
     }
@@ -1513,29 +2078,55 @@
     function applyBrand(){
       if(brand.logo) document.getElementById('logoImg').src=githubToRaw(brand.logo);
       const remoteTitle = String(brand.title || '').trim();
-      document.getElementById('siteTitle').textContent = (!remoteTitle || remoteTitle === '啃酥批發') ? SITE_TITLE : remoteTitle;
-      document.getElementById('heroTitle').textContent=brand.heroTitle||'';
-      document.getElementById('heroSub').textContent=brand.heroSub||'';
+      document.getElementById('siteTitle').textContent = (!remoteTitle || remoteTitle === '啃酥菱角酥 Superstar Fried Food 批發網站') ? SITE_TITLE : remoteTitle;
+      document.getElementById('heroTitle').textContent=brand.heroTitle||'啃酥批發供應';
+      document.getElementById('heroSub').textContent=brand.heroSub||'原料、半成品、灑粉與設備，一次備齊。';
     }
     function uniqueTags(){ return ['全部',...TAGS] }
     function categoryIcon(label){ return CATEGORY_ICONS[label] || '🏷️' }
+    function getCategoryLabel(){
+      return filterOn === '全部' ? '全部商品' : filterOn;
+    }
+    function updateCategoryToggleLabel(){
+      const label=document.getElementById('currentCategoryLabel');
+      if(label) label.textContent=getCategoryLabel();
+    }
+    function toggleCategoryMenu(){
+      const wrap=document.getElementById('categoryFilter');
+      const btn=document.getElementById('categoryToggle');
+      if(!wrap || !btn) return;
+      const next=!wrap.classList.contains('is-open');
+      wrap.classList.toggle('is-open', next);
+      btn.setAttribute('aria-expanded', next ? 'true' : 'false');
+    }
+    function closeCategoryMenu(){
+      const wrap=document.getElementById('categoryFilter');
+      const btn=document.getElementById('categoryToggle');
+      if(!wrap || !btn) return;
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded','false');
+    }
     function renderChips(){
       const chips=document.getElementById('chips');
       chips.innerHTML='';
+      updateCategoryToggleLabel();
 
       const makeChip = (label, onClick, active=false, extraClass='') => {
         const btn=document.createElement('button');
         btn.type='button';
         btn.className='chip'+(active?' is-on':'')+(extraClass?` ${extraClass}`:'');
-        btn.innerHTML=`<span class="chip-icon" aria-hidden="true">${categoryIcon(label)}</span><span>${label}</span>`;
-        btn.onclick=onClick;
+        btn.textContent=label;
+        btn.onclick=()=>{
+          onClick();
+          if(window.matchMedia('(max-width:720px)').matches) closeCategoryMenu();
+        };
         chips.appendChild(btn);
       };
 
-      makeChip('查訂單', openSearch, false, 'chip-search');
       uniqueTags().forEach(t=>{
-        makeChip(t, ()=>{ filterOn=t; renderGrid(); }, t===filterOn);
+        makeChip(t, ()=>{ filterOn=t; renderGrid(); renderChips(); }, t===filterOn);
       });
+      makeChip('查訂單', openSearch, false, 'chip-search');
     }
     function normalizeCategoryTag(tag){
       const t = String(tag || '').trim();
@@ -2221,6 +2812,7 @@
       btn.setAttribute('aria-expanded', String(isOpen));
       btn.setAttribute('aria-label', isOpen ? '關閉選單' : '開啟選單');
       if(mainHeader) mainHeader.classList.toggle('menu-open', isOpen);
+      document.body.classList.toggle('nav-lock', isOpen);
       updateMobileHeader();
     }
     function closeMenu(){
@@ -2231,6 +2823,7 @@
       btn.setAttribute('aria-expanded', 'false');
       btn.setAttribute('aria-label', '開啟選單');
       if(mainHeader) mainHeader.classList.remove('menu-open');
+      document.body.classList.remove('nav-lock');
       updateMobileHeader();
     }
     window.addEventListener('resize', function(){
@@ -2292,6 +2885,18 @@
         return false;
       }
     });
-  </script>
+  
+
+    // 點擊分類選單外側時，自動收合手機分類選單
+    document.addEventListener('click', function(e){
+      const wrap=document.getElementById('categoryFilter');
+      if(!wrap || !wrap.classList.contains('is-open')) return;
+      if(!window.matchMedia('(max-width:720px)').matches) return;
+      if(!wrap.contains(e.target)) closeCategoryMenu();
+    });
+    window.addEventListener('resize', function(){
+      if(!window.matchMedia('(max-width:720px)').matches) closeCategoryMenu();
+    });
+</script>
 </body>
 </html>
